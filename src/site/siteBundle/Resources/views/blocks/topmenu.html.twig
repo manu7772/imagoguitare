@@ -1,0 +1,36 @@
+{% set current_locale = 'sitesite' %}
+{% set LANGUESITE = list_locales[current_locale]|default(list_locales['default'])|split('|') %}
+<ul>
+	{% if LANGUESITE|length > 1 %}
+	<li>
+		<a href="#" title="{{ 'traduction.langues'|trans|capitalize }}"><i class="fa fa-flag"></i></a>
+		<!-- Nav Dropdown -->
+		<ul class="nav-dropdown">
+			{% set route_params = infoRoute['_route_params'] %}
+			{% if route_params is not iterable %}{% set route_params = [] %}{% endif %}
+			{% for langue in LANGUESITE %}
+			{% set route_params = route_params|merge({_locale: langue}) %}
+			{% set tradlangue = ('traduction.languename.' ~ langue)|trans({}, 'messages', langue) %}
+			<li>
+				<a href="{{ path(infoRoute['_route'], route_params) }}" class="change-user-language" data-url="{{ path('change_user_language', {language: langue, user: app.user.id|default(null)}) }}">
+					{{ 'traduction.voir_site'|trans({'%langue%': tradlangue}, 'messages', langue)|capitalize }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</li>
+	{% endif %}
+
+	{% for name,menuroute in menu %}
+	{# <!-- class="current-ele" --> #}
+	<li><a href="{{ path(menuroute.name, menuroute.params|default([])) }}">{{ name|trans|capitalize }}</a></li>
+	{% endfor %}
+
+	{% if sidemenuswitcher == false %}
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'siteUserBundle') }}</a></li>
+		{% else %}
+		<li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'siteUserBundle') }}</a></li>
+		{% endif %}
+	{% endif %}
+</ul>

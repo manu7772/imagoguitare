@@ -1,0 +1,20 @@
+site: 'Contemporary luthier, guitar, bass, Ukulele'
+bundles:
+    admin:
+        name: administration
+    translate:
+        name: translation
+    User:
+        name: users
+menu:
+    accueil: home
+    realisations: realisations
+    videos: videos
+    login: login
+    contact: contact
+search:
+    name: search…
+footer:
+    realisation: 'Concepted by %name%'
+    generation: 'generated with'
+    rights: 'all rights reserved'

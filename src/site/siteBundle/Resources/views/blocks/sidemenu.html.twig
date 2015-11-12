@@ -1,0 +1,5 @@
+<ul>
+    {% for name,menuroute in menu %}
+    <li><a href="{{ path(menuroute.name, menuroute.params|default([])) }}">{{ name|trans|capitalize }}</a></li>
+    {% endfor %}
+</ul>
