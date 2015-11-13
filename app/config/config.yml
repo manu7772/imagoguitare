@@ -7,6 +7,13 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    menus:
+        site-menu:
+            bundle: sitesite
+            name: imago
+        admin-sidemenu:
+            bundle: siteadmin
+            name: sidemenu
     locale:                 fr
     homepage:               sitesite_homepage
     restrict_admin:         ROLE_ADMIN
@@ -51,31 +58,6 @@ parameters:
             extendedTimeOut: 1000
             closeHtml: '<button type="button">&times;</button>'
             newestOnTop: false
-    site_menu:
-        top:
-            menu.accueil:
-                name: sitesite_homepage
-            menu.realisations:
-                name: site_pageweb
-                params:
-                    pageweb: realisations
-            menu.videos:
-                name: site_pageweb
-                params:
-                    pageweb: videos
-            menu.contact:
-                name: site_pageweb
-                params:
-                    pageweb: contact
-        admin:
-            bundles.admin.name:
-                name: siteadmin_homepage
-            bundles.translate.name:
-                name: sitetranslate_homepage
-            bundles.User.name:
-                name: site_user_homepage
-                params:
-                    name: contact
 
 framework:
     #esi:             ~

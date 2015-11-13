@@ -16,6 +16,7 @@ pageweb:
     backlist_btn: 'back to list'
     dontexist: 'this web page does not exist'
     moredetails: 'more details on %name%'
+    bydefault: 'set as default homepage'
 media:
     name_s: medias
     name: media
@@ -117,6 +118,7 @@ table:
         versions_list: 'available versions list'
         email: email
         originalnom: file name
+        bundle: bundle
 msg:
     supp: 'do you want to delete this element?'
     suppression: deleting

@@ -7,6 +7,10 @@ bundles:
     User:
         name: users
 menu:
+    name: menu
+    name_s : menus
+    not_found: no menu found
+    create_btn: new menu
     accueil: home
     realisations: realisations
     videos: videos

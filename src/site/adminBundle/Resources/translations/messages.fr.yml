@@ -16,6 +16,7 @@ pageweb:
     backlist_btn: 'retour liste'
     dontexist: 'cette page web n''existe pas'
     moredetails: 'plus de détails sur %name%'
+    bydefault: 'définir comme page d''accueil par défaut'
 media:
     name_s: médias
     name: média
@@ -117,6 +118,7 @@ table:
         default: défaut
         email: courriel
         originalnom: nom fichier
+        bundle: bundle
 msg:
     supp: 'souhaitez-vous supprimer cet élément ?'
     suppression: suppression
