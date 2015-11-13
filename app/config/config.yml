@@ -209,3 +209,30 @@ stof_doctrine_extensions:
             timestampable:  false
             translatable:   false
             tree:           true
+
+# monolog config
+monolog:
+    handlers:
+        main:
+            type:               fingers_crossed
+            action_level:       error
+            handler:            grouped
+            channels:           !bomo_files
+        grouped:
+            type:               group
+            members:            [streamed, swift]
+        streamed:
+            type:               stream
+            path:               "%kernel.logs_dir%/%kernel.environment%.log"
+            level:              debug
+        swift:
+            type:               swift_mailer
+            from_email:         FQN@foo.com
+            to_email:           manu7772@gmail.com
+            subject:            "monolog - imagoguitare"
+            level:              debug
+        login:
+            type:               stream
+            path:               "%kernel.logs_dir%/auth.log"
+            level:              info
+            channels:           security
