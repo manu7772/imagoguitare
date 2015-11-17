@@ -1,4 +1,7 @@
-site: 'Contemporary luthier, guitar, bass, Ukulele'
+site:
+    title: 'Contemporanean luthier, Guitar, Bass, Ukulélé'
+    description: 'Contemporanean luthier, Guitar, Bass, Ukulélé'
+    keywords: 'luthier, contemporanean, guitar, bass, ukulélé'
 bundles:
     admin:
         name: administration

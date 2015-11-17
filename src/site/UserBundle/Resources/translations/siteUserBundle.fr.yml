@@ -31,6 +31,9 @@ fields:
     email: courriel
     nom: nom
     prenom: prénom
+    help: aide
+    theme: thème admin
+    lang: langue
 
 # Profile
 profile:

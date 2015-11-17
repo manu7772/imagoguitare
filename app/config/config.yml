@@ -111,6 +111,9 @@ assetic:
     bundles:
         - sitesiteBundle
         - siteadminBundle
+        - siteinterfaceBundle
+        # - siteUserBundle
+        - FOSUserBundle
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

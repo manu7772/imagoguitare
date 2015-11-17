@@ -1,8 +1,8 @@
 {% if is_granted(menu.menu.roles.view|default(null)) or (menu.menu.roles.view|default(null) == null) %}
-<ul>
+<ul class="link">
 	{% for item in menu.menu.menu if (is_granted(item.role|default(null)) or item.role|default(null) == null) %}
 	{% set icon = '' %}
-	{% if item.icon is defined %}{% set icon = '<i class="fa ' ~ item.icon ~ '"></i>' %}{% endif %}
+	{% if (item.icon is defined) and (options.icons == true) %}{% set icon = '<i class="fa ' ~ item.icon ~ '"></i>' %}{% endif %}
 	{% set path = '#' %}
 	{% if item.path.route|default('#') != '#' %}
 		{% set path = path(item.path.route, item.path.params|default([])) %}
@@ -14,12 +14,12 @@
 	{% if item.name|default('') != '' %}{% set name = ' ' ~ item.name|trans({}, item.trans_domain|default(null))|capitalize %}{% endif %}
 	<li><a href="{{ path|raw }}"{% if item.title|default(null) != null %} title="{{ item.title|trans({}, item.trans_domain|default(null))|capitalize }}"{% endif %}>{{ icon|raw }}{{ name }}</a>
 
-	{% if item.items|default(null) is iterable %}
+	{% if (item.items|default(null) is iterable) and (options.levels != 1) %}
 	<!-- Nav Dropdown -->
 	<ul class="nav-dropdown">
 		{% for itemL2 in item.items if (is_granted(itemL2.role|default(null)) or itemL2.role|default(null) == null) %}
 		{% set icon = '' %}
-		{% if itemL2.icon is defined %}{% set icon = '<i class="fa ' ~ itemL2.icon ~ '"></i>' %}{% endif %}
+		{% if (itemL2.icon is defined) and (options.icons == true) %}{% set icon = '<i class="fa ' ~ itemL2.icon ~ '"></i>' %}{% endif %}
 		{% set path = '#' %}
 		{% if itemL2.path.route|default('#') != '#' %}
 			{% set path = path(itemL2.path.route, itemL2.path.params|default([])) %}
@@ -38,46 +38,3 @@
 	{% endfor %}
 </ul>
 {% endif %}
-
-
-
-{#
-
-{% set current_locale = 'sitesite' %}
-{% set LANGUESITE = list_locales[current_locale]|default(list_locales['default'])|split('|') %}
-<ul>
-	{% if LANGUESITE|length > 1 %}
-	<li>
-		<a href="#" title="{{ 'traduction.langues'|trans|capitalize }}"><i class="fa fa-flag"></i></a>
-		<!-- Nav Dropdown -->
-		<ul class="nav-dropdown">
-			{% set route_params = infoRoute['_route_params'] %}
-			{% if route_params is not iterable %}{% set route_params = [] %}{% endif %}
-			{% for langue in LANGUESITE %}
-			{% set route_params = route_params|merge({_locale: langue}) %}
-			{% set tradlangue = ('traduction.languename.' ~ langue)|trans({}, 'messages', langue) %}
-			<li>
-				<a href="{{ path(infoRoute['_route'], route_params) }}" class="change-user-language" data-url="{{ path('change_user_language', {language: langue, user: app.user.id|default(null)}) }}">
-					{{ 'traduction.voir_site'|trans({'%langue%': tradlangue}, 'messages', langue)|capitalize }}
-				</a>
-			</li>
-			{% endfor %}
-		</ul>
-	</li>
-	{% endif %}
-
-	{% for name,menuroute in menu %}
-	<!-- class="current-ele" -->
-	<li><a href="{{ path(menuroute.name, menuroute.params|default([])) }}">{{ name|trans|capitalize }}</a></li>
-	{% endfor %}
-
-	{% if sidemenuswitcher == false %}
-		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-		<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'siteUserBundle') }}</a></li>
-		{% else %}
-		<li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'siteUserBundle') }}</a></li>
-		{% endif %}
-	{% endif %}
-</ul>
-
-#}

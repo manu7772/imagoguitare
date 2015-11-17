@@ -1,27 +1,5 @@
 {% extends 'sitesiteBundle:bases:base_simple.html.twig' %}
 
-{%- block title -%}
-    {%- if pageweb.title|trim|length > 0 -%}
-    {{- pageweb.title|raw -}}
-    {%- else -%}
-    {{- parent() -}}
-    {%- endif -%}
-{%- endblock -%}
-{%- block description -%}
-    {%- if pageweb.metadescription|trim|length > 0 -%}
-    {{- pageweb.metadescription|raw -}}
-    {%- else -%}
-    {{- parent() -}}
-    {%- endif -%}
-{%- endblock description -%}
-{%- block keywords -%}
-    {%- if pageweb.metatitle|trim|length > 0 -%}
-    {{- pageweb.metatitle|raw -}}
-    {%- else -%}
-    {{- parent() -}}
-    {%- endif -%}
-{%- endblock keywords -%}
-
 {% block sections %}
 
         <!-- Intro Section -->
@@ -51,12 +29,13 @@
                             <h6>Atelier imago guitare</h6>
                             <p>
                                 20 allée des vignes
-                                <br />
+                                <br>
                                 01340 Jayat
                                 <br>
                                 <small>(village situé 22km au nord de Bourg en Bresse et 30km à l'est de Macon dans l'Ain)</small>
                             </p>
-                            <a href="mailto:contact@imagoguitare.com"><i class="fa fa-envelope-o left"></i>contact@imagoguitare.com</a><br />
+                            <a href="mailto:contact@imagoguitare.com"><i class="fa fa-envelope-o left"></i>contact@imagoguitare.com</a>
+                            <br>
                             <a><i class="fa fa-phone left"></i>06 35 26 24 98</a>
                         </div>
                         <div class="contact-box-left mb-45">
@@ -66,7 +45,7 @@
                                 <span>Du lundi au vendredi</span>
                                 <br>
                                 <span>14h / 19h</span>
-                                <br />
+                                <br>
                                 <span>Le samedi sur RDV</span>
                             </p>
                         </div>
@@ -77,7 +56,7 @@
                                 <!-- <li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li> -->
                                 <!-- <li><a href="https://instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li> -->
                                 <li><a href="https://www.facebook.com/rikett.rico" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                <!-- <li><a href="https://vimeo.com/" target="_blank"><i class="fa fa-vimeo-square"></i></a></li> -->
+                                <li><a href="https://vimeo.com/" target="_blank"><i class="fa fa-vimeo-square"></i></a></li>
                                 <!-- <li><a href="https://www.behance.net/" target="_blank"><i class="fa fa-behance"></i></a></li> -->
                             </ul>
                         </div>
@@ -128,5 +107,8 @@
             <div id="map"></div>
         </section>
         <!-- Map Section -->
+
+        <br>
+        <br>
 
 {% endblock sections %}

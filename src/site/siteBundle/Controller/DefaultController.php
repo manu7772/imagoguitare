@@ -9,16 +9,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DefaultController extends Controller {
 
 	public function indexAction() {
-		// $data['title'] = 'Imago GUITARE - Site web';
-		// $data['description'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
-		// $data['keywords'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
 		$this->em = $this->getDoctrine()->getManager();
 		$this->repo = $this->em->getRepository('site\adminBundle\Entity\pageweb');
 		$data['pageweb'] = $this->repo->findOneByHomepage(1);
 		// chargement de la pageweb
-		$page = 'sitesiteBundle:pages_web:'.$data['pageweb']->getModele().'.html.twig';
-		return $this->render($page, $data);
-		// return $this->render('sitesiteBundle:Default:index.html.twig', $data);
+		if(is_object($data['pageweb'])) {
+			return $this->render($data['pageweb']->getTemplate(), $data);
+		} else {
+			// si aucune page web… chargement de la page par défaut…
+			$data['title'] = 'Imago GUITARE - Site web';
+			$data['description'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
+			$data['keywords'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
+			return $this->render('sitesiteBundle:Default:index.html.twig', $data);
+		}
 	}
 
 	public function pagewebAction($pageweb, $params = null) {
@@ -29,12 +32,13 @@ class DefaultController extends Controller {
 		$this->repo = $this->em->getRepository('site\adminBundle\Entity\pageweb');
 		$data['pageweb'] = $this->repo->findOneBySlug($pageweb);
 		// chargement de la pageweb
-		$page = 'sitesiteBundle:pages_web:'.$data['pageweb']->getModele().'.html.twig';
-		return $this->render($page, $data);
+		return $this->render($data['pageweb']->getTemplate(), $data);
 	}
 
-	public function topmenuAction() {
+	public function topmenuAction($levels = 0, $icons = true) {
 		$data['menu'] = $this->get('aeMenus')->getMenu('site-menu');
+		$data['options']['levels'] = $levels;
+		$data['options']['icons'] = $icons;
 		// récupération route/params requête MASTER
 		$stack = $this->get('request_stack');
 		$masterRequest = $stack->getMasterRequest();

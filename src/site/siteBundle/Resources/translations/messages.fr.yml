@@ -1,4 +1,7 @@
-site: 'Luthier contemporain, Guitare, Basse, Ukulélé'
+site:
+    title: 'Luthier contemporain, Guitare, Basse, Ukulélé'
+    description: 'le site du luthier malin en ligne :)'
+    keywords: 'luthier, contemporain, guitare, basse, ukulélé'
 bundles:
     admin:
         name: administration

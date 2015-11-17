@@ -56,15 +56,31 @@ class User extends BaseUser {
 	private $adminhelp;
 
 	/**
+	 * @ORM\Column(name="admintheme", type="string", length=32, unique=false, nullable=true)
+	 */
+	protected $admintheme;
+
+	/**
 	 * @ORM\Column(name="langue", type="string", length=32, unique=false, nullable=true)
 	 */
 	protected $langue;
 
+	protected $adminskins;
 
 	public function __construct() {
 		parent::__construct();
 		$this->adminhelp = true;
+		$this->admintheme = $this->getDefaultAdminskin();
 		$this->langue = 'default_locale';
+	}
+
+	public function getAdminskins() {
+		return array("skin-0" => "skin-0", "skin-1" => "skin-1", "skin-2" => "skin-2", "skin-3" => "skin-3");
+	}
+
+	public function getDefaultAdminskin() {
+		$skins = $this->getAdminskins();
+		return reset($skins);
 	}
 
 	/**
@@ -135,6 +151,28 @@ class User extends BaseUser {
 	 */
 	public function getAdminhelp() {
 		return $this->adminhelp;
+	}
+
+	/**
+	 * Set admintheme
+	 * @param boolean $admintheme
+	 * @return User
+	 */
+	public function setAdmintheme($admintheme) {
+		$skins = $this->getAdminskins();
+		if(in_array($admintheme, $skins)) $this->admintheme = $admintheme;
+			else $this->admintheme = $this->getDefaultAdminskin();
+		return $this;
+	}
+
+	/**
+	 * Get admintheme
+	 * @return boolean 
+	 */
+	public function getAdmintheme() {
+		$skins = $this->getAdminskins();
+		if(in_array($this->admintheme, $skins)) return $this->admintheme;
+			else return $this->getDefaultAdminskin();
 	}
 
 	/**

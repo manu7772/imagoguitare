@@ -100,8 +100,8 @@ table:
         title: titre
         titreh1: titre H1
         modele: modèle
-        metatitle: meta title
-        metadescription: mots clés
+        keywords: mots clés
+        metadescription: description
         attribut: attribut
         valeur: valeur
         creation: création

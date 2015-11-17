@@ -1,6 +1,16 @@
 {% extends 'sitesiteBundle:bases:base_simple.html.twig' %}
 {% trans_default_domain 'siteUserBundle' %}
 
+{% block stylesheets %}
+{{ parent() }}
+{% stylesheets filter='cssrewrite, lessphp, ?yui_css'
+    'bundles/siteinterface/framework_inspinia/css/plugins/chosen/chosen.css'
+    'bundles/siteinterface/framework_inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+{% endstylesheets %}
+{% endblock stylesheets %}
+
 {% block sections %}
 
         <!-- Intro Section -->
@@ -33,3 +43,15 @@
         <!-- End Login Section -->
 
 {% endblock sections %}
+
+{% block javascripts %}
+{{ parent() }}
+{% javascripts filter='?yui_js'
+    'bundles/siteinterface/framework_inspinia/js/plugins/chosen/chosen.jquery.js'
+
+    'bundles/siteinterface/js/inspinia-form_widgets.js'
+    'bundles/siteinterface/js/inspinia-effects.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock javascripts %}
