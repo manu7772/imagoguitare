@@ -105,6 +105,7 @@ actions:
     suppQuestion: Do you really want to delete %name% ?
     vue: 'detail view'
     repondre: answer by mail
+    activer: activ mode
 table:
     col:
         id: id

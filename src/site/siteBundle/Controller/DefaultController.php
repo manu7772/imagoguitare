@@ -45,7 +45,7 @@ class DefaultController extends Controller {
 		switch ($data['pageweb']) {
 			case 'contact':
 				// page contact
-				$message = new message();
+				$message = $this->getNewEntity('site\adminBundle\Entity\message');
 				$form = $this->createForm(new contactmessageType($this, []), $message);
 				// $this->repo = $this->em->getRepository('site\adminBundle\Entity\message');
 				$request = $this->getRequest();
@@ -78,6 +78,17 @@ class DefaultController extends Controller {
 				break;
 		}
 		return $data;
+	}
+
+	protected function getNewEntity($classname) {
+		$newEntity = new $classname();
+		$this->em = $this->getDoctrine()->getManager();
+		if(method_exists($newEntity, 'setStatut')) {
+			// si un champ statut existe
+			$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->defaultVal();
+			$newEntity->setStatut($inactif);
+		}
+		return $newEntity;
 	}
 
 	public function topmenuAction($levels = 0, $icons = true) {

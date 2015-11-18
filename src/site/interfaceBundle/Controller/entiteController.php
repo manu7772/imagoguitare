@@ -80,8 +80,7 @@ class entiteController extends Controller {
 				// page générique entités
 				switch ($data['action']) {
 					case 'create' :
-						$entCname = $data['classname'];
-						$data['entite'] = new $entCname();
+						$data['entite'] = $this->getNewEntity($data['classname']);
 						$data[$data['action'].'_form'] = $this->getEntityFormView($data);
 						break;
 					case 'show' :
@@ -114,7 +113,7 @@ class entiteController extends Controller {
 						} else {
 							if(method_exists($data['entite'], 'setStatut')) {
 								// si un champ statut existe
-								$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->find(2);
+								$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->findInactif();
 								$data['entite']->setStatut($inactif);
 							} else {
 								// sinon on la supprime
@@ -128,6 +127,32 @@ class entiteController extends Controller {
 							));
 							$data['action'] = null;
 							$data['id'] = null;
+						}
+						return $this->redirect($this->generateEntityUrl($data));
+						break;
+					case 'active' :
+						$data['entite'] = $this->repo->find($id);
+						if(!is_object($data['entite'])) {
+							$message = $this->get('flash_messages')->send(array(
+								'title'		=> 'Message introuvable',
+								'type'		=> flashMessage::MESSAGES_ERROR,
+								'text'		=> 'Le message est introuvable et ne peut être supprimé.',
+							));
+							$data['action'] = null;
+							$data['id'] = null;
+						} else {
+							if(method_exists($data['entite'], 'setStatut')) {
+								// si un champ statut existe
+								$actif = $this->em->getRepository('site\adminBundle\Entity\statut')->findActif();
+								$data['entite']->setStatut($actif);
+							}
+							$this->em->flush();
+							$message = $this->get('flash_messages')->send(array(
+								'title'		=> 'Message activé',
+								'type'		=> flashMessage::MESSAGES_SUCCESS,
+								'text'		=> 'Le message a été activé.',
+							));
+							$data['action'] = 'show';
 						}
 						return $this->redirect($this->generateEntityUrl($data));
 						break;
@@ -188,7 +213,7 @@ class entiteController extends Controller {
 		if($data['action'] == "create") {
 			// create
 			$imsg = '';
-			$data['entite'] = new $classname();
+			$data['entite'] = $this->getNewEntity($classname);
 		} else {
 			// edit / delete
 			$imsg = ' (id:'.$data['id'].')';
@@ -206,7 +231,7 @@ class entiteController extends Controller {
 				case 'delete':
 					if(method_exists($data['entite'], 'setStatut')) {
 						// si un champ statut existe
-						$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->find(2);
+						$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->findInactif();
 						$data['entite']->setStatut($inactif);
 					} else {
 						// sinon on la supprime
@@ -425,6 +450,17 @@ class entiteController extends Controller {
 				break;
 		}
 		// return $data;
+	}
+
+	protected function getNewEntity($classname) {
+		$newEntity = new $classname();
+		$this->em = $this->getDoctrine()->getManager();
+		if(method_exists($newEntity, 'setStatut')) {
+			// si un champ statut existe
+			$inactif = $this->em->getRepository('site\adminBundle\Entity\statut')->defaultVal();
+			$newEntity->setStatut($inactif);
+		}
+		return $newEntity;
 	}
 
 	public function pageweb_as_defaultAction($id, $redir) {

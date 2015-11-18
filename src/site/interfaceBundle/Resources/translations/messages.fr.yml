@@ -105,6 +105,7 @@ actions:
     suppQuestion: Souhaitez-vous vraiment supprimer %name% ?
     vue: 'vue en détails'
     repondre: répondre par mail
+    activer: mode actif
 table:
     col:
         id: id

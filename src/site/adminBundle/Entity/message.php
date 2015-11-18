@@ -4,6 +4,9 @@ namespace site\adminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use site\adminBundle\Entity\statut;
+
 use \DateTime;
 
 /**
@@ -66,6 +69,12 @@ class message {
      * @ORM\Column(name="ip", type="string", length=32, nullable=true, unique=false)
      */
     private $ip;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="statut")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false, unique=false)
+     */
+    protected $statut;
 
 
     public function __construct() {
@@ -194,5 +203,26 @@ class message {
     public function getIp() {
         return $this->ip;
     }
+
+    /**
+     * Set statut
+     * @param statut $statut
+     * @return article
+     */
+    public function setStatut(statut $statut) {
+        $this->statut = $statut;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut
+     * @return statut 
+     */
+    public function getStatut() {
+        return $this->statut;
+    }
+
+
 }
 
