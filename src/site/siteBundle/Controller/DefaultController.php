@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use site\adminBundle\Entity\message;
+use site\adminBundle\Form\contactmessageType;
+use \DateTime;
+
 class DefaultController extends Controller {
 
 	public function indexAction() {
@@ -25,14 +29,55 @@ class DefaultController extends Controller {
 	}
 
 	public function pagewebAction($pageweb, $params = null) {
-		if($params == null) $params = array();
-		$data = $params;
-		// find $pageweb
 		$this->em = $this->getDoctrine()->getManager();
+		// if($params == null) $params = array();
+		$data = $this->get('tools_json')->JSonExtract($params);
+		$data['pageweb'] = $pageweb;
+		$this->pagewebactions($data);
+		// find $pageweb
 		$this->repo = $this->em->getRepository('site\adminBundle\Entity\pageweb');
 		$data['pageweb'] = $this->repo->findOneBySlug($pageweb);
 		// chargement de la pageweb
 		return $this->render($data['pageweb']->getTemplate(), $data);
+	}
+
+	protected function pagewebactions(&$data) {
+		switch ($data['pageweb']) {
+			case 'contact':
+				// page contact
+				$message = new message();
+				$form = $this->createForm(new contactmessageType($this, []), $message);
+				// $this->repo = $this->em->getRepository('site\adminBundle\Entity\message');
+				$request = $this->getRequest();
+				if($request->getMethod() == 'POST') {
+					// formulaire reçu
+					$form->bind($request);
+					if($form->isValid()) {
+						// get IP & DateTime
+						$message->setIp($request->getClientIp());
+						$message->setCreation(new DateTime());
+						// enregistrement
+						$this->em->persist($message);
+						$this->em->flush();
+						$data['message_success'] = "message.success";
+						// nouveau formulaire
+						$new_message = new message();
+						$new_message->setNom($message->getNom());
+						$new_message->setEmail($message->getEmail());
+						// $new_message->setObjet($message->getObjet());
+						$form = $this->createForm(new contactmessageType($this, []), $new_message);
+					} else {
+						$data['message_error'] = "message.error";
+					}
+				}
+				$data['message_form'] = $form->createView();
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+		return $data;
 	}
 
 	public function topmenuAction($levels = 0, $icons = true) {

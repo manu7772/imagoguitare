@@ -62,40 +62,26 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-md-offset-1">
-                        <!-- Contact FORM -->
-                        <form class="contact-form" id="contact" role="form">
-
-                            <!-- IF MAIL SENT SUCCESSFULLY -->
-                            <h6 class="successContent">
-                                <i class="fa fa-check left" style="color: #5cb45d;"></i>Votre message a été envoyé. Merci.
-                            </h6>
-                            <!-- END IF MAIL SENT SUCCESSFULLY -->
-
-                            <!-- MAIL SENDING UNSUCCESSFULL -->
-                            <h6 class="errorContent">
-                                <i class="fa fa-exclamation-circle left" style="color: #e1534f;"></i>Le formulaire n'est pas conforme, veuillez compléter, s.v.p.!
-                            </h6>
-                            <!-- END MAIL SENDING UNSUCCESSFULL -->
-
-                            <div class="form-field-wrapper">
-                                <input class="input-sm form-full" id="form-name" type="text" name="form-name" placeholder="Nom" required>
-                            </div>
-
-                            <div class="form-field-wrapper">
-                                <input class="input-sm form-full" id="form-email" type="email" name="form-email" placeholder="Courriel" required>
-                            </div>
-
-                            <div class="form-field-wrapper">
-                                <input class="input-sm form-full" id="form-subject" type="text" name="form-subject" placeholder="Objet">
-                            </div>
-
-                            <div class="form-field-wrapper">
-                                <textarea class="form-full" id="form-message" rows="7" name="form-message" placeholder="Votre message…" required></textarea>
-                            </div>
-
-                            <button class="btn btn-md btn-black form-full" type="submit" id="form-submit" name="submit">Envoyer</button>
-                        </form>
-                        <!-- END Contact FORM -->
+                        {% if message_success is defined %}
+                        <div class="alert alert-info" role="alert">
+                            {{ message_success|trans }}
+                        </div>
+                        {% endif %}
+                        {% if message_error is defined %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message_error|trans }}
+                        </div>
+                        {% endif %}
+                        {{ form_start(message_form) }}
+                        {{ form_errors(message_form) }}
+                        {% for item in ['nom', 'email', 'objet', 'message'] %}
+                        <div class="form-field-wrapper">
+                            {{ form_widget(message_form[item]) }}
+                            {{ form_errors(message_form[item]) }}
+                        </div>
+                        {% endfor %}
+                        {{ form_rest(message_form) }}
+                        {{ form_end(message_form) }}
                     </div>
                 </div>
             </div>

@@ -25,3 +25,6 @@ footer:
     realisation: 'réalisé par %name%'
     generation: 'réalisé avec'
     rights: 'tous droits réservés'
+message:
+    success: 'Votre message a été envoyé. Merci.'
+    error: 'Votre message n''a pu être enregistré. Merci de le compléter avant d''envoyer.'

@@ -9,6 +9,14 @@ menu:
         icon: fa-cog
         path:
             route: siteadmin_homepage
+    messages:
+        name: message.name_s
+        icon: fa-paper-plane
+        role: ROLE_EDITOR
+        path:
+            route: siteadmin_entite
+            params:
+                entite: message
     users:
         name: bundles.User.name
         icon: fa-users
