@@ -44,12 +44,16 @@
 									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'check'}) }}" type="button" class="btn btn-danger btn-xs" title="Checker article {{ entite.nom }}"><i class="fa fa-check"></i></a>
 									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'show'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ (entite_name ~ '.moredetails')|trans({'%name%': entite.nom})|capitalize }}"><i class="fa fa-eye"></i></a>
 									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'edit'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ 'actions.modifier'|trans|capitalize }}"><i class="fa fa-pencil"></i></a>
+									{% if(entite.statut.nom|default('Actif') != 'Actif') %}
 									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'active'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ 'actions.activer'|trans|capitalize }}"><i class="fa fa-star"></i></a>
+									{% endif %}
 									{% else %}
 									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'check'}) }}" type="button" class="btn btn-danger btn-xs" title="Checker article {{ entite.nom }}"><i class="fa fa-check"></i></a>
 									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'show'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ (entite_name ~ '.moredetails')|trans({'%name%': entite.nom})|capitalize }}"><i class="fa fa-eye"></i></a>
 									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'edit'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ 'actions.modifier'|trans|capitalize }}"><i class="fa fa-pencil"></i></a>
+									{% if(entite.statut.nom|default('Actif') != 'Actif') %}
 									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'active'}) }}" type="button" class="btn btn-danger btn-xs" title="{{ 'actions.activer'|trans|capitalize }}"><i class="fa fa-star"></i></a>
+									{% endif %}
 									{% endif %}
 								</div>
 								{% endif %}
