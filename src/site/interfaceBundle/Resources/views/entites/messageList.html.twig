@@ -31,10 +31,11 @@
 							<td>
 								<div class="btn-group">
 									<a href="mailto:{{ entite.email }}" type="button" class="btn btn-white btn-xs" title="{{ 'actions.repondre'|trans|capitalize }}"><i class="fa fa-paper-plane"></i></a>
+									{% set question = 'actions.suppQuestion'|trans({'%name%': entite.nom|default(entite.objet|default(phraseCut(entite.message, 20)|raw))}) %}
 									{% if type.type_values|default(null) != null %}
-									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'delete'}) }}" type="button" class="btn btn-white btn-xs" title="{{ 'actions.supprimer'|trans|capitalize }}"><i class="fa fa-times"></i></a>
+									<a href="{{ path('siteadmin_entite_type', {entite: entite_name, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'delete'}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="{{ 'actions.supprimer'|trans|capitalize }}" data-message="{{ question }}"><i class="fa fa-times"></i></a>
 									{% else %}
-									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'delete'}) }}" type="button" class="btn btn-white btn-xs" title="{{ 'actions.supprimer'|trans|capitalize }}"><i class="fa fa-times"></i></a>
+									<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'delete'}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="{{ 'actions.supprimer'|trans|capitalize }}" data-message="{{ question }}"><i class="fa fa-times"></i></a>
 									{% endif %}
 								</div>
 								{% if DEVMODE %}
