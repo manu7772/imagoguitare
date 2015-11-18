@@ -1,4 +1,5 @@
-﻿(function () {
+﻿if($('body #intro').length && $('body #pollyfill-canvas').length) {
+(function () {
 
     var width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
 
@@ -185,3 +186,4 @@
     }
 
 })();
+}
