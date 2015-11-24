@@ -1,7 +1,7 @@
 name: sidemenu
 roles:
     view: ROLE_EDITOR
-    edit: ROLE_ADMIN
+    edit: ROLE_SUPER_ADMIN
     delete: ROLE_SUPER_ADMIN
 menu:
     admin:
@@ -23,8 +23,6 @@ menu:
         role: ROLE_ADMIN
         path:
             route: site_user_homepage
-            params:
-                name: contact
     translation:
         name: bundles.translate.name
         icon: fa-flag

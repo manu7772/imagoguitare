@@ -4,6 +4,24 @@ roles:
     edit: ROLE_ADMIN
     delete: ROLE_SUPER_ADMIN
 menu:
+    langues:
+        icon: fa-flag
+        title: traduction.langues
+        path:
+            route: '#'
+        items:
+            français:
+                name: traduction.languename.fr
+                path:
+                    route: '#'
+                    params:
+                        _locale: fr
+            anglais:
+                name: traduction.languename.en
+                path:
+                    route: '#'
+                    params:
+                        _locale: en
     accueil:
         name: menu.accueil
         icon: fa-home
@@ -29,24 +47,6 @@ menu:
             route: site_pageweb
             params:
                 pageweb: contact
-    langues:
-        icon: fa-flag
-        title: traduction.langues
-        path:
-            route: '#'
-        items:
-            français:
-                name: traduction.languename.fr
-                path:
-                    route: '#'
-                    params:
-                        _locale: fr
-            anglais:
-                name: traduction.languename.en
-                path:
-                    route: '#'
-                    params:
-                        _locale: en
     logout:
         role: IS_AUTHENTICATED_REMEMBERED
         icon: fa-lock

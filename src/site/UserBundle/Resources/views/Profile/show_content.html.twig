@@ -26,9 +26,15 @@
 	</div>
 </div>
 <br>
-<a href="{{ path('fos_user_profile_edit') }}" type="button" class="btn btn-xs btn-color-b btn-block">
+<a href="{{ path('fos_user_profile_edit') }}" type="button" class="btn btn-xs btn-black btn-block">
+	<i class="fa fa-pencil icon-wait-on-click"></i>&nbsp;
 	{{ 'profile.action.modify'|trans|capitalize }}
 </a>
 <a href="{{ path('fos_user_change_password') }}" type="button" class="btn btn-xs btn-black btn-block">
+	<i class="fa fa-times icon-wait-on-click"></i>&nbsp;
 	{{ 'change_password.submit'|trans|capitalize }}
+</a>
+<a href="{{ path('fos_user_deleting', {id: app.user.id}) }}" type="button" class="btn btn-xs btn-color-b btn-block btn-outline need-confirmation" title="Supprimer votre compte" data-message="Ceci est votre compte ! Souhaitez-vous vraiment supprimer votre compte ?">
+	<i class="fa fa-times icon-wait-on-click"></i>&nbsp;
+	{{ 'profile.action.delete'|trans|capitalize }}
 </a>

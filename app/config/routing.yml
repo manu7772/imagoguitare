@@ -7,6 +7,7 @@ main_home:
 site_site:
     resource: "@sitesiteBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/
+    defaults: { _locale: %locale% }
     requirements:
         _locale: %default_locales%
 
@@ -23,7 +24,7 @@ site_edition:
         _locale: %default_locales%
 
 # site_user:
-#     resource: "@siteUserBundle/Resources/config/routing.yml"
+#     resource: "@siteUserBundle/Resources/config/routing/admin.xml"
 #     prefix:   /{_locale}/user
 #     requirements:
 #         _locale: %default_locales%

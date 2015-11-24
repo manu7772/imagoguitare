@@ -1,4 +1,4 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "siteUserBundle::layout.html.twig" %}
 {% trans_default_domain 'siteUserBundle' %}
 
 {% block soustitre %}<div class="page-breadcrumb">{{ 'layout.login'|trans|capitalize }}</div>{% endblock soustitre %}
@@ -7,7 +7,7 @@
 
 {% if error %}
 <div class="alert alert-danger">
-	{# error|trans|capitalize #}Erreur de connexion…
+	{{ error.message|trans|capitalize }}
 </div>
 {% endif %}
 

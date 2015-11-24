@@ -68,7 +68,7 @@
 						</thead>
 						<tbody>
 							{% for keybundle,bundle in menus %}
-							{% for name,menu in bundle if is_granted(menu.roles.view) %}
+							{% for name,menu in bundle if (is_granted(menu.roles.view|default(null)) or menu.roles.view|default(null) == null) %}
 							<tr>
 								<td>{{ keybundle }}</td>
 								<td>{{ name }}</td>

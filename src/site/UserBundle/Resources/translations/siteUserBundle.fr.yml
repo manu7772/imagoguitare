@@ -42,6 +42,7 @@ profile:
         modify: modifier
         view: Voir profil
         create: créer un compte
+        delete: supprimer
     show:
         username: Nom d'utilisateur
         email: Adresse e-mail

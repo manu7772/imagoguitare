@@ -73,8 +73,8 @@ class entiteController extends Controller {
 		$this->repo = $this->em->getRepository($data['classname']);
 		// actions selon entité…
 		switch ($data['entite_name']) {
-			case 'une entité quelconque à traiter de manière particulière…':
-				break;
+			// case 'une entité quelconque à traiter de manière particulière…':
+			// 	break;
 
 			default:
 				// page générique entités

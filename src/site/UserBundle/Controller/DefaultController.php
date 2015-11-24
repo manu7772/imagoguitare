@@ -29,7 +29,6 @@ class DefaultController extends Controller {
 		// $this->checkPostByForm($action, $params);
 
 		// get users
-		
 		switch ($data["type"]) {
 			case 'ROLE_USER':
 			case 'ROLE_EDITOR':

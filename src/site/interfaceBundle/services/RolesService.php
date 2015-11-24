@@ -40,15 +40,15 @@ class RolesService extends Twig_Extension {
 
 	public function getFunctions() {
 		return array(
-			new Twig_SimpleFunction('userRoles', array($this, 'userRoles')),
-			new Twig_SimpleFunction('userAllRoles', array($this, 'userAllRoles')),
-			new Twig_SimpleFunction('roleName', array($this, 'roleName')),
-			new Twig_SimpleFunction('roleNames', array($this, 'roleNames')),
-			new Twig_SimpleFunction('roleColor', array($this, 'roleColor')),
-			new Twig_SimpleFunction('roleColors', array($this, 'roleColors')),
-			new Twig_SimpleFunction('roleRights', array($this, 'roleRights')),
-			new Twig_SimpleFunction('roleList', array($this, 'roleList')),
-			new Twig_SimpleFunction('userColor', array($this, 'userColor')),
+			new Twig_SimpleFunction('userRoles', array($this, 'getRoles')),
+			new Twig_SimpleFunction('userAllRoles', array($this, 'getAllRoles')),
+			new Twig_SimpleFunction('roleName', array($this, 'getRoleName')),
+			new Twig_SimpleFunction('roleNames', array($this, 'getRoleNames')),
+			new Twig_SimpleFunction('roleColor', array($this, 'getRoleColor')),
+			new Twig_SimpleFunction('roleColors', array($this, 'getRoleColors')),
+			new Twig_SimpleFunction('roleRights', array($this, 'getRoleRights')),
+			new Twig_SimpleFunction('roleList', array($this, 'getListOfRoles')),
+			new Twig_SimpleFunction('userColor', array($this, 'getUserColor')),
 			);
 	}
 

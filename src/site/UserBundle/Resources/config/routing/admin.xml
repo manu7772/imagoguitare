@@ -12,7 +12,7 @@
         <requirement key="_method">GET</requirement>
     </route>
 
-    <route id="site_user_homepage" pattern="/hello/{name}">
+    <route id="site_user_homepage" pattern="/user">
         <default key="_controller">siteUserBundle:Default:index</default>
         <requirement key="_method">GET</requirement>
     </route>
@@ -32,7 +32,7 @@
         <requirement key="_method">GET</requirement>
     </route>
 
-    <route id="change_user_language" pattern="/change-user-language/{language}/{user}">
+    <route id="change_user_language" pattern="/user/change-user-language/{language}/{user}">
         <default key="_controller">siteUserBundle:Default:changeUserLanguage</default>
         <default key="user">null</default>
         <requirement key="language">%default_locales%</requirement>

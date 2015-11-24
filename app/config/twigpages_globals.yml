@@ -56,7 +56,7 @@ twig:
             item4:
                 role: %restrict_admin%
                 nom: 'User.name_s'
-                path: 'siteadmin_homepage'
+                path: 'site_user_homepage'
                 icon: 'fa-users'
             item5:
                 role: ROLE_EDITOR

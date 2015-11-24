@@ -1,6 +1,6 @@
-{% if is_granted(menu.menu.roles.view|default(null)) or (menu.menu.roles.view|default(null) == null) %}
+{% if is_granted(menu.roles.view|default(null)) or (menu.roles.view|default(null) == null) %}
 <ul>
-	{% for item in menu.menu.menu if (is_granted(item.role|default(null)) or item.role|default(null) == null) %}
+	{% for item in menu.menu if (is_granted(item.role|default(null)) or item.role|default(null) == null) %}
 	{% set icon = '' %}
 	{% if item.icon is defined %}{% set icon = '<i class="fa ' ~ item.icon ~ '"></i>' %}{% endif %}
 	{% set path = '#' %}

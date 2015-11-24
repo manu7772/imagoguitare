@@ -63,7 +63,7 @@ class menusController extends Controller {
 		$request = $this->getRequest();
 		$tree = $request->request->get('tree');
 		$data = $aeMenus->changeOrderInFile($bundle, $name, $tree);
-		return new JsonResponse(true);
+		return new JsonResponse($data);
 	}
 
 
