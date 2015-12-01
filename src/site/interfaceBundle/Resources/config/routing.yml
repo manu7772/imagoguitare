@@ -25,10 +25,14 @@ siteinterface_pageweb_set_default:
     path:     /pageweb/set-as-default/{id}/{redir}
     defaults: { _controller: siteinterfaceBundle:entite:pageweb_as_default, redir: 'siteinterface_homepage' }
 
+# FILE FORMAT
+siteinterface_fileformat_resetall:
+    path:     /file-format/{erase}
+    defaults: { _controller: siteinterfaceBundle:entite:resetFileFormats, erase: false }
 
 # MENUS
 siteinterface_menus:
-    path:     /menus/{name}
+    path:     /menus/list/{name}
     defaults: { _controller: siteinterfaceBundle:menus:index, name: 'all' }
 
 siteinterface_menus_action:
@@ -38,4 +42,3 @@ siteinterface_menus_action:
 siteinterface_ajax_modify:
     path:     /menus/ajax-modify/{bundle}/{name}
     defaults: { _controller: siteinterfaceBundle:menus:modify }
-

@@ -18,6 +18,16 @@ services:
         class: %ae_services%pageweb
         arguments: [@service_container]
 
+    # fonctionnalités images / formats d'images
+    aetools.media:
+        class: %ae_services%aeImages
+        arguments: [@doctrine.orm.entity_manager]
+
+    # fonctionnalités tags
+    aetools.tag:
+        class: %ae_services%aeTags
+        arguments: [@doctrine.orm.entity_manager]
+
     # Fonctions textes utiles et pratiques pour utilisation dans TWIG
     aetools.textutilities:
         class: %ae_services%twigTools
@@ -30,7 +40,7 @@ services:
     ### SUCCESS HANDLER ###
     #######################
 
-    vexim.success_handler:
+    ae.success_handler:
         class: %ae_services%SuccessHandler
         arguments: [@router, @service_container]
         public: false

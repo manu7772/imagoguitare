@@ -1,7 +1,173 @@
 <?php
 namespace site\services;
+use Doctrine\ORM\EntityManager;
+
+use site\adminBundle\Entity\media;
+use site\adminBundle\Entity\fileFormat;
+use site\interfaceBundle\services\flashMessage;
 
 class aeImages {
+
+    protected $em; // EntityManager
+
+    public function __construct(EntityManager $em = null) {
+        $this->em = $em;
+    }
+
+    public function createNewImage() {
+        //
+    }
+
+    public function check_media(&$data) {
+        $this->repo = $this->em->getRepository('site\adminBundle\Entity\media');
+        if($data['id'] == null) {
+            if($data['type']['type_values'] != null) {
+                $data['entites'] = $this->repo->findByField($data['type'], self::TYPE_SELF, true);
+            } else {
+                $data['entites'] = $this->repo->findAll();
+            }
+        } else {
+            array_push($data['entites'], $this->repo->find($data['id']));
+        }
+        if(count($data['entites']) > 0) {
+            // OK média(s) concernée(s)…
+            foreach ($data['entites'] as $key => $entite) {
+                if($entite->getFormat() == null) {
+                    if($entite->getFormat_nom() != null) {
+                        // selon format mémorisé…
+                        $format = $this->em->getRepository('site\adminBundle\Entity\fileFormat')->findByNom($entite->getFormat_nom());
+                        if(count($formats) > 0) $entite->setFormat(reset($formats));
+                    } else {
+                        // sinon selon extension…
+                    }
+                }
+                // test de check sur l'entité directement
+                if(method_exists($entite, "check")) $entite->check();
+            }
+            $this->em->flush();
+            return array(
+                'title'     => 'Check media',
+                'type'      => flashMessage::MESSAGES_WARNING,
+                'text'      => 'Les média ont été checkés.',
+                );
+        } else {
+            // aucun média trouvé
+            return array(
+                'title'     => 'Check non effectué',
+                'type'      => flashMessage::MESSAGES_ERROR,
+                'text'      => 'Auncun élément à checker.',
+                );
+        }
+    }
+
+    /**
+     * Crée un nouveau format de fichier
+     * @param string $contentType
+     * @param string $nom
+     * @param boolean $enable
+     * @return fileFormat
+     */
+    public function createNewFormat($contentType, $nom = null, $enable = true) {
+        $newFormat = new fileFormat();
+        $newFormat->setEnabled($enable);
+        $newFormat->setContentType($contentType);
+        if(!is_string($nom)) $nom = $contentType;
+        $newFormat->setNom($nom);
+        $this->em->persist($newFormat);
+        $this->em->flush();
+        return $newFormat;
+    }
+
+    /**
+     * Renvoie la liste des formats
+     * @return array
+     */
+    public function getAllFormats() {
+        return $this->em->getRepository('site\adminBundle\Entity\fileFormat')->findAll();
+    }
+
+    /**
+     * Efface tous les formats
+     */
+    public function eraseAllFormats() {
+        $formats = $this->getAllFormats();
+        foreach ($formats as $format) $this->em->remove($format);
+        $this->em->flush();
+        return $this;
+    }
+
+    public function initiateFormats($eraseAll = true) {
+        // $result = false;
+        $formats = array(
+            array(
+                'nom'           => 'png',
+                'icon'          => 'fa-file-image-o',
+                'contentType'   => 'image/png',
+                'enabled'       => true,
+                ),
+            array(
+                'nom'           => 'jpg',
+                'icon'          => 'fa-file-image-o',
+                'contentType'   => 'image/jpg',
+                'enabled'       => true,
+                ),
+            array(
+                'nom'           => 'jpeg',
+                'icon'          => 'fa-file-image-o',
+                'contentType'   => 'image/jpeg',
+                'enabled'       => true,
+                ),
+            array(
+                'nom'           => 'gif',
+                'icon'          => 'fa-file-image-o',
+                'contentType'   => 'image/gif',
+                'enabled'       => true,
+                ),
+            array(
+                'nom'           => 'pdf',
+                'icon'          => 'fa-file-pdf-o',
+                'contentType'   => 'application/pdf',
+                'enabled'       => true,
+                ),
+            array(
+                'nom'           => 'doc',
+                'icon'          => 'fa-file-word-o',
+                'contentType'   => 'application/msword',
+                'enabled'       => false,
+                ),
+            array(
+                'nom'           => 'docx',
+                'icon'          => 'fa-file-word-o',
+                'contentType'   => 'application/msword',
+                'enabled'       => false,
+                ),
+            array(
+                'nom'           => 'xls',
+                'icon'          => 'fa-file-excel-o',
+                'contentType'   => 'application/vnd.ms-excel',
+                'enabled'       => false,
+                ),
+            array(
+                'nom'           => 'txt',
+                'icon'          => 'fa-file-word-o',
+                'contentType'   => 'text/plain',
+                'enabled'       => false,
+                ),
+            );
+        if($eraseAll) $this->eraseAllFormats();
+        foreach ($formats as $key => $format) {
+            $newFormat[$key] = new fileFormat();
+            foreach ($format as $field => $value) {
+                $add = "add".ucfirst($field);
+                $set = "set".ucfirst($field);
+                if(method_exists($newFormat[$key], $add)) $newFormat[$key]->$add($value);
+                    else if(method_exists($newFormat[$key], $set)) $newFormat[$key]->$set($value);
+            }
+            $this->em->persist($newFormat[$key]);
+        }
+        $result = $this->em->flush();
+        return $result;
+    }
 
     /**
     * thumb_image
@@ -85,5 +251,9 @@ class aeImages {
         }
         return $Rimage;
     }
+
+
+
+
 
 }

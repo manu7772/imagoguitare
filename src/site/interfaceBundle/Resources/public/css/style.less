@@ -12,8 +12,13 @@
 .page-heading {
 	padding-bottom: 12px;
 }
-.page-heading .btn.pull-right {
+
+div .btn.pull-right {
 	margin-right: 4px;
+	margin-bottom: 3px;
+}
+div .btn.pull-right:first-child {
+	margin-right: 0px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
@@ -35,6 +40,13 @@ table .progress {
 table .progress-mini,
 table .progress-mini .progress-bar {
 	height: 8px;
+}
+
+/* IBOX */
+.border-shaded {
+	display: block;
+	border: 1px solid #999;
+	box-shadow: #999 0px 3px 20px;
 }
 
 /* FOOTABLES */
@@ -94,6 +106,10 @@ table .progress-mini .progress-bar {
 	padding: 6px 12px;
 	text-align: center;
 	width: 40px;
+}
+textarea {
+	resize:vertical;
+	overflow:auto;
 }
 
 /* richText / summernote */

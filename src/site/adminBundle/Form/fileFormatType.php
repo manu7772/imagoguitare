@@ -14,7 +14,9 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
-class tagType extends AbstractType {
+use site\adminBundle\Entity\fileFormat;
+
+class fileFormatType extends AbstractType {
 
     private $controller;
     private $securityContext;
@@ -32,37 +34,28 @@ class tagType extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        // ajout de action si défini
-        if(isset($this->parametres['form_action'])) $builder->setAction($this->parametres['form_action']);
-        // Builder…
-        $factory = $builder->getFormFactory();
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function(FormEvent $event) use ($factory) {
-                $data = $event->getData();
-                // important : GARDER CETTE CONDITION CI-DESSOUS (toujours !!!)
-                if(null === $data) return;
-                if(null === $data->getId()) {
-                    // création
-                    $event->getForm()->add('nom', 'textarea', array(
-                        'label'         => 'form.nom',
-                        'required'      => true,
-                        'attr'          => array(
-                            'rows'  => 6,
-                            'style' => 'resize: vertical;',
-                            ),
-                        ))
-                    ;
-                } else {
-                    // L'entité existe : édition
-                    $event->getForm()->add('nom', 'text', array(
-                        'label'         => 'form.nom',
-                        'required'      => true,
-                        ))
-                    ;
-                }
-            }
-        );
+        $fileFormat = new fileFormat();
+        $iconChoice = $fileFormat->getTypeIcons();
+        $builder
+            ->add('nom', 'text', array(
+                'label'     => 'form.nom',
+                'required'  => true,
+                ))
+            ->add('icon', 'choice', array(
+                'label'     => 'form.icone',
+                'required'  => true,
+                'multiple'  => false,
+                'expanded'  => false,
+                'choices'   => $iconChoice,
+                ))
+            ->add('contentType', 'text', array(
+                'label' => 'Content Type',
+                ))
+            ->add('enabled', 'checkbox', array(
+                'label' => 'actif',
+                'required' => false,
+                ))
+        ;
 
         // ajoute les valeurs hidden, passés en paramètre
         $builder = $this->addHiddenValues($builder);
@@ -95,7 +88,6 @@ class tagType extends AbstractType {
             'data' => urlencode(json_encode($data, true)),
             'mapped' => false,
         ));
-        // }
         return $builder;
     }
 
@@ -105,7 +97,7 @@ class tagType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'site\adminBundle\Entity\tag'
+            'data_class' => 'site\adminBundle\Entity\fileFormat'
         ));
     }
 
@@ -114,6 +106,6 @@ class tagType extends AbstractType {
      */
     public function getName()
     {
-        return 'site_adminbundle_tag';
+        return 'site_adminbundle_fileformat';
     }
 }

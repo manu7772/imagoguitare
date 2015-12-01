@@ -39,7 +39,7 @@ class tag {
 	 * @Assert\NotBlank(message = "entity.notblank.nom")
 	 * @Assert\Length(
 	 *      min = "2",
-	 *      max = "30",
+	 *      max = "255",
 	 *      minMessage = "Le nom doit comporter au moins {{ limit }} lettres.",
 	 *      maxMessage = "Le nom doit comporter au maximum {{ limit }} lettres."
 	 * )

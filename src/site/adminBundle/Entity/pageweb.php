@@ -186,6 +186,18 @@ class pageweb {
 	 */
 	public function setBackground(media $background = null) {
 		$this->background = $background;
+		if($background != null) $background->setPagewebBackground_reverse($this);
+			else $background->setPagewebBackground_reverse(null);
+		return $this;
+	}
+
+	/**
+	 * Set background
+	 * @param media $background
+	 * @return pageweb
+	 */
+	public function setBackground_reverse(media $background = null) {
+		$this->background = $background;
 		return $this;
 	}
 

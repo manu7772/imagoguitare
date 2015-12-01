@@ -25,6 +25,10 @@ siteadmin_pageweb_set_default:
     path:     /pageweb/set-as-default/{id}/{redir}
     defaults: { _controller: siteadminBundle:entite:pageweb_as_default, redir: 'siteadmin_homepage' }
 
+# FILE FORMAT
+siteadmin_fileformat_resetall:
+    path:     /file-format/{erase}
+    defaults: { _controller: siteadminBundle:entite:resetFileFormats, erase: false }
 
 # MENUS
 siteadmin_menus:

@@ -56,10 +56,6 @@ class pagewebType extends AbstractType {
 				'label' => 'table.col.titreh1',
 				'required' => true,
 				))
-			// ->add('keywords', 'text', array(
-			// 	'label' => 'table.col.keywords',
-			// 	'required' => false,
-			// 	))
 			->add('metadescription', 'text', array(
 				'label' => 'table.col.metadescription',
 				'required' => false,
@@ -67,7 +63,12 @@ class pagewebType extends AbstractType {
 			->add('modele', 'choice', array(
 				'label' => 'table.col.modele',
 				'required' => true,
+				'multiple' => false,
 				'choice_list' => $this->pageweb->getPagewebChoices(),
+				'attr' => array(
+					'class' => 'chosen-select chosen-select-width chosen-select-no-results',
+					'placeholder' => 'form.select',
+					),
 				))
 			->add('background', new mediaType($this->controller), array(
 				'label' => 'form.background',
@@ -84,6 +85,11 @@ class pagewebType extends AbstractType {
 					'placeholder' => 'form.select',
 					),
 				))
+			->add('keywords', 'text', array(
+				'label' => 'table.col.keywords',
+				'required' => false,
+				'disabled' => true,
+				))
 		;
         // ajoute les valeurs hidden, passés en paramètre
         $builder = $this->addHiddenValues($builder);
@@ -91,6 +97,14 @@ class pagewebType extends AbstractType {
         // AJOUT SUBMIT
         $builder->add('submit', 'submit', array(
             'label' => 'form.enregistrer',
+            'attr' => array(
+                'class' => "btn btn-md btn-block btn-info",
+                ),
+            ))
+        ;
+        $builder->add('submit2', 'submit', array(
+            'label' => 'form.enregistrer',
+            // 'mapped' => false,
             'attr' => array(
                 'class' => "btn btn-md btn-block btn-info",
                 ),

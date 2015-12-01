@@ -3,6 +3,12 @@ date_format:
     date: Y-m-d
     time: 'H:i:s'
     datetime: 'Y-m-d H:i:s'
+sizes:
+    auto: auto
+    Ko: Ko
+    Mo: Mo
+    Go: Go
+    To: To
 entity:
     notblank:
         nom: Vous devez préciser le nom
@@ -53,6 +59,7 @@ fileFormat:
     dontexist: 'ce type n''existe pas'
     suppression: 'le format de fichier %name% a été supprimé'
     moredetails: 'plus de détails sur %name%'
+    reset: réinitialiser
 User:
     name_s: utilisateurs
     name: utilisateur

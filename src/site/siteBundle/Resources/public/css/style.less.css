@@ -529,6 +529,11 @@ button, input, textarea, select {
     font-family: 'Raleway', sans-serif;
     font-size: 12px;
 }
+textarea {
+    resize:vertical;
+    overflow:auto;
+}
+
 
     input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], input[type="radio"], input[type="checkbox"], textarea, select {
         appearance: none;

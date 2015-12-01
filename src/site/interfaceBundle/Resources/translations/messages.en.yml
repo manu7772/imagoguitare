@@ -3,6 +3,12 @@ date_format:
     date: Y-m-d
     time: 'H:i:s'
     datetime: 'Y-m-d H:i:s'
+sizes:
+    auto: auto
+    Ko: Kb
+    Mo: Mb
+    Go: Gb
+    To: Tb
 entity:
     notblank:
         nom: You must give a name
@@ -53,6 +59,7 @@ fileFormat:
     dontexist: 'this type does not exist'
     moredetails: 'more details on %name%'
     suppression: 'file format %name% has been deleted'
+    reset: reset all
 User:
     name_s: users
     name: user

@@ -38,9 +38,29 @@ class media {
 	/**
 	 * @var string
 	 * @ORM\Column(name="nom", type="string", length=255)
+	 * @Gedmo\Slug(fields={"originalnom"})
+	 * @ORM\Column(length=128, unique=true)
 	 */
 	private $nom;
-	
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="formatnom", type="string", length=16, nullable=true, unique=false)
+	 */
+	private $format_nom;
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="formaticon", type="string", length=64, nullable=true, unique=false)
+	 */
+	private $format_icon;
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="formatcontentType", type="string", length=255, nullable=true, unique=false)
+	 */
+	private $format_contentType;
+
 	/**
 	 * @var string
 	 * @ORM\Column(name="originalnom", type="string", length=255)
@@ -49,12 +69,19 @@ class media {
 		
 	/**
 	 * @var string
+	 * @ORM\Column(name="extension", type="string", length=8)
+	 */
+	private $extension;
+		
+	/**
+	 * @var string
 	 * @ORM\Column(name="binaryFile", type="blob")
 	 */
 	private $binaryFile;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="fileFormat")
+	 * @ORM\ManyToOne(targetEntity="fileFormat", inversedBy="medias")
+	 * @ORM\JoinColumn(nullable=true, unique=false, name="fileFormat_id", referencedColumnName="id",  onDelete="SET NULL")
 	 */
 	private $format;
 
@@ -64,12 +91,6 @@ class media {
 	 */
 	private $pagewebBackground;
 
-	/**
-	 * @Gedmo\Slug(fields={"nom"})
-	 * @ORM\Column(length=128, unique=true)
-	 */
-	protected $slug;
-	
 	public $upload_file;
 	
 	/**
@@ -98,25 +119,39 @@ class media {
 		$this->dateMaj = null;
 		$this->rawCodeFile = null;
 		$date = new DateTime();
-		$defaultVersion = $date->format('d-m-Y_H-i-s');
-		$this->setNom($defaultVersion);
+		$this->extension = null;
+		$this->format_nom = null;
+		$this->format_icon = null;
+		$this->format_contentType = null;
 	}
 
-	public function __toString(){
-		return $this->name.' modifié le '.$this->updated->format('d-m-Y H:i:s');
+	public function __toString() {
+		return $this->getNom;
 	}
 
 	/**
 	 * @Assert\True(message="Le type de fichier n'est pas conforme.")
 	 */
 	public function isAuthorizedFileFormat() {
-		return $this->format->getEnabled();
+		if($this->getFormat() != null) return $this->format->getEnabled();
+		return true;
 	}
 
 	/**
 	 * @ORM\PrePersist()
 	 * @ORM\PreUpdate()
 	 */
+	public function check() {
+		// IMPORTANT
+		$this->upload();
+		// copie info fileFormat
+		if($this->getFormat() != null) {
+			$this->setFormat_nom($this->format->getNom());
+			$this->setFormat_icon($this->format->getIcon());
+			$this->setFormat_contentType($this->format->getContentType());
+		}
+	}
+
 	public function upload(){
 		if (null === $this->upload_file) return;
 		
@@ -124,6 +159,7 @@ class media {
 		$this->setBinaryFile(stream_get_contents($strm));
 		$this->setFileSize(filesize($this->upload_file->getRealPath()));
 		$this->setOriginalnom($this->upload_file->getClientOriginalName());
+		$this->setExtension($this->getUploadFile_extension());
 	}
 	
 	/**
@@ -154,7 +190,7 @@ class media {
 	 */
 	public function getThumbnail($x = 256, $y = 256, $mode = 'cut') {
 		$thumbnail = null;
-		if($this->getFormat()->getType() == 'image') {
+		if($this->isImage()) {
 			$aeImages = new aeImages();
 			// $codeImg = base64_decode($this->getB64File());
 			$codeImg = $this->getRawCodeFile();
@@ -225,7 +261,7 @@ class media {
 	/**
 	 * Set binaryFile
 	 * @param string $binaryFile
-	 * @return Version
+	 * @return media
 	 */
 	public function setBinaryFile($binaryFile) {
 		$this->binaryFile = $binaryFile;
@@ -244,9 +280,21 @@ class media {
 	/**
 	 * Set pagewebBackground
 	 * @param pageweb $pagewebBackground
-	 * @return Version
+	 * @return media
 	 */
 	public function setPagewebBackground(pageweb $pagewebBackground = null) {
+		$this->pagewebBackground = $pagewebBackground;
+		if($pagewebBackground != null) $pagewebBackground->setBackground_reverse($this);
+			else $pagewebBackground->setBackground_reverse(null);
+		return $this;
+	}
+
+	/**
+	 * Set pagewebBackground
+	 * @param pageweb $pagewebBackground
+	 * @return media
+	 */
+	public function setPagewebBackground_reverse(pageweb $pagewebBackground = null) {
 		$this->pagewebBackground = $pagewebBackground;
 
 		return $this;
@@ -263,7 +311,7 @@ class media {
 	/**
 	 * Set nom
 	 * @param string $nom
-	 * @return Version
+	 * @return media
 	 */
 	public function setNom($nom) {
 		$this->nom = $nom;
@@ -280,9 +328,91 @@ class media {
 	}
 
 	/**
+	 * Set extension
+	 * @param string $extension
+	 * @return media
+	 */
+	public function setExtension($extension) {
+		$this->extension = $extension;
+
+		return $this;
+	}
+
+	/**
+	 * Get extension
+	 * @return string
+	 */
+	public function getExtension() {
+		return $this->extension;
+	}
+
+	/**
+	 * Set format_nom
+	 * @param string $format_nom
+	 * @return media
+	 */
+	public function setFormat_nom($format_nom) {
+		$this->format_nom = $format_nom;
+
+		return $this;
+	}
+
+	/**
+	 * Get format_nom
+	 * @return string
+	 */
+	public function getFormat_nom() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->getNom();
+			else return $this->format_nom;
+	}
+
+	/**
+	 * Set format_icon
+	 * @param string $format_icon
+	 * @return media
+	 */
+	public function setFormat_icon($format_icon) {
+		$this->format_icon = $format_icon;
+
+		return $this;
+	}
+
+	/**
+	 * Get format_icon
+	 * @return string
+	 */
+	public function getFormat_icon() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->getIcon();
+			else return $this->format_icon;
+	}
+
+	/**
+	 * Set format_contentType
+	 * @param string $format_contentType
+	 * @return media
+	 */
+	public function setFormat_contentType($format_contentType) {
+		$this->format_contentType = $format_contentType;
+
+		return $this;
+	}
+
+	/**
+	 * Get format_contentType
+	 * @return string
+	 */
+	public function getFormat_contentType() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->getContentType();
+			else return $this->format_contentType;
+	}
+
+	/**
 	 * Set originalnom
 	 * @param string $originalnom
-	 * @return Version
+	 * @return media
 	 */
 	public function setOriginalnom($originalnom) {
 		$this->originalnom = $originalnom;
@@ -301,11 +431,22 @@ class media {
 	/**
 	 * Set format
 	 * @param fileFormat $format
-	 * @return Version
+	 * @return media
 	 */
 	public function setFormat(fileFormat $format = null) {
 		$this->format = $format;
+		if($format != null) $format->addMedia_reverse($this);
+			else $format->removeMedia_reverse($this);
+		return $this;
+	}
 
+	/**
+	 * Set format
+	 * @param fileFormat $format
+	 * @return media
+	 */
+	public function setFormat_reverse(fileFormat $format = null) {
+		$this->format = $format;
 		return $this;
 	}
 
@@ -320,7 +461,7 @@ class media {
 	/**
 	 * Set fileSize
 	 * @param integer $fileSize
-	 * @return Version
+	 * @return media
 	 */
 	public function setFileSize($fileSize) {
 		$this->fileSize = $fileSize;
@@ -340,23 +481,27 @@ class media {
 	 * Get first part of content-type (type)
 	 * @return string
 	 */
-	public function getType(){
-		return $this->getFormat()->getType();
+	public function getType() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->getType();
+			else return explode('/', $this->getFormat_contentType())[0];
 	}
 
 	/**
 	 * is version an IMAGE type ?
 	 * @return boolean
 	 */
-	public function isImage(){
-		return $this->getFormat()->isImage();
+	public function isImage() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->isImage();
+			else return strtolower($this->getType()) == "image";
 	}
 
 	/**
 	 * is version a screenable IMAGE type ?
 	 * @return boolean
 	 */
-	public function isScreenableImage(){
+	public function isScreenableImage() {
 		return ($this->isImage() && ($this->getRawCodeFile() !== null));
 	}
 
@@ -364,26 +509,13 @@ class media {
 	 * is version a PDF type ?
 	 * @return boolean
 	 */
-	public function isPdf(){
-		return $this->getFormat()->isPdf();
-	}
-
-	/**
-	 * Set slug
-	 * @param integer $slug
-	 * @return media
-	 */
-	public function setSlug($slug) {
-		$this->slug = $slug;
-		return $this;
-	}
-
-	/**
-	 * Get slug
-	 * @return string
-	 */
-	public function getSlug() {
-		return $this->slug;
+	public function isPdf() {
+		if($this->getFormat() != null)
+			return $this->getFormat()->isPdf();
+			else {
+				$isPdf = explode('/', $this->getFormat_contentType())[1];
+				return strtolower($isPdf) == "pdf";
+			}
 	}
 
 	/**

@@ -3,14 +3,26 @@
 namespace site\adminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+// Slug
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use site\adminBundle\Entity\media;
+
+use \DateTime;
 
 /**
  * fileFormat
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="fileFormatRepository")
+ * @UniqueEntity(fields={"nom"}, message="fileFormat.existe")
  */
 class fileFormat {
+
     /**
      * @var integer
      * @ORM\Column(name="id", type="integer")
@@ -38,6 +50,12 @@ class fileFormat {
     private $contentType;
 
     /**
+     * @ORM\OneToMany(targetEntity="media", mappedBy="format")
+     * @ORM\JoinColumn(nullable=true, unique=false)
+     */
+    private $medias;
+
+    /**
      * @var boolean
      * @ORM\Column(name="enabled", type="boolean", nullable=false, unique=false)
      */
@@ -45,8 +63,11 @@ class fileFormat {
 
     private $typeIcons;
 
+    private $nomExtended;
+
     public function __construct() {
         // $this->getTypeIcons();
+        $this->medias = new ArrayCollection();
         $this->icon = $this->getDefaultIcon();
         $this->enabled = false;
     }
@@ -79,6 +100,14 @@ class fileFormat {
      */
     public function getNom() {
         return $this->nom;
+    }
+
+    /**
+     * Get nomExtended
+     * @return string
+     */
+    public function getNomExtended() {
+        return $this->nom." : ".$this->contentType;
     }
 
     /**
@@ -159,7 +188,31 @@ class fileFormat {
     public function getContentType() {
         return $this->contentType;
     }
-    
+
+    public function addMedia(media $media) {
+        $this->medias->add($media);
+        $media->setFormat_reverse($this);
+        return $this;
+    }
+
+    public function addMedia_reverse(media $media) {
+        $this->medias->add($media);
+        return $this;
+    }
+
+    public function getMedias() {
+        return $this->medias;
+    }
+
+    public function removeMedia(media $media) {
+        $this->medias->removeElement($media);
+        $media->setFormat_reverse(null);
+    }
+
+    public function removeMedia_reverse(media $media) {
+        $this->medias->removeElement($media);
+    }
+
     /**
      * Get first part of content-type (type)
      * @return string
@@ -184,5 +237,8 @@ class fileFormat {
         $isPdf = explode('/', $this->getContentType())[1];
         return strtolower($isPdf) == "pdf";
     }
-    
+
+
+
+
 }

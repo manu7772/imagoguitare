@@ -7,11 +7,11 @@
 {% block content %}
 <div class="row">
 
-	<div class="col-md-12">
+	<div class="col-md-8">
 		<div class="ibox float-e-margins">
 			<div class="ibox-content">
 				<h2 class="row">
-					<div class="col-md-8">{{ entite.nom|default('#' ~ entite.id) }}</div>
+					<div class="col-md-8">{{ entite.originalnom }}</div>
 					<div class="col-md-4">
 						<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'delete'}) }}" type="button" class="btn btn-xs btn-danger btn-outline pull-right need-confirmation" title="{{ 'actions.suppression'|trans|capitalize }}" data-message="{{ 'actions.suppQuestion'|trans({'%name%': entite.nom|default('#' ~ entite.id)})|capitalize }}"><i class="fa fa-times icon-wait-on-click"></i> {{ 'actions.supprimer'|trans|capitalize }}</a>
 						<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'edit'}) }}" type="button" class="btn btn-xs btn-warning pull-right"><i class="fa fa-pencil icon-wait-on-click"></i> {{ 'actions.modifier'|trans|capitalize }}</a>
@@ -26,31 +26,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% if entite.nom is defined %}
 						<tr>
 							<td><strong>{{ 'table.col.nom'|trans|capitalize }}</strong></td>
-							<td>{{ entite.nom }}</td>
-						</tr>
-						{% endif %}
-						<tr>
-							<td><strong>{{ 'table.col.title'|trans|capitalize }}</strong></td>
-							<td>{{ entite.title }}</td>
+							<td>{{ entite.originalnom }}</td>
 						</tr>
 						<tr>
-							<td><strong>{{ 'table.col.titreh1'|trans|capitalize }}</strong></td>
-							<td>{{ entite.titreh1 }}</td>
-						</tr>
-						<tr>
-							<td><strong>{{ 'table.col.modele'|trans|capitalize }}</strong></td>
-							<td>{{ entite.modelename }}</td>
-						</tr>
-						<tr>
-							<td><strong>{{ 'table.col.metadescription'|trans|capitalize }}</strong></td>
-							<td>{{ entite.metadescription }}</td>
-						</tr>
-						<tr>
-							<td><strong>{{ 'table.col.keywords'|trans|capitalize }}</strong></td>
-							<td>{{ entite.keywords }}</td>
+							<td><strong></strong></td>
+							<td>{{ ThumbMedia(entite, false, 'img-rounded')|raw }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -58,25 +40,13 @@
 		</div>
 	</div>
 
-	<div class="col-md-12">
+	<div class="col-md-4">
 		<div class="ibox float-e-margins">
-			<div class="ibox-content">
-				<h2 class="row">
-					<div class="col-md-8">{{ 'form.code'|trans|capitalize }}</div>
-					<div class="col-md-4">
-						<a href="{{ path('siteadmin_entite', {entite: entite_name, id: entite.id, action: 'edit'}) }}" type="button" class="btn btn-xs btn-warning pull-right"><i class="fa fa-pencil icon-wait-on-click"></i> {{ 'actions.modifier'|trans|capitalize }}</a>
-					</div>
-				</h2>
-				<hr>
-				<div class="row">
-					<div class="col-lg-10 col-lg-offset-1">
-						<div class="ibox">
-							<div class="ibox-content border-shaded">
-								{{ entite.code|raw }}
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="ibox-title">
+				<h3>IMAGE</h3>
+			</div>
+			<div class="ibox-content text-center" style='min-height: 180px;'>
+				{{ ThumbMedia(entite, true, 'center-block img-rounded', 360)|raw }}
 			</div>
 		</div>
 	</div>

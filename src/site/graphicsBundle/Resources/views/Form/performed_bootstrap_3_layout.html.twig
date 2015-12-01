@@ -324,12 +324,40 @@
 
 {% block insImageCropper_widget %}
     {% set attr = attr|merge({'class': "hide"}) %}
-    <div class="btn-group">
+<!--     <div class="btn-group">
         <label title="Upload image file" for="{{ id }}" class="btn btn-primary">
             <input type="{{ type }}" accept="image/*" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value|raw }}" {% endif %}/>
             Nouvelle image
         </label>
         <label title="Donload image" id="download" class="btn btn-primary">Importer</label>
+    </div> -->
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="image-crop">
+                        <img src="{% if value is not empty %}data:image/jpg;base64,{{ value }}{% endif %}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Preview image</h4>
+                    <div class="img-preview img-preview-sm"></div>
+                    <div class="btn-group">
+                        <label title="Upload image file" for="{{ type }}_{{ id }}" class="btn btn-xs btn-white">
+                            <input type="{{ type }}" accept="image/*" name="file" id="{{ type }}_{{ id }}" class="hide">
+                            {{ 'nouvelle image'|trans|capitalize }}
+                        </label>
+                        <!-- <label title="Donload image" id="download" class="btn btn-primary">Download</label> -->
+                        <button class="btn btn-xs btn-white" id="zoomIn" type="button"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-xs btn-white" id="zoomOut" type="button"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-xs btn-white" id="rotateLeft" type="button"><i class="fa fa-rotate-left"></i></button>
+                        <button class="btn btn-xs btn-white" id="rotateRight" type="button"><i class="fa fa-rotate-right"></i></button>
+                        <button class="btn btn-xs btn-warning" id="setDrag" type="button"><i class="fa fa-asterisk"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock insImageCropper_widget %}
 

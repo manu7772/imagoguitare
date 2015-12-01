@@ -1,7 +1,7 @@
 name: sidemenu
 roles:
-    view: ROLE_EDITOR
-    edit: ROLE_ADMIN
+    view: ROLE_SUPER_ADMIN
+    edit: ROLE_SUPER_ADMIN
     delete: ROLE_SUPER_ADMIN
 menu:
     admin:
