@@ -1,0 +1,36 @@
+{% extends 'siteinterfaceBundle::page_admin_generic.html.twig' %}
+{% set cssjsloads = 'simple' %}
+{% set DEVMODE = (app.environment in ['dev', 'test']) or (is_granted('ROLE_SUPER_ADMIN')) %}
+
+{% block page_heading %}
+<div class="row wrapper border-bottom white-bg page-heading">
+	<div class="col-lg-12 m-t-xs">
+		<ol class="breadcrumb">
+			<li>{{ 'administration'|trans|capitalize }}</li>
+			{% if entite|default(null) == null %}
+			<li>Installation</li>
+			{% else %}
+			<li><a href="{{ path('generate_statuts') }}">Installation</a></li>
+			<li>{{ entite|capitalize }}</li>
+			{% endif %}
+		</ol>
+	</div>
+</div>
+{% endblock page_heading %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<h1>SITE INSTALLATION</h1>
+		<h3>Génération statuts</h3>
+		<a href="{{ path('generate', {entite: 'statut'}) }}">Générer</a>
+		<hr>
+		{% if created_users is iterable %}
+		<h3>Utilisateurs créés</h3>
+		{% for user in created_users %}
+		<p>Nouvel utilisateur : {{ user.username }} <small><em><i>({{ user.email }})</i></em></small></p>
+		{% endfor %}
+		{% endif %}
+	</div>
+</div>
+{% endblock content %}

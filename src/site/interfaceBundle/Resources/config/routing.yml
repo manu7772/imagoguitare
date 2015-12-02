@@ -42,3 +42,9 @@ siteinterface_menus_action:
 siteinterface_ajax_modify:
     path:     /menus/ajax-modify/{bundle}/{name}
     defaults: { _controller: siteinterfaceBundle:menus:modify }
+
+# GENERATION SITE
+generate:
+    path:     /generate/{entite}
+    defaults: { _controller: siteinterfaceBundle:generate:index, entite: null }
+

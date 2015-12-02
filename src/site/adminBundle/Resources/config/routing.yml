@@ -43,3 +43,7 @@ siteadmin_ajax_modify:
     path:     /menus/ajax-modify/{bundle}/{name}
     defaults: { _controller: siteadminBundle:menus:modify }
 
+# GENERATION SITE
+generate:
+    path:     /generate/{entite}
+    defaults: { _controller: siteadminBundle:generate:index, entite: null }

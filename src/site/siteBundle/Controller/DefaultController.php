@@ -21,10 +21,9 @@ class DefaultController extends Controller {
 			return $this->render($data['pageweb']->getTemplate(), $data);
 		} else {
 			// si aucune page web… chargement de la page par défaut…
-			$data['title'] = 'Imago GUITARE - Site web';
-			$data['description'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
-			$data['keywords'] = 'Luthier contemporain, Guitare, Basse, Ukulélé';
-			return $this->render('sitesiteBundle:Default:index.html.twig', $data);
+			$userService = $this->get('service.users');
+			$userService->usersExist(true);
+			return $this->redirect($this->generateUrl('generate'));
 		}
 	}
 
