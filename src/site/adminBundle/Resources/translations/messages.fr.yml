@@ -9,6 +9,25 @@ sizes:
     Mo: Mo
     Go: Go
     To: To
+install:
+    name_s: installations
+    name: installation
+    info:
+        class: classe :
+        elements: éléments :
+    generation: génération
+    suppression: suppression
+    generer: générer
+    effacer: effacer
+    sansnom: sans nom
+    message:
+        supprimes: '{0} Aucun élément n''a été supprimé.|{1} %count% élément a été supprimé.|[2,+Inf] %count% éléments ont été supprimés.'
+        generer:
+            title: Attention !
+            texte: 'Les données existantes vont être totalement supprimées avant génération. Veuillez confirmer, s.v.p.'
+        effacer:
+            title: Attention !
+            texte: 'Les données existantes vont être totalement supprimées. Veuillez confirmer, s.v.p.'
 entity:
     notblank:
         nom: Vous devez préciser le nom

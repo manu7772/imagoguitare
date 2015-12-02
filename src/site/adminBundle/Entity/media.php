@@ -63,19 +63,19 @@ class media {
 
 	/**
 	 * @var string
-	 * @ORM\Column(name="originalnom", type="string", length=255)
+	 * @ORM\Column(name="originalnom", type="string", length=255, nullable=true, unique=false)
 	 */
 	private $originalnom;
 		
 	/**
 	 * @var string
-	 * @ORM\Column(name="extension", type="string", length=8)
+	 * @ORM\Column(name="extension", type="string", length=8, nullable=true, unique=false)
 	 */
 	private $extension;
 		
 	/**
 	 * @var string
-	 * @ORM\Column(name="binaryFile", type="blob")
+	 * @ORM\Column(name="binaryFile", type="blob", nullable=true, unique=false)
 	 */
 	private $binaryFile;
 	
@@ -95,19 +95,19 @@ class media {
 	
 	/**
 	 * @var int
-	 * @ORM\Column(name="file_size", type="integer", length=10)
+	 * @ORM\Column(name="file_size", type="integer", length=10, nullable=true, unique=false)
 	 */
 	private $fileSize;
 
 	/**
 	 * @var DateTime
-	 * @ORM\Column(name="created", type="datetime", nullable=false)
+	 * @ORM\Column(name="created", type="datetime", nullable=false, unique=false)
 	 */
 	protected $dateCreation;
 
 	/**
 	 * @var DateTime
-	 * @ORM\Column(name="updated", type="datetime", nullable=true)
+	 * @ORM\Column(name="updated", type="datetime", nullable=true, unique=false)
 	 */
 	protected $dateMaj;
 

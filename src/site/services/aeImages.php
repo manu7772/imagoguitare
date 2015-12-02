@@ -90,10 +90,16 @@ class aeImages {
      * Efface tous les formats
      */
     public function eraseAllFormats() {
+        $count = 0;
         $formats = $this->getAllFormats();
-        foreach ($formats as $format) $this->em->remove($format);
+        foreach ($formats as $format) {
+            $this->em->remove($format);
+            $count++;
+        }
         $this->em->flush();
-        return $this;
+        // remise à zéro de l'index de la table
+        $this->em->getConnection()->executeUpdate("ALTER TABLE fileFormat AUTO_INCREMENT = 1;");
+        return $count;
     }
 
     public function initiateFormats($eraseAll = true) {
@@ -166,7 +172,7 @@ class aeImages {
             $this->em->persist($newFormat[$key]);
         }
         $result = $this->em->flush();
-        return $result;
+        return $newFormat;
     }
 
     /**

@@ -25,15 +25,30 @@ class User {
 		return count($u) > 0 ? $u : false ;
 	}
 
+	/**
+	 * Efface tous les utilisateurs
+	 * @return integer
+	 */
+	public function deleteAllUsers() {
+		$users = $this->UserManager->findUsers();
+		$n = count($users);
+		if($n > 0) {
+			foreach($users as $key => $user) {
+				$this->UserManager->deleteUser($user);
+			}
+		}
+		return $n;
+	}
+
+	/**
+	 * Hydrate avec les utilisateurs de base
+	 * @param boolean $deleteAll
+	 * @return array
+	 */
 	public function createUsers($deleteAll = false) {
 		if($deleteAll === true) {
 			// efface tous les utilisateur existants
-			$users = $this->UserManager->findUsers();
-			if(count($users) > 0) {
-				foreach($users as $key => $user) {
-					$this->UserManager->deleteUser($user);
-				}
-			}
+			$this->deleteAllUsers();
 		}
 		$users = array(
 			0 => array(

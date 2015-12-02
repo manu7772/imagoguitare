@@ -9,6 +9,25 @@ sizes:
     Mo: Mo
     Go: Go
     To: To
+install:
+    name_s: setups
+    name: setup
+    info:
+        class: class:
+        elements: elements:
+    generation: generation
+    suppression: deletation
+    generer: generate
+    effacer: delete
+    sansnom: no name
+    message:
+        supprimes: '{0} No element have been deleted.|{1} %count% element have been deleted.|[2,+Inf] %count% elements have been deleted.'
+        generer:
+            title: Beware !
+            texte: 'All data will be deleted before generation. Please confirm this action.'
+        effacer:
+            title: Beware !
+            texte: 'All data will be deleted. Please confirm this action.'
 entity:
     notblank:
         nom: You must give a name

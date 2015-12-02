@@ -13,6 +13,11 @@ services:
         class: %ae_services%aetools
         arguments: [@service_container]
 
+    # fonctionnalités d'entités
+    aetools.aeEntities:
+        class: %ae_services%aeEntities
+        arguments: [@service_container]
+
     # fonctionnalités de pages web
     aetools.pageweb:
         class: %ae_services%pageweb
