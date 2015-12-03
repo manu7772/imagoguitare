@@ -611,22 +611,20 @@ class aetools {
 	 */
 	public function verifDossierAndCreate($dossier, $chmod = null) {
 		$result = true;
-		$dossiersTmp = explode(self::SLASH, $dossier);
-		$dossiers = array();
-		foreach ($dossiersTmp as $dossier) {
-			if(strlen(trim($dossier)) > 0) $dossiers[] = $dossier;
-		}
+		$dossiers = preg_split('#['.self::SLASH.']+#', $dossier, -1, PREG_SPLIT_NO_EMPTY);
 		if($chmod === null || !preg_match('#^[0-7]{4}$#', $chmod."")) $chmod = self::DEFAULT_CHMOD;
 		// création des dossiers
+		$cumul = "";
 		foreach ($dossiers as $dossier) {
-			$doss = $this->getCurrentPath().$dossier;
+			$doss = $this->getCurrentPath().$cumul.$dossier;
 			if(!file_exists($doss)) {
 				if(!is_dir($doss)) {
-					if (!mkdir($doss, $chmod, true)) {
-						$result = false;
+					if(!mkdir($doss, $chmod, true)) {
+						return false;
 					}
 				}
 			}
+			$cumul .= $dossier.self::SLASH;
 		}
 		return $result;
 	}
@@ -648,20 +646,18 @@ class aetools {
 		} else return false;
 	}
 
-	/**
+	/** A VERIFIER !!!!!!!!!!!!!!
 	 * Vérifie si un dossier existe (le crée si nécessaire) et s'y place en tant que dossier courant
-	 * @param string $type - type de rapport
+	 * @param string $path
 	 * @return string - chemin courant
 	 */
-	public function verifAndGotoFromCurrentPath($type = null) {
-		$this->rootpath = $this->fmparameters['dossiers']['pathrapports'];
-		// vérifie la présence du dossier pathrapports et pointe dessus
+	public function verifAndGotoFromCurrentPath($path = null) {
 		$this->setWebPath();
 		$this->verifDossierAndCreate($this->rootpath);
 		$this->setWebPath($this->rootpath);
-		if(is_string($type)) {
-			$path = $this->rootpath.$type.self::SLASH;
-			$this->verifDossierAndCreate($type);
+		if(is_string($path)) {
+			$path = $this->rootpath.$path.self::SLASH;
+			$this->verifDossierAndCreate($path);
 			$this->setWebPath($path);
 			// echo('Current path : '.$this->getCurrentPath().'<br>');
 			return $path;
