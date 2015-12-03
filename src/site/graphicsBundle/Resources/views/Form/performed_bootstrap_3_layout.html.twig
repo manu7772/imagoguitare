@@ -5,6 +5,9 @@
 {% block form_widget_simple -%}
     {% if type is not defined or 'file' != type %}
         {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control input-sm')|trim}) -%}
+    {% elseif 'file' == type %}
+        <h1>FILE !!!</h1>
+        {# ThumbMedia(entity)|raw #}
     {% endif %}
     {{- parent() -}}
 {%- endblock form_widget_simple %}

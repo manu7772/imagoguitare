@@ -75,7 +75,7 @@ class media {
 		
 	/**
 	 * @var string
-	 * @ORM\Column(name="binaryFile", type="blob", nullable=true, unique=false)
+	 * @ORM\Column(name="binaryFile", type="blob", nullable=false, unique=false)
 	 */
 	private $binaryFile;
 	
@@ -130,11 +130,11 @@ class media {
 	}
 
 	/**
-	 * @Assert\True(message="Le type de fichier n'est pas conforme.")
+	 * @Assert\True(message="fileFormat.notsupported")
 	 */
 	public function isAuthorizedFileFormat() {
 		if($this->getFormat() != null) return $this->format->getEnabled();
-		return true;
+		return false;
 	}
 
 	/**
@@ -167,6 +167,7 @@ class media {
 	 * @return string - code brut du fichier / null si aucun code
 	 */
 	public function getRawCodeFile(){
+		if(null === $this->binaryFile) return null;
 		if($this->rawCodeFile == null)
 			$this->rawCodeFile = stream_get_contents($this->binaryFile);
 		return $this->rawCodeFile;
@@ -177,8 +178,8 @@ class media {
 	 * @return string
 	 */
 	public function getB64File(){
-		if($this->rawCodeFile !== null) return base64_encode($this->getRawCodeFile());
-			else return null;
+		$rawCodeFile = $this->getRawCodeFile();
+		return $rawCodeFile !== null ? base64_encode($rawCodeFile) : null;
 	}
 
 	/**

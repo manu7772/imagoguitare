@@ -38,7 +38,7 @@ class mediaType extends AbstractType {
     	if(isset($this->parametres['form_action'])) $builder->setAction($this->parametres['form_action']);
     	// Builder…
 		$builder
-			->add('upload_file', 'insImageCropper', array(
+			->add('upload_file', 'file', array(
 				'label' => 'form.telechargement',
 				))
 		;

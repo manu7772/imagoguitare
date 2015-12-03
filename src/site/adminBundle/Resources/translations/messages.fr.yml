@@ -84,6 +84,7 @@ fileFormat:
     existe: ce type de fichier existe déjà
     reset: réinitialiser tout
     reset_question: voulez-vous vraiment réinitialiser les types de fichiers ?
+    notsupported: Le type de fichier n'est pas supporté
 contentType:
     existe: ce type existe déjà
 User:

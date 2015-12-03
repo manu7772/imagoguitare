@@ -362,7 +362,12 @@ class entiteController extends Controller {
 				}
 				break;
 			default:
-				# code...
+				// entités contenant des champs media
+				if(method_exists($data['entite'], 'getBackground')) {
+					$bg = $data['entite']->getBackground();
+					$this->em->remove($bg);
+					// echo('<h3>Media persisté</h3>');
+				}
 				break;
 		}
 		return $confirmPersist;

@@ -82,4 +82,9 @@
 	{% endif %}
 
 </div>
+
+{% if DEVMODE %}
+<hr>{{ dump(create_form.vars.value) }}<br>
+{% endif %}
+
 {% endblock content %}

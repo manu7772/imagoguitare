@@ -66,10 +66,20 @@ class generateController extends Controller {
 						'homepage' => true,
 						'code' => '<p>Guitare, Basse, Ukulélé</p>',
 						'title' => 'Imago Guitare',
-						'titreh1' => '',
+						'titreh1' => 'Imago Guitare',
 						'keywords' => '',
 						'metadescription' => 'Imago Guitare',
 						'modele' => 'src/site/siteBundle/Resources/views/pages_web/presentation.html.twig',
+						),
+					array(
+						'nom' => 'contact',
+						'homepage' => false,
+						'code' => '<p>Contactez-moi</p>',
+						'title' => 'Contact Imago Guitare',
+						'titreh1' => 'Contact Imago Guitare',
+						'keywords' => '',
+						'metadescription' => 'Contact Imago Guitare',
+						'modele' => 'src/site/siteBundle/Resources/views/pages_web/contact.html.twig',
 						),
 					);
 					return $this->fillEntity($data, $entite);

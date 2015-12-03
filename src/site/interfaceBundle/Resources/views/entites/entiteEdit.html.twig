@@ -52,6 +52,10 @@
     {{ form_rest(edit_form) }}
     {{ form_end(edit_form) }}
 
+    {% if DEVMODE %}
+    <hr>{{ dump(edit_form.vars.value) }}<br>
+    {% endif %}
+
 {% endblock content %}
 
 {% block end_javascripts %}

@@ -9,6 +9,14 @@ menu:
         icon: fa-cog
         path:
             route: siteadmin_homepage
+    pageweb:
+        name: pageweb.name_s
+        icon: fa-desktop
+        role: ROLE_EDITOR
+        path:
+            route: siteadmin_entite
+            params:
+                entite: pageweb
     messages:
         name: message.name_s
         icon: fa-paper-plane

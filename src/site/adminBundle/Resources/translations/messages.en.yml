@@ -84,6 +84,7 @@ fileFormat:
     existe: 'this file format already exists'
     reset: reset all file types
     reset_question: do you really want to reset all file types?
+    notsupported: This file type is not supported
 contentType:
     existe: this type already exists
 User:
