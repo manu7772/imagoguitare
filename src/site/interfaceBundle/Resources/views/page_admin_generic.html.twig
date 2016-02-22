@@ -23,12 +23,6 @@
 			{% endblock content %}
 		</div>
 
-		{% block devtest %}
-		{% if app.environment in ['dev', 'test'] %}
-		<hr>{{ dump() }}<br>
-		{% endif %}
-		{% endblock devtest %}
-
 		<div class="footer">
 		{% block footer %}
 		{{ include('siteinterfaceBundle:blocks:footer.html.twig') }}

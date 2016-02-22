@@ -21,8 +21,7 @@ class DefaultController extends Controller {
 			return $this->render($data['pageweb']->getTemplate(), $data);
 		} else {
 			// si aucune page web… chargement de la page par défaut…
-			$userService = $this->get('service.users');
-			$userService->usersExist(true);
+			$this->get('service.users')->usersExist(true);
 			return $this->redirect($this->generateUrl('generate'));
 		}
 	}

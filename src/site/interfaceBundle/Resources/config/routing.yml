@@ -45,6 +45,5 @@ siteinterface_ajax_modify:
 
 # GENERATION SITE
 generate:
-    path:     /generate/{entite}
-    defaults: { _controller: siteinterfaceBundle:generate:index, entite: null }
-
+    path:     /generate/{action}/{entite}
+    defaults: { _controller: siteadminBundle:generate:index, action: null, entite: null }
