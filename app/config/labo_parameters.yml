@@ -41,7 +41,7 @@ parameters:
         part1: 'Imago Guitare'
         part2: 'Eric Priet, Rico, Luthier à Jayat'
     site_domains:
-        main_domain: 'imagoguitaredemo.aequation.fr'
+        main_domain: 'aequation.fr'
         public:
             reseau: 'http://'
             prefix: 'imagoguitaredemo'
@@ -50,7 +50,7 @@ parameters:
                 - 'fr'
         test:
             reseau: 'http://'
-            prefix: 'imagoguitaredemotest'
+            prefix: 'imagoguitaredemo'
             domain: 'aequation'
             extensions:
                 - 'fr'
