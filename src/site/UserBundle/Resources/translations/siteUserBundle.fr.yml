@@ -11,6 +11,16 @@ group:
         created: Le groupe a été créé
         deleted: Le groupe a été supprimé
 
+roles:
+    IS_AUTHENTICATED_ANONYMOUSLY: authentifié
+    ROLE_USER: inscrit
+    ROLE_TESTER: testeur
+    ROLE_TRANSLATOR: traducteur
+    ROLE_EDITOR: éditeur
+    ROLE_ADMIN: administrateur
+    ROLE_SUPER_ADMIN: super admin
+    ROLE_ALLOWED_TO_SWITCH: switch utilisateur
+
 # Security
 security:
     login:
@@ -24,6 +34,23 @@ info:
     compte: Informations de compte
     autres: Autres Informations
 
+found:
+    not_found: Utilisateur non trouvé
+    found: Utilisateur trouvé %username%
+
+actions:
+    help:
+        on: Le mode help est activé
+        off: Le mode help est désactivé
+        setOn: 'Activer l''aide'
+        setOff: 'Désctiver l''aide'
+    langage:
+        is: Le language par défaut est %langage%
+    modif:
+        no_change: 'L''utilisateur %username% n''a enregistré aucune modification'
+        error: 'Erreur : l''utilisateur "%username%" n''a pu être modifié'
+        forbidden: 'Vous n''avez pas les droits sur cet utilisateur %username%'
+
 name: compte utilisateur
 # champs
 fields:
@@ -31,18 +58,23 @@ fields:
     email: courriel
     nom: nom
     prenom: prénom
-    help: aide
+    telephone: téléphone
+    help: aide admin
+    mail_sitemessages: copie mail des messages du site
     theme: thème admin
     lang: langue
+    avatar: avatar
+    OptionArticlePhotosOnly: masquer articles sans photo
+    OptionArticlePriceOnly: masquer articles sans prix (ou 0€)
 
 # Profile
 profile:
     name: Informations compte utilisateur
     action:
-        modify: modifier
-        view: Voir profil
+        modify: modifier votre profil
+        view: voir profil
         create: créer un compte
-        delete: supprimer
+        confirmed: confirmation de création de compte
     show:
         username: Nom d'utilisateur
         email: Adresse e-mail
@@ -116,3 +148,6 @@ form:
     password_confirmation: Vérification
     new_password: Nouveau mot de passe
     new_password_confirmation: Vérification
+
+'User account is disabled.': 'Compte utilisateur désactivé.'
+'Bad credentials.': 'Nom utilisateur ou mot de passe incorrect.'

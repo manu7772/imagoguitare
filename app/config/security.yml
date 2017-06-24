@@ -1,12 +1,13 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 parameters:
-    roles_redirect:
-        ROLE_USER:          sitesite_homepage
-        ROLE_TRANSLATOR:    sitetranslate_homepage
-        ROLE_EDITOR:        siteadmin_homepage
-        ROLE_ADMIN:         siteadmin_homepage
-        ROLE_SUPER_ADMIN:   siteadmin_homepage
+    # roles_redirect:
+    #     ROLE_USER:          sitesite_homepage
+    #     ROLE_TESER:         sitesite_homepage
+    #     ROLE_TRANSLATOR:    sitetranslate_homepage
+    #     ROLE_EDITOR:        siteadmin_homepage
+    #     ROLE_ADMIN:         siteadmin_homepage
+    #     ROLE_SUPER_ADMIN:   siteadmin_homepage
 
 security:
     encoders:
@@ -15,15 +16,18 @@ security:
             iterations: 100
 
     role_hierarchy:
-        ROLE_USER:         [ROLE_USER]
-        ROLE_TRANSLATOR:   [ROLE_USER]
-        ROLE_EDITOR:       [ROLE_USER, ROLE_TRANSLATOR]
-        ROLE_ADMIN:        [ROLE_USER, ROLE_TRANSLATOR, ROLE_EDITOR]
-        ROLE_SUPER_ADMIN:  [ROLE_USER, ROLE_TRANSLATOR, ROLE_EDITOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        IS_AUTHENTICATED_ANONYMOUSLY: null
+        ROLE_USER:         [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_TESTER:       [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_TRANSLATOR:   [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_EDITOR:       [ROLE_USER, ROLE_TRANSLATOR, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_ADMIN:        [ROLE_USER, ROLE_TRANSLATOR, ROLE_EDITOR, IS_AUTHENTICATED_ANONYMOUSLY]
+        ROLE_SUPER_ADMIN:  [ROLE_USER, ROLE_TRANSLATOR, ROLE_EDITOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, IS_AUTHENTICATED_ANONYMOUSLY]
 
     providers:
         main:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
+            # id: fos_user.user_provider.username
 
     firewalls:
         dev:
@@ -45,18 +49,19 @@ security:
                 invalidate_session: false
             remember_me:
                 key:  %secret%
-                # lifetime: 1000
-                # path: /
+                lifetime: 20
+                path: /
+                always_remember_me: true
             switch_user: true
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(.*/)?translate, roles: ROLE_TRANSLATOR }
-        - { path: ^/(.*/)?edition, roles: ROLE_EDITOR }
-        - { path: ^/(.*/)?(user|users), roles: ROLE_ADMIN }
-        - { path: ^/(.*/)?admin, roles: ROLE_ADMIN }
-        - { path: ^/(.*/)?admin/generate, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/(.*/)?interface, roles: ROLE_ADMIN }
+        # - { host: 'admin.buffard-cerdon.fr', roles: ROLE_TRANSLATOR }
+        # - { path: ^/(.*/)?translate, roles: ROLE_TRANSLATOR }
+        # - { path: ^/(.*/)?edition, roles: ROLE_EDITOR }
+        # - { path: ^/(.*/)?user, roles: ROLE_ADMIN }
+        # - { path: ^/(.*/)?admin, roles: ROLE_ADMIN }
+        # - { path: ^/(.*/)?admin\/superadmin, roles: ROLE_SUPER_ADMIN }
 
     # ROLE_ALLOWED_TO_SWITCH :
     # ?_switch_user=username

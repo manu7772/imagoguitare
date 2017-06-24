@@ -1,0 +1,40 @@
+tag:
+    order: 2
+    data:
+        -
+            nom: Imago
+            default: 1
+        -
+            nom: contemporain
+        -
+            nom: Priet
+            default: 1
+        -
+            nom: luthier
+            default: 1
+        -
+            nom: guitare
+        -
+            nom: basse
+        -
+            nom: ukulélé
+        -
+            nom: bois
+        -
+            nom: artisan
+        -
+            nom: cordes
+        -
+            nom: musique
+        -
+            nom: instrument
+        -
+            nom: Jayat
+            default: 1
+        -
+            nom: Rhône-Alpes
+            default: 1
+        -
+            nom: Ain
+        -
+            nom: Lyon

@@ -1,0 +1,35 @@
+{% if pageweb.diaporama.nestedChilds|default(null) is not null %}
+{% set width = 800 %}
+{% set heigth = 600 %}
+<!-- CAROUSEL PORTFOLIO SIMPLE -->
+<div id="carousel-portfolio-simple" class="owl-carousel carousel-portfolio-simple">
+	{% for slide in pageweb.diaporama.nestedChilds %}
+	{% if slide.shortName == 'image' %}
+	<div>
+		<div class="portfolio-simple">
+			<div class="text-center">
+				<img src="{{ slide.imgThumbnail(width,heigth,'cut') }}" class="img-responsive" alt="{{ slide.slug }}">
+				<div class="info">
+					<h3 class="title">{{ slide.nom }}</h3>
+					<span><i class="fa fa-tags fa-fw"></i> {{ slide.tags|join(', ')|truncate(100,true,'…')|raw }}</span>
+					{# <a href="#" class="btn btn-primary btn-sm">DETAILS</a> #}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% elseif slide.shortName == 'slide' and slide.image|default(null) is not null %}
+	<div>
+		<div class="portfolio-simple">
+			<img src="{{ slide.image.imgThumbnail(width,heigth,'cut') }}" class="img-responsive" alt="{{ slide.image.slug }}">
+			<div class="info">
+				<h3 class="title">{{ slide.titre|default('…')|replace({"<br>":" "})|truncate(80,true,'…')|raw }}</h3>
+				<span>{{ slide.accroche|default('')|replace({"<br>":" "})|truncate(200,true,'…')|raw }}</span>
+				{# <a href="#" class="btn btn-primary btn-sm">DETAILS</a> #}
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% endfor %}
+</div>
+<!-- END CAROUSEL PORTFOLIO SIMPLE -->
+{% endif %}

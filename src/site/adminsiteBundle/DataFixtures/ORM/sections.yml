@@ -1,0 +1,53 @@
+section:
+    order: 11
+    data:
+        # SLIDER
+        -
+            nom: 'Slider Revolution 1'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/slider_revolution_1.section.twig'
+            controller: ~
+        -
+            nom: 'Slider Revolution 2'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/slider_revolution_2.section.twig'
+            controller: ~
+        -
+            nom: 'Chiffres animés'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/countinfo.section.twig'
+            controller: ~
+        -
+            nom: 'Partenaires'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/partenaires.section.twig'
+            controller: ~
+        -
+            nom: 'Mini diapo articles'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/diaporama_articles.section.twig'
+            controller: ~
+            subentitys:
+                field: nom
+                value: "Atelier"
+        -
+            nom: 'Bas de page - grand'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/footer_grand.section.twig'
+            controller: ~
+        -
+            nom: 'Bas de page - mini'
+            default: 0
+            code: ~
+            modele: 'src/site/siteBundle/Resources/views/sections/footer_mini.section.twig'
+            controller: ~
+
+
+
+

@@ -1,0 +1,190 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+{% set cssjsloads = 'shop' %}
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+{% set EDITORMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_EDITOR')) %}
+
+{% block title -%}
+{{ site_titles.part1 }} - {{ article.nom|default(site_titles.part2)|raw  }}
+{%- endblock title %}
+
+{% block slider %}
+{# {{ parent() }} #}
+{% endblock slider %}
+
+{% block content %}
+<!-- BREADCRUMBS -->
+<div class="page-header breadcrumbs-only">
+	<div class="container">
+		<ol class="breadcrumb link-accent">
+			{% if categorie is defined %}
+				{% if categorie.shortName == 'categorie' %}
+				<li><a href="{{ path('site_pageweb_articles', {categorieSlug: categorie.slug}) }}">{{ UCfirst(categorie.nom)|raw }}</a></li>
+				{% elseif categorie.shortName == 'pageweb' %}
+				<li><a href="{{ path('site_pageweb_pageweb', {itemSlug: categorie.slug}) }}">{{ UCfirst(categorie.nom)|raw }}</a></li>
+				{% endif %}
+			{% else %}
+			<li><a>{{ UCfirst(pageweb.nom) }}</a></li>
+			{% endif %}
+			<li class="active">{{ UCfirst(article.nom)|raw }}</li>
+		</ol>
+	</div>
+</div>
+<!-- END BREADCRUMBS -->
+
+<!-- PAGE CONTENT -->
+<div class="page-content product-single ptb-0 mtb-40">
+	<div class="container">
+		<!-- SINGLE PRODUCT -->
+		<section class="ptb-0">
+			<!-- TOP MAIN -->
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="product-single-image">
+						<img src="{{ imageB64sized(article.image.id|default(null), 700, 1000, 'in') }}" class="img-responsive" alt="{{ article.slug }}">
+						<span class="icon-zoom"><i class="fa fa-search-plus"></i> Détail</span>
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<h1 class="product-title no-margin-top">{{ UCfirst(article.nom)|raw }}</h1>
+					<p class="short-description">
+						<small><i>{{ article.accroche|raw }}</i></small><br>
+						{{ article.descriptif|raw }}
+					</p>
+					{# <p class="pricing"><!-- <span class="price-old"><s>7,00€</s></span> --> <span class="price">{{ articlePrix(article)|raw }}</span></p> #}
+					<form method="post" class="product-single-form">
+<!-- 								<div class="product-attributes">
+							<div class="form-group">
+								<label>Choose size:</label>
+								<select class="form-control"> -->
+									<!-- <option value="">Choose size</option> -->
+<!-- 											<option value="xs">XS</option>
+									<option value="s">S</option>
+									<option value="m">M</option>
+									<option value="l">L</option>
+									<option value="xl">XL</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Choose color:</label>
+								<select class="form-control"> -->
+									<!-- <option value="">Choose color</option> -->
+<!-- 											<option value="black">Black</option>
+									<option value="blue">Blue</option>
+									<option value="red">Red</option>
+									<option value="yellow">Yellow</option>
+									<option value="green">Green</option>
+								</select>
+							</div>
+						</div> -->
+						{% if marketplace.vente -%}
+						<div class="form-group">
+							<a href="shop-cart-checkout.html" class="btn btn-primary btn-addtocart-big"><i class="fa fa-cart-plus"></i> Ajouter au panier</a>
+							{# <p><i class="fa fa-heart"></i> <a href="#" class="link-addtowishlist"><span>J'aime</span></a></p> #}
+						</div>
+						{%- endif -%}
+					</form>
+				</div>
+			</div>
+			<!-- END TOP MAIN -->
+{# 			<!-- BOTTOM INFO -->
+			<div class="bottom">
+				<div class="custom-tabs-line tabs-line-bottom left-aligned product-carousel-tab">
+					<ul class="nav nav-pills" role="tablist">
+						<li class="active"><a href="#tab-description" role="tab" data-toggle="tab">Description</a></li>
+						<!-- <li><a href="#tab-reviews" role="tab" data-toggle="tab">Reviews (152)</a></li> -->
+					</ul>
+				</div> #}
+				{# <section class="tab-content"> #}
+					<!-- product complete description -->
+					{# <div class="tab-pane fade in active" id="tab-description"> #}
+						{# <h2 class="sr-only">Description</h2> #}
+						{# <p>Pellentesque lacinia lacinia massa, elementum porttitor diam scelerisque vitae. Nullam non pretium nisl, eget accumsan ante. Quisque feugiat leo vitae felis convallis volutpat. Pellentesque auctor lacus lectus, at vestibulum ex tincidunt sit amet. Etiam porttitor ultrices elementum. Donec pulvinar iaculis orci, et ultricies ante. Proin pharetra, lacus at condimentum venenatis, magna dui dapibus mi, eget consequat felis arcu at elit. Aenean eget euismod ante. Quisque et mi orci. In congue ac justo in dignissim. Maecenas eu erat ac nibh dictum viverra. Suspendisse non ipsum sit amet quam laoreet laoreet a sit amet massa.</p> #}
+					{# </div> #}
+					<!-- end product complete description -->
+					<!-- product reviews -->
+<!-- 							<div class="tab-pane fade" id="tab-reviews">
+						<h2 class="sr-only">Product Reviews</h2>
+						<p>152 reviews for <strong>Elegant Black Wool Coat</strong></p>
+						<div class="product-reviews">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="testimonial-rating">
+										<img src="assets/img/testimonial-author4.png" class="img-circle avatar" alt="avatar">
+										<div class="text">
+											<strong class="name">Rachel Ferguson</strong>
+											<span class="rating">
+										<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-full"></i>
+									</span>
+											<h4 class="title">This is awesome!</h4>
+											<p class="content">Energistically empower seamless systems rather than granular web-readiness. Conveniently foster accurate total linkage vis-a-vis timely interfaces. Synergistically repurpose visionary.</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="testimonial-rating">
+										<img src="assets/img/testimonial-author3.png" class="img-circle avatar" alt="avatar">
+										<div class="text">
+											<strong class="name">Anthony</strong>
+											<span class="rating">
+										<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+									</span>
+											<h4 class="title">Totally worth it</h4>
+											<p class="content">Efficiently visualize impactful bandwidth whereas cooperative e-markets. Synergistically reintermediate technically sound results rather than exceptional niche markets.</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="testimonial-rating margin-bottom-30">
+										<img src="assets/img/testimonial-author2.png" class="img-circle avatar" alt="avatar">
+										<div class="text">
+											<strong class="name">Edward Freeman</strong>
+											<span class="rating">
+										<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+									</span>
+											<h4 class="title">Value for money</h4>
+											<p class="content">Efficiently envisioneer virtual materials rather than empowered outsourcing. Intrinsicly transform resource maximizing manufactured products and resource-leveling processes. Dramatically unleash cross-unit mindshare without next-generation communities. Efficiently procrastinate unique technologies after ethical.</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="testimonial-rating margin-bottom-30">
+										<img src="assets/img/testimonial-author.png" class="img-circle avatar" alt="avatar">
+										<div class="text">
+											<strong class="name">Emily Murray</strong>
+											<span class="rating">
+										<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i>
+									</span>
+											<h4 class="title">Value for money</h4>
+											<p class="content">Efficiently envisioneer virtual materials rather than empowered outsourcing. Intrinsicly transform resource maximizing manufactured products and resource-leveling processes. Dramatically unleash cross-unit mindshare without next-generation communities. Efficiently procrastinate unique technologies after ethical.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<p class="text-right"><a href="#">See all reviews <i class="fa fa-long-arrow-right"></i></a></p>
+						</div>
+					</div> -->
+					<!-- end product reviews -->
+				{# </section> #}
+			{# </div> #}
+			<!-- BOTTOM INFO -->
+		</section>
+		<!-- END SINGLE PRODUCT -->
+	</div>
+</div>
+
+{% endblock content %}
+
+{# {%- block addons_sections -%} #}
+{# {%- endblock addons_sections -%} #}
+
+{# {% block end_javascripts %} #}
+
+	{# {{ parent() }} #}
+
+{# {% endblock end_javascripts %} #}
+
+
+
+
+
+

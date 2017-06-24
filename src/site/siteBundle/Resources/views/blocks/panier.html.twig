@@ -1,0 +1,42 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and marketplace.active and marketplace.vente %}
+<ul class="nav navbar-nav secondary-navbar-nav">
+	<li class="dropdown dropdown-cart">
+		<a href="#" class="as-icon disabled dropdown-toggle" data-toggle="dropdown"><i class="icon icon_cart_alt"></i> <span class="cart-count">2</span></a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li>
+				<div class="shopping-cart-widget">
+					<strong><span class="text-primary">2 produits</span> dans votre panier</strong>
+					<ul class="list-unstyled">
+						<li>
+							<div class="cart-item clearfix">
+								<a href="#"><img src="assets/img/reportage/bottle.png" class="img-responsive" alt="Product Thumbnail"></a>
+								<div class="info">
+									<a href="#"><strong class="product-title">Cerdon M.A. 75cl</strong></a>
+									<span class="product-qty-price text-muted-2x">1 x 7,00€</span>
+								</div>
+								<button type="button" class="btn btn-link btn-close"><i class="fa fa-close"></i></button>
+							</div>
+						</li>
+						<li>
+							<div class="cart-item clearfix">
+								<a href="#"><img src="assets/img/reportage/bottle.png" alt="Product Thumbnail"></a>
+								<div class="info">
+									<a href="#"><strong class="product-title"></strong>Rosé 75cl</a>
+									<span class="product-qty-price text-muted-2x">1 x 4,50€</span>
+								</div>
+								<button type="button" class="btn btn-link btn-close"><i class="fa fa-close"></i></button>
+							</div>
+						</li>
+					</ul>
+					<div class="cart-footer">
+						<strong class="total">Total: 11,50€</strong>
+						<a href="shop-cart-checkout.html" class="btn btn-primary btn-checkout btn-fullrounded">Commander</a>
+						<div class="clearfix"></div>
+						<p class="continue-shopping"><a href="#">Retourner à la cave</a></p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</li>
+</ul>
+{% endif %}

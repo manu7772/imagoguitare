@@ -1,7 +1,7 @@
 site:
-    title: 'Luthier contemporain, Guitare, Basse, Ukulélé'
-    description: 'le site du luthier malin en ligne :)'
-    keywords: 'luthier, contemporain, guitare, basse, ukulélé'
+    title: 'Domaine Buffard'
+    description: 'Producteur à Cerdon et département de l''Ain'
+    keywords: 'vin, pétillant, viticulteur, tradition, cerdon, producteur, poncin, ain, rhône-alpes'
 bundles:
     admin:
         name: administration
@@ -9,16 +9,6 @@ bundles:
         name: traduction
     User:
         name: utilisateurs
-menu:
-    name: menu
-    name_s : menus
-    not_found: aucun menu trouvé
-    create_btn: nouveau menu
-    accueil: accueil
-    realisations: réalisations
-    videos: vidéos
-    login: connexion
-    contact: contact
 search:
     name: rechercher…
 footer:
@@ -26,5 +16,12 @@ footer:
     generation: 'réalisé avec'
     rights: 'tous droits réservés'
 message:
+    name: message
+    name_s: messages
     success: 'Votre message a été envoyé. Merci.'
     error: 'Votre message n''a pu être enregistré. Merci de le compléter avant d''envoyer.'
+    title:
+        sent: message envoyé
+        error: echec message
+divers:
+    Toggle_navigation: 'Menu navigation'

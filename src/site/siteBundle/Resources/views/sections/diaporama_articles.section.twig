@@ -1,0 +1,32 @@
+{% set articles = selectListClasses(section.subentitys, ['article'], site|default(null)) %}
+{% if articles|length > 0 %}
+<!-- LAST VIEWED PRODUCTS -->
+<section class='overlay-light-gray ptb-10'>
+	<div class="container">
+		{% if section.descriptif is not null %}
+		<h3 class="section-heading">{{ section.descriptif|raw }}</h3>
+		{% endif %}
+		<ul id="product-carousel" class="list-inline product-grid product-grid-simple owl-carousel carousel-nav-hidefirst product-carousel">
+			{% for article in articles %}
+			<li>
+				<div class="product-item">
+					<a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">
+						<img src="{{ imageB64sized(article.image.id|default(null), 400, 400, 'cut') }}" class="img-responsive" alt="{{ article.slug }}">
+						{# {% if article.isStockempty() -%}<span class="label label-{{ article.stockColor }}">Indisponible</span> #}
+						{# {%- elseif article.isStockcritique() -%}<span class="label label-{{ article.stockColor }}">Fin de stock</span> #}
+						{# {%- endif %} #}
+					</a>
+					<div class="product-info">
+						<h3 class="title"><a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">{{ article.nom|raw }}</a></h3>
+						<div class="bottom">
+							{# <span class="price">{{ articlePrix(article)|raw }}</span> #}
+						</div>
+					</div>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+<!-- END LAST VIEWED PRODUCTS -->
+{% endif %}

@@ -1,0 +1,73 @@
+{% macro elementHref(item, parent, target) -%}
+	{% import _self as self %}
+	{% set clss = item.shortName|default(item.className|default(null)) %}
+	{%- if clss in ['categorie'] -%}
+		{% if item.pageweb != null %}
+		{{ self.elementHref(item.pageweb, item, target) }}
+		{% elseif item.childsByGroup('pagewebs')|length > 0 %}
+		{{ self.elementHref(item.childsByGroup('pagewebs').0, item, target) }}
+		{%- else -%}
+		href="{{ url('site_pageweb_' ~ clss, {itemSlug: item.slug, parentSlug: parent.slug|default(item.categorieParent.slug|default(null))}) }}" target="{{ target|default('_self')|raw }}"
+		{%- endif -%}
+	{%- elseif clss in ['pageweb'] -%}
+		{% if parent.slug|default(null) is not null %}
+		href="{{ url('site_pageweb_pageweb_parent', {parentSlug: parent.slug, itemSlug: item.slug}) }}" target="{{ target|default('_self')|raw }}"
+		{%- else -%}
+		href="{{ url('site_pageweb_pageweb', {itemSlug: item.slug}) }}" target="{{ target|default('_self')|raw }}"
+		{%- endif -%}
+	{%- elseif clss in ['article','fiche','ficherecette','ficheboisson'] -%}
+		href="{{ url('site_pageweb_' ~ clss, {itemSlug: item.slug, parentSlug: parent.slug|default(null)}) }}" target="{{ target|default('_self')|raw }}"
+	{%- else -%}
+		href="#"
+	{%- endif -%}
+{%- endmacro elementHref %}
+
+{% macro breadcrumbs(categorie) -%}
+	{% import _self as self %}
+	<!-- BREADCRUMBS -->
+	<div class="page-header breadcrumbs-only">
+		<div class="container">
+			<ol class="breadcrumb link-accent">
+				{% for cat in categorie.categorieParents_inverse(true) %}
+				{% if loop.last and  cat.lvl > 0 %}
+				<li class="active">{{ UCfirst(cat.nom) }}</li>
+				{% elseif cat.lvl > 0 %}
+				<li><a href="{{ path('site_pageweb_pageweb', {itemSlug: cat.slug}) }}">{{ UCfirst(cat.nom) }}</a></li>
+				{% elseif cat != categorie %}
+				<li><a {{ self.elementHref(cat)|raw }}><i class="fa fa-home"></i></a></li>
+				{% else %}
+				<li><i class="fa fa-home"></i></li>
+				{% endif %}
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<!-- END BREADCRUMBS -->
+{%- endmacro breadcrumbs %}
+
+{% macro adminHref(path, target) -%}
+	{%- if 'localhost' in app.request.headers.get('host') -%}
+		{# LOCALHOST #}
+		href="{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- elseif app.request.headers.get('host') matches '#^test\\.#' -%}
+		{# TEST ADMIN #}
+		href="{{ site_domains.testadmin.reseau|default('http://') }}{{ site_domains.testadmin.prefix }}.{{ site_domains.testadmin.domain }}.{{ site_domains.testadmin.extensions[0] }}{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- else -%}
+		{# ADMIN #}
+		href="{{ site_domains.admin.reseau|default('http://') }}{{ site_domains.admin.prefix }}.{{ site_domains.admin.domain }}.{{ site_domains.admin.extensions[0] }}{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- endif -%}
+{%- endmacro %}
+
+{% macro siteHref(path, target) -%}
+	{%- if 'localhost' in app.request.headers.get('host') -%}
+		{# LOCALHOST #}
+		href="{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- elseif app.request.headers.get('host') matches '#^test\\.#' -%}
+		{# TEST ADMIN #}
+		href="{{ site_domains.testadmin.reseau|default('http://') }}{{ site_domains.testadmin.prefix }}.{{ site_domains.testadmin.domain }}.{{ site_domains.testadmin.extensions[0] }}{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- else -%}
+		{# ADMIN #}
+		href="{{ site_domains.admin.reseau|default('http://') }}{{ site_domains.admin.prefix }}.{{ site_domains.admin.domain }}.{{ site_domains.admin.extensions[0] }}{{ path }}" target="{{ target|default('_blank') }}" 
+	{%- endif -%}
+{%- endmacro %}
+

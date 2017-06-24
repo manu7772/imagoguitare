@@ -1,0 +1,84 @@
+{% extends 'LaboAdminBundle:entites:entiteList.html.twig' %}
+{% set cssjsloads = 'TAB' %}
+{% set DEVMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_SUPER_ADMIN')) %}
+
+{% block page_heading %}
+	{{ parent() }}
+{% endblock page_heading %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
+				{% if entites|length > 0 %}
+				<table class="table table-striped table-bordered table-hover dataTables dataTable dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+					<thead>
+						<tr>
+							{% if DEVMODE %}<th class="text-center" style="width:1%;">{{ UCfirst('fields.id'|trans({}, entite_name)) }}</th>{% endif %}
+							<th class="text-center" style="width:1%;">{{ UCfirst('fields.image'|trans({}, entite_name)) }}</th>
+							<th class="text-center" style="width:1%;">{{ UCfirst('fields.couleur'|trans({}, entite_name)) }}</th>
+							<th>{{ UCfirst('fields.nom'|trans({}, entite_name)) }}</th>
+							<th>{{ UCfirst('actions.name'|trans) }}</th>
+							<th>{{ UCfirst('fields.titre'|trans({}, entite_name)) }}</th>
+							<th>Médias</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for entite in entites if(is_granted(entite.statut.niveau|default('ROLE_USER')) or DEVMODE) %}
+						{% set bgcolor = ' style="background-color:' ~ entite.statut.couleur|default('transparent') ~ ';"' %}
+						<tr>
+							{% if DEVMODE %}<td class="text-center"{{ bgcolor|raw }}>{{ entite.id }}</td>{% endif %}
+							<td class="text-center"{{ bgcolor|raw }}>
+								{% if entite.image|default(null) != null %}
+								<a href="{{ path('siteadmin_entite', {entite: entite.image.shortName, id: entite.image.id, action: 'show'}) }}" class="docs-tooltip" data-toggle="tooltip" title="{{ UCfirst('moredetails'|trans({'%name%': entite.image.nom}, entite.shortName)) }}">
+									<img src="{{ entite.image.imgThumbnail(64, 64, 'cut')|raw }}" class="img-responsive img-thumbnail">
+								</a>
+								{% else %}
+								<i class="fa fa-ban fa-3x text-muted fa-border"></i>
+								{% endif %}
+							</td>
+							<td class="text-center"{{ bgcolor|raw }}>
+								{{ actions.colorDot(entite.couleur) }}
+							</td>
+							<td{{ bgcolor|raw }}>
+								{% if type.type_values|default(null) != null %}
+								<a href="{{ path('siteadmin_entite_type', {entite: entite.shortName, type_related: type.type_related, type_field: type.type_field, type_values: type.type_values|join(type_value_joiner)|url_encode, id: entite.id, action: 'show'}) }}" title="{{ UCfirst('moredetails'|trans({'%name%': entite.nom}, entite.shortName)) }}"><strong>{{ entite.nom }}</strong></a>
+								{% else %}
+								<a href="{{ path('siteadmin_entite', {entite: entite.shortName, id: entite.id, action: 'show'}) }}" title="{{ UCfirst('moredetails'|trans({'%name%': entite.nom})) }}"><strong>{{ entite.nom }}</strong></a>
+								{% endif %}
+								<p class="m-t-none m-b-xs">Délai : {{ (entite.delay|default(8.0))|number_format(1,',','') }}s.</p>
+								{% if entite.statut is defined %}
+								{% if entite.statut.id > 1 %}<br><small><i>({{ entite.statut.nom }})</i></small>{% endif %}
+								{% endif %}
+							</td>
+							<td{{ bgcolor|raw }}>
+								{{ actions.entiteButtons(entite, ['show','edit','delete'], type) }}
+							</td>
+							<td{{ bgcolor|raw }}>{{ entite.titre|default('…')|replace({"<br>":" "})|truncate(200,true,'…')|raw }}</td>
+							<td{{ bgcolor|raw }}>
+								{%- if entite.youtube is not null -%}
+								<p class="m-t-none m-b-xs">
+									<a href="https://youtu.be/{{- entite.youtube -}}" target="_blank"><i class="fa fa-youtube-play m-r-xs"></i>{{- entite.youtube -}}</a>
+								</p>
+								{% endif %}
+								{%- if entite.item is not null -%}
+								<p class="m-t-none m-b-xs">
+									<a href="{{ path('siteadmin_entite', {entite: entite.item.shortName, id: entite.item.id, action: 'show'}) }}" title="{{ UCfirst('moredetails'|trans({'%name%': entite.item.nom}, entite.item.shortName)) }}">
+										{{- actions.htmlicon(entite.item.shortName, 1, ['m-r-xs']) -}}{{- entite.item.nom -}}
+									</a>
+								</p>
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				<h3><i class="fa fa-ban"></i> {{ UCfirst('not_found'|trans({}, entite_name)) }}</h3>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

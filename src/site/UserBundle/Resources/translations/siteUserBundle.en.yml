@@ -11,6 +11,16 @@ group:
         created: The group has been created
         deleted: The group has been deleted
 
+roles:
+    IS_AUTHENTICATED_ANONYMOUSLY: authenticated
+    ROLE_USER: user
+    ROLE_TESTER: tester
+    ROLE_TRANSLATOR: translator
+    ROLE_EDITOR: editor
+    ROLE_ADMIN: administrator
+    ROLE_SUPER_ADMIN: super admin
+    ROLE_ALLOWED_TO_SWITCH: switch user
+
 # Security
 security:
     login:
@@ -24,6 +34,23 @@ info:
     compte: account informations
     autres: other informations
 
+found:
+    not_found: User not found
+    found: User found %username%
+
+actions:
+    help:
+        on: 'Help mode is enabled'
+        off: 'Help is disabled'
+        setOn: 'Enable Help mode'
+        setOff: 'Disable Help mode'
+    langage:
+        is: Default langage is defined to %langage%
+    modif:
+        no_change: 'User %username% has no changes'
+        error: 'Error : user "%username%" has not been modified'
+        forbidden: 'You do not have rights on this user %username%'
+
 name: compte utilisateur
 # champs
 fields:
@@ -31,16 +58,23 @@ fields:
     email: email
     nom: first name
     prenom: last name
-    help: help
+    telephone: telephon
+    help: admin help
+    mail_sitemessages: website messages copy by mail
     theme: admin theme
     lang: language
+    avatar: avatar
+    OptionArticlePhotosOnly: hide articles without photo
+    OptionArticlePriceOnly: hide articles without price (or 0€)
 
+# Profile
 profile:
     name: Informations on user
     action:
-        modify: modify
+        modify: modify your profile
         view: view profile
         create: create new account
+        confirmed: confirmation for new account
     show:
         username: Username
         email: Email
@@ -114,3 +148,6 @@ form:
     password_confirmation: Repeat password
     new_password: New password
     new_password_confirmation: Repeat new password
+
+'User account is disabled.': 'User account is disabled.'
+'Bad credentials.': 'Login or password is wrong. Try again, please.'

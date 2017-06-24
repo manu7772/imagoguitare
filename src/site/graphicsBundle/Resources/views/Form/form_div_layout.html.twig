@@ -55,7 +55,7 @@
     {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
         {% set required = false %}
     {%- endif -%}
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} data-allowClear={{ (not required|default(false))|json_encode }}>
         {%- if placeholder is not none -%}
             <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain)|raw }}</option>
         {%- endif -%}
@@ -214,8 +214,8 @@
             {% set label_attr = label_attr|merge({'for': id}) %}
         {%- endif %}
         {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-            {% set asterisque = "<sup>*</sup>" %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required bold')|trim}) %}
+            {# set asterisque = "<sup>*</sup>" #}
         {%- endif %}
         {% if label is empty -%}
             {%- if label_format is not empty -%}
@@ -227,7 +227,7 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain)|raw }}{{ asterisque|default('')|raw }}</label>
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ UCfirst(label|trans({}, translation_domain|raw)) }}{{ asterisque|default('')|raw }}</label>
     {%- endif -%}
 {%- endblock form_label -%}
 
@@ -271,10 +271,9 @@
 
 {%- block form_start -%}
     {% set method = method|upper %}
+    {% set form_method = "POST" %}
     {%- if method in ["GET", "POST"] -%}
         {% set form_method = method %}
-    {%- else -%}
-        {% set form_method = "POST" %}
     {%- endif -%}
     <form name="{{ name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
     {%- if form_method != method -%}

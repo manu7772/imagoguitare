@@ -1,0 +1,6 @@
+sitesiteBundle: site\siteBundle\sitesiteBundle
+siteUserBundle: site\UserBundle\siteUserBundle
+siteadminsiteBundle: site\adminsiteBundle\siteadminsiteBundle
+sitegraphicsBundle: site\graphicsBundle\sitegraphicsBundle
+sitetranslateBundle: site\translateBundle\sitetranslateBundle
+siteeditionBundle: site\editionBundle\siteeditionBundle

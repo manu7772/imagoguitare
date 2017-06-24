@@ -1,0 +1,89 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+{% set cssjsloads = 'shop' %}
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+{% set EDITORMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_EDITOR')) %}
+
+{# {% block slider %} #}
+{# {{ parent() }} #}
+{# {% endblock slider %} #}
+
+{% block content %}
+{# <!-- PAGE HEADER HAS INTRO -->
+<div class="page-header has-intro">
+	<div class="container">
+		<div class="left pull-left">
+			<h1 class="page-title">{{ UCfirst(categorie.nom)|capitalize }}</h1>
+			<p class="page-header-intro">{{ categorie.descriptif|raw }}</p>
+		</div>
+		<ol class="breadcrumb link-accent">
+			{% for cat in categorie.categorieParents_inverse(true) %}
+			{% if loop.last %}
+			<li class="active">{{ UCfirst(cat.nom) }}</li>
+			{% else %}
+			<li><a href="#">{{ UCfirst(cat.nom) }}</a></li>
+			{% endif %}
+			{% endfor %}
+		</ol>
+	</div>
+</div>
+<!-- END PAGE HEADER HAS INTRO --> #}
+
+{{ actions.breadcrumbs(categorie) }}
+
+<!-- PAGE CONTENT -->
+<div class="page-content">
+	<!-- WHAT WE DO -->
+	<section class="no-padding-bottom">
+		<div class="container">
+			<div class="row">
+				{% for cat in categorie.NestedsForMenu if selectClasses(cat, ['categorie','pageweb'], site) != null %}
+				{# {% for cat in categorie.categorieChilds|merge(categorie.nestedChilds) if selectClasses(cat, ['categorie','pageweb'], site) != null %} #}
+				<div class="col-md-4">
+					<div class="icon-info icon-info-center">
+						<a {{ actions.elementHref(cat, categorie)|raw }}>
+							{% if cat.group_pagewebsChilds.0.icon|default(null) != null %}
+							<span class="fa-stack fa-lg fa-3x">
+								<i class="fa {{ cat.icon }} fa-stack-2x text-primary"></i>
+								<i class="fa {{ cat.group_pagewebsChilds.0.icon }} fa-stack-1x fa-inverse"></i>
+							</span>
+							{% else %}
+							<i class="fa {{ cat.icon }} fa-5x text-primary"></i>
+							{% endif %}
+							<h3 class="title">
+								{{- UCfirst(cat.nom) -}}
+							</h3>
+							<p>{{ cat.descriptif|default('…')|truncate(60, true, '…')|raw }}</p>
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+				{% for cat in categorie.ChildrenForMenu if selectClasses(cat, ['categorie','pageweb'], site) != null %}
+				{# {% for cat in categorie.categorieChilds|merge(categorie.nestedChilds) if selectClasses(cat, ['categorie','pageweb'], site) != null %} #}
+				<div class="col-md-4">
+					<div class="icon-info icon-info-center">
+						<a {{ actions.elementHref(cat, categorie)|raw }}>
+							{% if cat.group_pagewebsChilds.0.icon|default(null) != null %}
+							<span class="fa-stack fa-lg fa-3x">
+								<i class="fa {{ cat.icon }} fa-stack-2x text-primary"></i>
+								<i class="fa {{ cat.group_pagewebsChilds.0.icon }} fa-stack-1x fa-inverse"></i>
+							</span>
+							{% else %}
+							<i class="fa {{ cat.icon }} fa-5x text-primary"></i>
+							{% endif %}
+							<h3 class="title">
+								{%- if cat.group_pagewebsChilds.0.icon|default(null) != null -%}<i class="fa fa-folder-o text-muted" title="alias"></i> {% endif -%}
+								{{- UCfirst(cat.nom) -}}
+							</h3>
+							<p>{{ cat.descriptif|default('…')|truncate(60, true, '…')|raw }}</p>
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- END WHAT WE DO -->
+</div>
+<!-- END PAGE CONTENT -->
+{% endblock content %}
+

@@ -1,0 +1,54 @@
+{% extends 'sitesiteBundle:bases:base_' ~ cssjsloads|default('simple')|lower ~ '.html.twig' %}
+
+{% block body %}
+
+   	<!-- WRAPPER -->
+	<div id="wrapper">
+		{% block navbar -%}
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top ">
+			{{ include("sitesiteBundle:blocks:topbar.html.twig") }}
+			<div class="container">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-collapse">
+					<span class="sr-only">{{ 'Toggle_navigation'|trans }}</span>
+					<i class="fa fa-bars"></i>
+				</button>
+				<a href="{{ path('sitesite_homepage') }}" class="navbar-brand">
+					{# <img src="assets/img/logo/bravana-default.png" alt="Bravana Logo"> #}
+					{{- site.nom|default('') }} {% if site.boutiques.0.adresse.ville|default(null) is not null %}<small class='hidden-xs'> - <i>{{ site.boutiques.0.adresse.ville }}</i></small>{% endif -%}
+				</a>
+				{{ include("sitesiteBundle:blocks:panier.html.twig") }}
+				{{ include("sitesiteBundle:blocks:menunav.html.twig") }}
+				<!-- END MAIN NAVIGATION -->
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		{% endblock navbar -%}
+
+		{%- block slider -%}
+		{# {%- include "sitesiteBundle:sections:slider_revolution_1.section.twig" with {'slider_revolution_slides': pageweb.diaporama.nestedChilds|default([])} -%} #}
+		{%- endblock slider -%}
+
+		{%- block content -%}
+		{%- endblock content -%}
+
+		{%- block addons -%}
+			{%- block messagebox -%}
+			{%- if pageweb.messagebox|default(false) == true %}{{ include("sitesiteBundle:blocks:messagebox.html.twig") }}{% endif -%}
+			{%- endblock messagebox -%}
+
+			{%- block addons_sections -%}
+			{# BEGIN SECTIONS #}
+			{# {{- sections(pageweb.group_pagewebSections_childs|default(null), {site: site|default(null), 'slider_revolution_slides': pageweb.diaporama.nestedChilds|default([])}, true) -}} #}
+			{{- sections(pageweb.childsByGroup('pageweb_sections')|default(null), {site: site|default(null), 'slider_revolution_slides': pageweb.diaporama.nestedChilds|default([]), categorie: categorie|default(null), pageweb: pageweb|default(null)}, false) -}}
+			{# END SECTIONS #}
+			{%- endblock addons_sections -%}
+
+			{{- include("sitesiteBundle:blocks:backtoup.html.twig") -}}
+		{%- endblock addons -%}
+	</div>
+	<!-- END WRAPPER -->
+
+{# {{ dump() }} #}
+{% endblock body %}
+

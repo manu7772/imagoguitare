@@ -1,0 +1,90 @@
+/* your custom styles here */
+
+.heading-invisible {
+	color: transparent;
+	border-color: transparent;
+}
+
+.text-white {
+	color: #ffffff;
+}
+
+/* your custom styles here */
+
+.overlay-white { background-color: rgba(255, 255, 255, 1); }
+.overlay-light-gray { background-color: rgba(230, 230, 230, 1); }
+.overlay-medium-gray { background-color: rgba(130, 130, 130, 1); }
+.overlay-dark-gray { background-color: rgba(59, 59, 59, 0.9); }
+
+.mtb-0 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.mtb-10 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.mtb-20 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.mtb-30 {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.mtb-40 {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.mtb-50 {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.mtb-60 {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+
+
+.ptb-0 {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.ptb-10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.ptb-20 {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.ptb-30 {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.ptb-40 {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.ptb-50 {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.ptb-60 {
+	padding-top: 60px;
+	padding-bottom: 60px;
+}
+

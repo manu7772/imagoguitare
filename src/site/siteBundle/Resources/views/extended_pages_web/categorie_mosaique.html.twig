@@ -1,0 +1,36 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+{% set cssjsloads = 'shop' %}
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+{% set EDITORMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_EDITOR')) %}
+
+{# {% block slider %} #}
+{# {{ parent() }} #}
+{# {% endblock slider %} #}
+
+{% block content %}
+{# <!-- PAGE HEADER HAS INTRO -->
+<div class="page-header has-intro">
+	<div class="container">
+		<div class="left pull-left">
+			<h1 class="page-title">{{ UCfirst(categorie.nom)|capitalize }}</h1>
+			<p class="page-header-intro">{{ categorie.descriptif|raw }}</p>
+		</div>
+		<ol class="breadcrumb link-accent">
+			{% for cat in categorie.categorieParents_inverse(true) %}
+			{% if loop.last %}
+			<li class="active">{{ UCfirst(cat.nom) }}</li>
+			{% else %}
+			<li><a href="#">{{ UCfirst(cat.nom) }}</a></li>
+			{% endif %}
+			{% endfor %}
+		</ol>
+	</div>
+</div>
+<!-- END PAGE HEADER HAS INTRO --> #}
+
+{{ actions.breadcrumbs(categorie) }}
+
+{% include 'sitesiteBundle:blocks:mosaique.html.twig' with {} %}
+
+{% endblock content %}
+

@@ -1,40 +1,47 @@
 {% extends "siteUserBundle::layout.html.twig" %}
 {% trans_default_domain 'siteUserBundle' %}
 
-{% block soustitre %}<div class="page-breadcrumb">{{ 'layout.login'|trans|capitalize }}</div>{% endblock soustitre %}
+	{% block titre %}<i class="fa fa-user"></i> {{ 'layout.login'|trans|capitalize }}{% endblock titre %}
 
-{% block fos_user_content %}
-
-{% if error %}
-<div class="alert alert-danger">
-	{{ error.message|trans|capitalize }}
-</div>
-{% endif %}
-
-<form action="{{ path('fos_user_security_check') }}" method="post" class="clearfix">
-	<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-	<!-- <div class="panel-heading">Informations de connexion</div> -->
-    <div class="form-field-wrapper">
-		<label for="username">{{ 'security.login.username'|trans|capitalize }}</label>
-		<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="input-sm form-full" />
+	{% block fos_user_content %}
+	<!-- SIGN IN FORM -->
+	{% if error %}
+	<div class="text-center">
+		<div class="alert alert-danger">{{ error.message|trans|capitalize }}</div>
 	</div>
-    <div class="form-field-wrapper">
-		<label for="password">{{ 'security.login.password'|trans|capitalize }}</label>
-		<input type="password" id="password" name="_password" required="required" class="input-sm form-full" />
-	</div>
-    <div class="form-field-wrapper">
-		<label for="remember_me">{{ 'security.login.remember_me'|trans|capitalize }} :</label>
-		<input type="checkbox" id="remember_me" name="_remember_me" value="on" class='ion ion-android-checkbox-outline' />&nbsp;&nbsp;&nbsp;<a href="{{ url('fos_user_resetting_request') }}" class="little italic">{{ 'security.login.forgotten'|trans|capitalize }}<a>
-	</div>
-    <div class="form-field-wrapper">
-		<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans|capitalize }}" class="btn btn-md btn-black form-full" />
-	</div>
-</form>
+	{% endif %}
 
-<div class="clearfix"></div>
-<hr>
-<br>
-<a href="{{ path('fos_user_registration_register') }}"><div class="btn btn-md btn-color-line">{{ 'profile.action.create'|trans|capitalize }}</div></a>
+	<div class="well well-form-wrapper center-block">
+		<p class="lead">Nom utilisateur ou email</p>
+		<form action="{{ path('fos_user_security_check') }}" method="post" class="form-horizontal label-left">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+			<div class="form-group">
+				<label for="signin-username" class="col-sm-3  control-label">{{ 'security.login.username'|trans|capitalize }}</label>
+				<div class="col-sm-9">
+					<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="{{ 'security.login.username'|trans|capitalize }}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="signin-password" class="col-sm-3  control-label">{{ 'security.login.password'|trans|capitalize }}</label>
+				<div class="col-sm-9">
+					<input type="password" id="password" name="_password" value="{{ last_username }}" required="required" class="form-control" placeholder="{{ 'security.login.password'|trans|capitalize }}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-9 col-md-offset-3">
+					<label class="fancy-checkbox">
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on" class='ion ion-android-checkbox-outline' />
+						<span>{{ 'security.login.remember_me'|trans|capitalize }}</span>
+					</label>
+				</div>
+			</div>
+			<button type="submit" id="_submit" name="_submit" class="btn btn-primary btn-lg center-block"><i class="fa fa-sign-in"></i> {{ 'security.login.submit'|trans|capitalize }}</button>
+		</form>
+	</div>
 
-{% endblock fos_user_content %}
+	<div class="text-center">
+		<a href="{{ path('fos_user_registration_register') }}" class="">{{ 'profile.action.create'|trans|capitalize }}</a>&nbsp;&nbsp;&nbsp;<a href="{{ url('fos_user_resetting_request') }}" class="">{{ 'security.login.forgotten'|trans|capitalize }}<a>
+	</div>
+
+	<!-- END SIGN IN FORM -->
+	{% endblock fos_user_content %}

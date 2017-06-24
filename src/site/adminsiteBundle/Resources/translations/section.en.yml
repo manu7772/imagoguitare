@@ -1,0 +1,30 @@
+name_s: sections
+name: section
+not_found: 'no section found'
+x_found: '{0} no section found|{1} 1 section found|[2,+Inf] %count% sections found'
+create: 'create new section'
+create_btn: 'new section'
+backlist: 'back to list of sections'
+backlist_btn: 'back to list'
+dontexist: 'this section does not exist'
+moredetails: 'more details on %name%'
+existe: this section already exists
+grants:
+    no_access: You are not granted to access to the section<br>"%name%"
+form:
+    select: Select…
+fields:
+    id: id
+    nom: name
+    code: text
+    descriptif: title
+    created: created
+    updated: updated
+    jamais: no modification
+    subentitys: elements
+    parents: parents
+    parent: parent
+    icon: icon
+    modele: model
+    action: 'controller action'
+    image: picture

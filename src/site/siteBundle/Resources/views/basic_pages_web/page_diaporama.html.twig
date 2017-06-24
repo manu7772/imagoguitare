@@ -1,0 +1,52 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+
+{% block content %}
+
+{% if pageweb.diaporama.nestedChilds|default(null) is not null %}
+{% include 'sitesiteBundle:sections:slider_revolution_2.section.twig' with {'slider_revolution_slides': pageweb.diaporama.nestedChilds} %}
+{% endif %}
+
+<!-- ABOUT -->
+<section id="scrollmore">
+	<div class="container">
+		<div class="row">
+			{% if pageweb.image is not null %}
+			<div class="col-md-8">
+				<div class="section-heading">
+					<h2 class="heading-border heading-thin">{{ pageweb.titreh1|raw }}</h2>
+				</div>
+				{{ pageweb.code|raw }}
+			</div>
+			<div class="col-md-4">
+				<div class="section-heading">
+					<h2 class="heading-border heading-thin heading-invisible">.</h2>
+				</div>
+				<img src="{{ pageweb.image.img }}" class="img-responsive" alt="visuel">
+				{# <img src="{{ imageB64sized(pageweb.image.id) }}" class="img-responsive" alt="visuel"> #}
+			</div>
+			{% elseif pageweb.code|striptags|trim != null %}
+			<div class="col-md-4">
+				<div class="section-heading">
+					<h2 class="heading-border heading-thin pull-right">{{ pageweb.titreh1|raw }}</h2>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="section-heading">
+					<h2 class="heading-border heading-thin heading-invisible"></h2>
+					{{ pageweb.code|raw }}
+				</div>
+			</div>
+			{% else %}
+			<div class="section-heading-center">
+				<h2 class="heading-border heading-thin">{{ pageweb.titreh1|raw }}</h2>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+<!-- END ABOUT -->
+
+{# {{ include('sitesiteBundle:blocks:mosaique.html.twig') }} #}
+
+{% endblock content %}
+

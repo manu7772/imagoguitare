@@ -15,13 +15,17 @@ use FOS\UserBundle\Controller\SecurityController as securityCtrl;
 // use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker as SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as FEBsecurity;
+use Labo\Bundle\AdminBundle\services\aeData;
 
-class SecurityController extends securityCtrl
-{
-    public function loginAction(Request $request)
-    {
+class SecurityController extends securityCtrl {
+
+    public function loginAction(Request $request) {
+        // verify users
+        $userService = $this->get('aetools.aeServiceUser');
+        $userService->usersExist(true);
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
@@ -60,15 +64,18 @@ class SecurityController extends securityCtrl
                 : null;
         }
 
-        return $this->renderLogin(array(
+        if(null !== $session) $session->remove('message_user');
+        return $this->render('siteUserBundle:Security:login.html.twig', array(
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
         ));
     }
 
-    public function loginInPageAction(Request $request)
-    {
+    public function loginInPageAction(Request $request) {
+        // verify users
+        $userService = $this->get('aetools.aeServiceUser');
+        $userService->usersExist(true);
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
@@ -107,6 +114,7 @@ class SecurityController extends securityCtrl
                 : null;
         }
 
+        if(null !== $session) $session->remove('message_user');
         return $this->renderLoginInPage(array(
             'last_username' => $lastUsername,
             'error' => $error,
@@ -122,23 +130,19 @@ class SecurityController extends securityCtrl
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderLogin(array $data)
-    {
+    protected function renderLogin(array $data) {
         return $this->render('siteUserBundle:Security:login.html.twig', $data);
     }
 
-    protected function renderLoginInPage(array $data)
-    {
+    protected function renderLoginInPage(array $data) {
         return $this->render('siteUserBundle:Security:loginInPage.html.twig', $data);
     }
 
-    public function checkAction()
-    {
+    public function checkAction() {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
-    public function logoutAction()
-    {
+    public function logoutAction() {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 }

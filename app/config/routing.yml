@@ -1,43 +1,97 @@
-main_home:
-    pattern: /{_locale}
+#############################
+# buffard-cerdon
+#############################
+
+### PUBLIC ###
+sitesiteBundle_path:
+    path: /{_locale}
     defaults: { _controller: sitesiteBundle:Default:index, _locale: %locale% }
+    host: "{base}{domaine}.{ext}"
+    requirements:
+        _locale: %default_locales%
+        domaine: "buffard-cerdon"
+        ext: "fr"
+        base: www\.|test\.|
+
+sitesiteBundle_www_fr:
+    resource: "@sitesiteBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}
+    defaults: { _locale: %locale% }
+    host: "{base}{domaine}.{ext}"
+    requirements:
+        _locale: %default_locales%
+        domaine: "buffard-cerdon"
+        ext: "fr"
+        base: www\.|test\.|
+
+### ADMIN ###
+siteadminsiteBundle_path:
+    path: /{_locale}
+    defaults: { _controller: siteadminsiteBundle:Default:index, _locale: %locale% }
+    host: "{base}.{domaine}.{ext}"
+    requirements:
+        _locale: %default_locales%
+        domaine: "buffard-cerdon"
+        ext: "fr"
+        base: admin|testadmin
+
+siteadminsiteBundle_admin_fr:
+    resource: "@siteadminsiteBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}
+    defaults: { _locale: %locale% }
+    host: "{base}.{domaine}.{ext}"
+    requirements:
+        _locale: %default_locales%
+        domaine: "buffard-cerdon"
+        ext: "fr"
+        base: admin|testadmin
+
+#############################
+# JS Revolution slider extentions
+#############################
+
+# base_js_revolution_extentions:
+#     path:       /extensions/{js_filename}
+#     defaults:   { _controller: sitesiteBundle:Revolution:getfile }
+
+#############################
+# localhost
+#############################
+
+sitesiteBundle_local_path:
+    path: /{_locale}
+    defaults: { _controller: sitesiteBundle:Default:index, _locale: %locale% }
+    host: "localhost"
     requirements:
         _locale: %default_locales%
 
-site_site:
+
+#############################
+# COMMON
+#############################
+
+sitesiteBundle_local:
     resource: "@sitesiteBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
+    prefix:   /{_locale}
     defaults: { _locale: %locale% }
     requirements:
         _locale: %default_locales%
 
-site_translate:
-    resource: "@sitetranslateBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/translate
-    requirements:
-        _locale: %default_locales%
-
-site_edition:
-    resource: "@siteeditionBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/edition
-    requirements:
-        _locale: %default_locales%
-
-# site_user:
-#     resource: "@siteUserBundle/Resources/config/routing/admin.xml"
-#     prefix:   /{_locale}/user
-#     requirements:
-#         _locale: %default_locales%
-
-site_interface:
-    resource: "@siteinterfaceBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/interface
-    requirements:
-        _locale: %default_locales%
-
-site_admin:
-    resource: "@siteadminBundle/Resources/config/routing.yml"
+siteadminsiteBundle_local:
+    resource: "@siteadminsiteBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/admin
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: %default_locales%
+
+
+#############################
+# User
+#############################
+
+site_user:
+    resource: "@siteUserBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/user
     requirements:
         _locale: %default_locales%
 

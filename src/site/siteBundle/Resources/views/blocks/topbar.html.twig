@@ -1,0 +1,50 @@
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+
+<!-- TOP BAR -->
+<div class="nav-topbar clearfix ">
+	<div class="container">
+		{# {% if site.boutiques|default([])|length > 0 %} #}
+		<div class="left">
+			<ul class="list-inline social-icons social-icons-small social-icons-fullrounded">
+				<li><a href="{{ url('sitesite_homepage') }}" title="Page d'accueil du site"><i class="fa fa-home fa-border"></i></a></li>
+				{# <li><a href="#"><i class="fa fa-facebook"></i></a></li> #}
+				{# <li><a href="#"><i class="fa fa-google"></i></a></li> #}
+				{# <li><a href="#"><i class="fa fa-rss"></i></a></li> #}
+				{# <li><a href="#"><i class="fa fa-youtube"></i></a></li> #}
+				{# <li><a href="#"><i class="fa fa-linkedin"></i></a></li> #}
+				{% if site.boutiques.0.telfixe|default(null) is not null %}
+				<li><i class="icon icon_phone ico-styled text-primary"></i> <strong class="text-primary"><a href="tel:{{ site.boutiques.0.telfixe }}">{{ site.boutiques.0.telfixe }}</a></strong></li>
+				{% endif %}
+				{% if site.boutiques.0.mobile|default(null) is not null %}
+				<li><i class="icon icon_mobile ico-styled text-primary"></i> <strong class="text-primary"><a href="tel:{{ site.boutiques.0.mobile }}">{{ site.boutiques.0.mobile }}</a></strong></li>
+				{% endif %}
+			</ul>
+		</div>
+		{# {% endif %} #}
+		<div class="right">
+			{% if searchswitcher %}
+			<form class="navbar-form navbar-left search-form" method="post" role="search">
+				<div class="input-group input-group-sm">
+					<input type="text" class="form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+					</span>
+				</div>
+			</form>
+			{% endif %}
+			<ul class="nav navbar-nav navbar-right">
+				{% if is_granted("ROLE_TRANSLATOR") %}
+				<li><a {{ actions.adminHref(path('siteadmin_homepage'))|raw }}><i class="fa fa-circle-o-notch fa-spin"></i> ADMIN</a></li>
+				{% endif %}
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+				<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'siteUserBundle')|capitalize }}</a></li>
+				<li><a href="{{ path('fos_user_profile_show') }}" title="{{ 'profile.name'|trans({}, 'siteUserBundle')|capitalize }}" class="as-button"><span class="btn btn-{{ is_granted('ROLE_ADMIN') ? 'danger' : 'primary' }}"><i class="fa fa-user"></i> {{ phraseCut(app.user.username, 20) }}</span></a></li>
+				{% else %}
+				<li><a href="{{ path('fos_user_registration_register') }}">Créer mon compte</a></li>
+				<li><a href="{{ path('fos_user_security_login') }}" class="as-button"><span class="btn btn-primary"><i class="fa fa-user"></i> Mon compte</span></a></li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END TOP BAR -->

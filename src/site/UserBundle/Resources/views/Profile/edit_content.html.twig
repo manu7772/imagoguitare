@@ -1,59 +1,116 @@
 {% trans_default_domain 'siteUserBundle' %}
 
-{% if form_errors(form) != null %}
-<div class="alert alert-danger">
-	{{ form_errors(form) }}
-</div>
-{% endif %}
+	<section id="section-gray">
+	
+		<div id="contact-page" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3 m-t-lg">
+					{% if form_errors(form) != null %}
+					<div class="status alert alert-danger">{{ form_errors(form) }}</div>
+					{% endif %}
+					<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+						<h4>{{ 'info.compte'|trans|capitalize }}</h4>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.username) }}
+							{{ form_errors(form.username) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.email) }}
+							{{ form_errors(form.email) }}
+						</div>
+						<hr class="dotted">
+						<h5>{{ 'info.autres'|trans|capitalize }}</h5>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.nom) }}
+							{{ form_errors(form.nom) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.prenom) }}
+							{{ form_errors(form.prenom) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.telephone) }}
+							{{ form_errors(form.telephone) }}
+						</div>
+{# 						<h5>{{ 'adresse'|trans|capitalize }}</h5>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresse.children.adresse) }}
+							{{ form_errors(form.adresse.children.adresse) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresse.children.cp) }}
+							{{ form_errors(form.adresse.children.cp) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresse.children.ville) }}
+							{{ form_errors(form.adresse.children.ville) }}
+						</div>
+						<div class="hidden" style='display:none;'>
+							{{ form_widget(form.adresse.children.commentaire) }}
+							{{ form_widget(form.adresse.children.url) }}
+						</div>
+ #}
+{# 						<h5>{{ 'adresse de livraison'|trans|capitalize }}</h5>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresseLivraison.children.adresse) }}
+							{{ form_errors(form.adresseLivraison.children.adresse) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresseLivraison.children.cp) }}
+							{{ form_errors(form.adresseLivraison.children.cp) }}
+						</div>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.adresseLivraison.children.ville) }}
+							{{ form_errors(form.adresseLivraison.children.ville) }}
+						</div>
+						<div class="hidden" style='display:none;'>
+							{{ form_widget(form.adresseLivraison.children.commentaire) }}
+							{{ form_widget(form.adresseLivraison.children.url) }}
+						</div>
+						<h5>{{ 'fields.avatar'|trans|capitalize }}</h5>
+						<div class="form-group col-md-12">
+							{{ form_widget(form.avatar) }}
+							{{ form_errors(form.avatar) }}
+						</div>
+ #}
+						{% if is_granted('ROLE_EDITOR') %}
+						{% if form.adminhelp is defined %}
+						<div class="form-group col-md-12">
+							<label class="text-muted">{{ 'fields.help'|trans|capitalize }} </label>
+							{{ form_widget(form.adminhelp) }}
+							{{ form_errors(form.adminhelp) }}
+						</div>
+						{% endif %}
+						{% if form.mail_sitemessages is defined %}
+						<div class="form-group col-md-12">
+							<label class="text-muted">{{ 'fields.mail_sitemessages'|trans|capitalize }} </label>
+							{{ form_widget(form.mail_sitemessages) }}
+							{{ form_errors(form.mail_sitemessages) }}
+						</div>
+						{% endif %}
+						{% if form.admintheme is defined %}
+						<div class="form-group col-md-12">
+							{{ form_widget(form.admintheme) }}
+							{{ form_errors(form.admintheme) }}
+						</div>
+						{% endif %}
 
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit clearfix">
-    <div class="form-field-wrapper">
-		{{ form_label(form.username) }}
-		{{ form_widget(form.username) }}
-		{{ form_errors(form.username) }}
-	</div>
+						{% if form.langue is defined %}
+						<div class="form-group col-md-12">
+							{{ form_widget(form.langue) }}
+							{{ form_errors(form.langue) }}
+							<p>&nbsp;<small><i>({% for loc in default_locales|split("|") %}{{ loc }}{% if not loop.last %}, {% endif %}{% endfor %})</i></small></p>
+						</div>
+						{% endif %}
+						{% endif %}
 
-	<div class="form-field-wrapper">
-		{{ form_label(form.email) }}
-		{{ form_widget(form.email) }}
-		{{ form_errors(form.email) }}
-	</div>
+						<div class="form-group col-md-12">
+							<input type="submit" id="_submit" name="_submit" class="btn btn-primary btn-md btn-block" value="{{ 'profile.edit.submit'|trans|capitalize }}">
+						</div>
+						<div style="display:none;">{{ form_rest(form) }}</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
-	<div class="form-field-wrapper">
-		{{ form_label(form.nom) }}
-		{{ form_widget(form.nom) }}
-		{{ form_errors(form.nom) }}
-	</div>
-
-	<div class="form-field-wrapper">
-		{{ form_label(form.prenom) }}
-		{{ form_widget(form.prenom) }}
-		{{ form_errors(form.prenom) }}
-	</div>
-
-	<div class="form-field-wrapper">
-		{{ form_label(form.adminhelp) }}
-		{{ form_widget(form.adminhelp) }}
-		{{ form_errors(form.adminhelp) }}
-	</div>
-
-	<div class="form-field-wrapper">
-		{{ form_label(form.admintheme) }}
-		{{ form_widget(form.admintheme) }}
-		{{ form_errors(form.admintheme) }}
-	</div>
-
-	<div class="form-field-wrapper">
-		{{ form_label(form.langue) }}
-		{{ form_widget(form.langue) }}
-		{{ form_errors(form.langue) }}
-	</div>
-
-	<div class="clearfix"></div>
-	<hr>
-	<br>
-	<input type="submit" value="{{ 'profile.action.modify'|trans|capitalize }}" class="btn btn-md btn-color-line" />
-	{{ form_rest(form) }}
-	<br>
-	<br>
-</form>
+	</section>

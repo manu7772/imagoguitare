@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default(app.request.defaultLocale) }}">
+<head>
+	<title>
+	{%- block title -%}{{ include("sitesiteBundle:blocks:title.html.twig") }}{%- endblock title -%}
+	</title>
+	{{ include("sitesiteBundle:blocks:meta.html.twig") }}
+
+	{% stylesheets filter='cssrewrite, yui_css'
+	'bundles/sitesite/css/bootstrap.css'
+	'bundles/sitesite/css/font-awesome.min.css'
+	'bundles/sitesite/css/main.css'
+	'css/less/imago.css'
+	'bundles/sitesite/css/my-custom-styles.css'
+	 output="css/site/base_commingsoon.css" %}
+	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+
+	{{ include("sitesiteBundle:blocks:google_fonts.html.twig") }}
+	{{ include("sitesiteBundle:blocks:favicon.html.twig") }}
+</head>
+<body class="layout-full">
+	{% block body %}
+	<!-- WRAPPER -->
+	<div id="cs-wrapper">
+		<!-- HEADER -->
+		<header class="cs-header">
+			{# <a href="#"><img src="assets/img/logo/bravana-default.png" class="img-responsive" alt="Logo"></a> #}
+			<h1 class="sr-only">Domaine Buffard - Claude Buffard, producteur à Cerdon</h1>
+		</header>
+		<!-- END HEADER -->
+		<!-- MAIN -->
+		<div class="table-wrap">
+			<div class="table-cell">
+				<h2 class="main-heading">Inauguration…</h2>
+				<div class="countdown clearfix"></div>
+			</div>
+		</div>
+		<!-- END MAIN -->
+		<!-- SOCIAL ICONS -->
+{# 		<ul class="list-inline social-icons social-icons-fullrounded cs-social-icons">
+			<li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
+			<li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
+			<li><a href="#" class="rss-bg"><i class="fa fa-rss"></i></a></li>
+			<li><a href="#" class="tumblr-bg"><i class="fa fa-tumblr"></i></a></li>
+			<li><a href="#" class="pinterest-bg"><i class="fa fa-pinterest"></i></a></li>
+		</ul> #}
+		<!-- END SOCIAL ICONS -->
+		<!-- RIGHT SECTION -->
+		<div class="cs-right-section">
+			<div class="table-wrap">
+				<div class="table-cell">
+					<h3 class="section-heading">Le site est en cours d'installation</h3>
+					<p class="lead">La mise en ligne est prévue pour lundi prochain.</p>
+{# 					<form>
+						<div class="form-group form-group-lg">
+							<label for="inputEmail" class="control-label sr-only">Email</label>
+							<input type="email" class="form-control input-lg" id="inputEmail" placeholder="Your email address" required>
+						</div>
+						<button type="submit" class="btn btn-block btn-lg btn-primary"><i class="fa fa-envelope"></i> NOTIFY ME</button>
+					</form> #}
+				</div>
+			</div>
+			<footer class="cs-footer">
+				<p>Copyright 2017. <a href="#">Aequation Webdesign &amp; Domaine Buffard</a>. Tous droits réservés.</p>
+			</footer>
+		</div>
+		<!-- END RIGHT SECTION -->
+	</div>
+	<!-- END WRAPPER -->
+	{% endblock body %}
+
+	{% block js %}
+	{% javascripts filter='yui_js'
+	'bundles/sitesite/js/jquery-2.1.1.min.js'
+	'bundles/sitesite/js/bootstrap.min.js'
+	'bundles/sitesite/js/plugins/jquery-countdown/jquery.plugin.min.js'
+	'bundles/sitesite/js/plugins/jquery-countdown/jquery.countdown.min.js'
+	'bundles/sitesite/js/plugins/toastr/toastr.min.js'
+	 output="js/site/base_commingsoon.js" %}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		{% block end_javascripts %}
+		/*----------------------/
+		/* COUNTDOWN
+		/*---------------------*/
+
+		/* the date value below is for demo purpose only
+		 * normally you would provide the value with format YYYY, MM, DD in which the countdown should stop counting
+		 */
+		var dateUntil = new Date(2017, 5, 12);
+
+		/*
+			STOP CHANGING THE REST OF THE CODES UNLESS YOU KNOW WHAT YOU ARE DOING
+		*/
+
+		$('.countdown').countdown({
+			until: dateUntil
+		});
+
+		// $('.countdown').countdown('pause');
+		{% endblock end_javascripts %}
+	});
+	</script>
+	{% endblock js %}
+</body>
+</html>

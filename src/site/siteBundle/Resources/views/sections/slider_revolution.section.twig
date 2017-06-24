@@ -1,0 +1,63 @@
+{% if slider_revolution_slides|default([])|length > 0 %}
+<!-- SLIDER -->
+<div class="revolution-slider-wrapper">
+	<section id="slider-fullwidth" class="rev_slider fullscreenbanner no-padding" data-version="5.4.1" data-filelocation="{{ asset('bundles/sitesite/js/plugins/revolution/js/') }}">
+		<ul>
+			{% for slide in slider_revolution_slides %}
+			{% if slide.shortName == 'image' %}
+			<li>
+				<img src="{{ slide.img }}" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" alt="{{ slide.slug }}">
+			</li>
+			{% elseif slide.shortName == 'slide' %}
+			<li data-transition="{{ slide.transitionname }}" style="background-color:{{ slide.couleur|raw }};" data-delay="{{ slide.delay|default(8.0) * 1000 }}">
+				{# BACKGROUND IMAGE #}
+				{% if slide.image|default(null) is not null -%}
+				<img src="{{ slide.image.img }}" data-bgfit="cover" data-bgposition="0 55%" data-bgrepeat="no-repeat" alt="{{ slide.image.slug }}">
+				{%- endif %}
+				{# OVERLAY #}	
+				{% if slide.overlay|default(false) == true -%}
+				<div class="tp-caption tp-shape tp-shapewrapper slide-overlay" data-width="full" data-height="full" data-basealign="slide" data-transform_in="o:0;s:1500;e:Power3.easeInOut;" data-transform_idle="o:1" data-transform_out="o:0;s:1000;e:Power3.easeInOut;" data-start="0"></div>
+				{%- endif %}
+				{% if slide.youtube is not null -%}
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="//www.youtube.com/embed/{{ slide.youtube }}?{{ slide.autoplayvideo|default(false) == true ? 'autoplay=1&' : '' }}rel=0" allowfullscreen></iframe>
+				</div>
+				{%- endif %}
+				{# ITEM IMAGE #}
+				{% if slide.item.image|default(null) is not null -%}
+					<div class="tp-caption" data-x="left" data-y="center" data-hoffset="0" data-voffset="0" data-transform_in="o:0;y:300;s:1500;" data-transform_idle="o:1;" data-transform_out="o:0;y:-600;s:1500;e:Power3.easeInOut;" data-start="1000">
+						<img src="{{ slide.item.image.img }}" width="320" height="450" data-ww="320" data-hh="450" alt="{{ slide.item.slug }}">
+					</div>
+					{% if slide.titre is not null -%}
+					<div class="tp-caption tp-resizeme{{ slide.lightext|default(false) == true or slide.overlay|default(false) == true ? ' light-text' : '' }} big-text" data-x="left" data-y="top" data-hoffset="270" data-voffset="0" data-transform_in="o:0;x:-80;s:1500;" data-transform_idle="o:1" data-transform_out="o:0;x:80;s:1500;e:Power3.easeInOut;" data-start="2000">
+						<h2 class="heading"><strong>{{ slide.titre|raw }}</strong></h2>
+					</div>
+					{%- endif %}
+					{% if slide.accroche is not null -%}
+					<div class="tp-caption tp-resizeme{{ slide.lightext|default(false) == true or slide.overlay|default(false) == true ? ' light-text' : '' }} lead-text" data-x="left" data-y="top" data-hoffset="270" data-voffset="110" data-width="700" data-height="auto" data-whitespace="normal" data-transform_in="o:0;x:-40;s:1500;" data-transform_idle="o:1;" data-transform_out="o:0;x:40;s:1500;e:Power3.easeInOut;" data-start="2500">
+						{{- slide.accroche|raw -}}
+					</div>
+					{%- endif %}
+				{%- else %}
+					{% if slide.titre is not null -%}
+					<div class="tp-caption tp-resizeme{{ slide.lightext|default(false) == true or slide.overlay|default(false) == true ? ' light-text' : '' }} big-text text-center" data-x="center" data-y="top" data-hoffset="0" data-voffset="30" data-transform_in="o:0;y:50;s:1500;" data-transform_idle="o:1;y:0;" data-transform_out="o:0;x:250;s:1500;e:Power3.easeInOut;" data-start="1000">
+						<h2 class="heading">{{ slide.titre|raw }}</h2>
+					</div>
+					{%- endif %}
+					{% if slide.accroche is not null -%}
+					<div class="tp-caption tp-resizeme lead-text{{ slide.lightext|default(false) == true or slide.overlay|default(false) == true ? ' light-text' : '' }} text-center" data-x="center" data-y="top" data-hoffset="0" data-voffset="130" data-width="700" data-height="auto" data-whitespace="normal" data-transform_in="o:0;y:50;s:1500;" data-transform_idle="o:1;y:0;" data-transform_out="o:0;x:250;s:1500;e:Power3.easeInOut;" data-start="1500">
+						{{- slide.accroche|raw -}}
+					</div>
+					{%- endif %}
+				{%- endif %}
+				{# <div class="tp-caption tp-resizeme" data-x="center" data-y="top" data-hoffset="0" data-voffset="330" data-transform_in="o:0;y:50;s:1500;" data-transform_idle="o:1;y:0;" data-transform_out="o:0;s:1500;e:Power3.easeInOut;" data-start="2000"> #}
+					{# <a href="#" class="btn btn-primary btn-lg"><i class="icon_film"></i> Autres vidéos</a><a href="#" class="btn btn-default-gray btn-lg"><i class="fa fa-glass"></i> Notre cave</a> #}
+				{# </div> #}
+			</li>
+			{% endif %}
+			{% endfor %}
+		</ul>
+	</section>
+</div>
+<!-- END SLIDER -->
+{% endif %}

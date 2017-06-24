@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default(app.request.defaultLocale) }}">
+<head>
+	<title>
+	{%- block title -%}{{ include("sitesiteBundle:blocks:title.html.twig") }}{%- endblock title -%}
+	</title>
+	{{ include("sitesiteBundle:blocks:meta.html.twig") }}
+
+	{% stylesheets filter='cssrewrite, yui_css'
+	'bundles/sitesite/css/bootstrap.css'
+	'bundles/sitesite/css/font-awesome.min.css'
+	'bundles/sitesite/css/elegant-icons.css'
+	'bundles/sitesite/css/main.css'
+	'css/less/imago.css'
+	'bundles/sitesite/css/main-shop.css'
+	'bundles/sitesite/css/my-custom-styles.css'
+	 output="css/site/base_shop.css" %}
+	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+
+	{{ include("sitesiteBundle:blocks:google_fonts.html.twig") }}
+	{{ include("sitesiteBundle:blocks:favicon.html.twig") }}
+</head>
+<body>
+	{% block body %}
+	{% endblock body %}
+
+	{% block hiddendata %}
+		{{ include('LaboAdminBundle:blocks:hidden-data.html.twig') }}
+	{% endblock hiddendata %}
+
+	{% block js %}
+	{% javascripts filter='yui_js'
+	'bundles/sitesite/js/jquery-2.1.1.min.js'
+	'bundles/sitesite/js/bootstrap.min.js'
+	'bundles/sitesite/js/plugins/easing/jquery.easing.min.js'
+	'bundles/sitesite/js/plugins/owl-carousel/owl.carousel.min.js'
+	'bundles/sitesite/js/plugins/range-slider/ion.rangeSlider.min.js'
+	'bundles/sitesite/js/plugins/zoom/jquery.zoom.js'
+	'bundles/sitesite/js/plugins/countto/jquery.countTo.js'
+	'bundles/sitesite/js/plugins/jquery-waypoints/jquery.waypoints.min.js'
+	'bundles/sitesite/js/plugins/parsley-validation/parsley.min.js'
+	'bundles/sitesite/js/plugins/toastr/toastr.min.js'
+	'bundles/sitesite/js/bravana.js'
+	'bundles/sitesite/js/bravana-shop.js'
+	 output="js/site/base_shop.js" %}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		{% block end_javascripts %}
+		{% endblock end_javascripts %}
+	});
+	</script>
+	{% endblock js %}
+</body>
+</html>

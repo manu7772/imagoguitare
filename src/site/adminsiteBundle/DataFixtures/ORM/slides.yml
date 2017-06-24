@@ -1,0 +1,38 @@
+slide:
+    order: 20
+    data:
+        # MENU PRINCIPAL
+        -
+            nom: 'Slide 1'
+            titre: 'Mes guitares'
+            accroche: '<p>Bienvenue sur le site de Rico Priet, luthier et tourneur sur bois, fabricant et concepteur des Imago Guitares et Basses.</p>'
+            transition: 'fadefromleft'
+            delay: 7.0
+            group_nesteds_parents:
+                field: nom
+                value: 'Diaporama accueil'
+        -
+            nom: 'Slide 2'
+            titre: 'Mes Ukulélés'
+            accroche: "<p>Vous êtes intéressé par un modèle présenté ou vous souhaitez que je réalise pour vous un modèle sur mesure, contactez-moi.</p>"
+            # item:
+            #     field: nom
+            #     value: 'nomduproduit'
+            transition: 'fadefromleft'
+            delay: 7.0
+            group_nesteds_parents:
+                field: nom
+                value: 'Diaporama accueil'
+        -
+            nom: 'Slide 3'
+            titre: "Ballade en Jazz'imago"
+            accroche: "<p>Guitare Jazz'i fabriquée à la main<br>par le luthier Rico Priet<br>et joué par Sébastien Etienne<br>à la Presqu'île d'Annonay</p>"
+            # youtube: 'https://youtu.be/Y-EtgkCU1GY'
+            youtube: 'https://youtu.be/UWuVG1Sm8sg'
+            transition: 'fadefromleft'
+            delay: 7.0
+            group_nesteds_parents:
+                field: nom
+                value: 'Diaporama accueil'
+
+

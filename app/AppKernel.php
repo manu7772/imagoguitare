@@ -17,16 +17,19 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new FOS\UserBundle\FOSUserBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
 
-            new site\UserBundle\siteUserBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Labo\Bundle\AdminBundle\LaboAdminBundle(),
+
             new site\siteBundle\sitesiteBundle(),
+            new site\UserBundle\siteUserBundle(),
+            new site\adminsiteBundle\siteadminsiteBundle(),
             new site\graphicsBundle\sitegraphicsBundle(),
             new site\translateBundle\sitetranslateBundle(),
             new site\editionBundle\siteeditionBundle(),
-            new site\adminBundle\siteadminBundle(),
-            new site\interfaceBundle\siteinterfaceBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -48,6 +51,7 @@ class AppKernel extends Kernel
     // initialisation du scope 'request'
     // --> sinon, erreur : You cannot create a service ("request") of an inactive scope ("request") !!!
     protected function initializeContainer() {
+        date_default_timezone_set('Europe/Paris');
         parent::initializeContainer();
         if (PHP_SAPI == 'cli') {
             $this->getContainer()->enterScope('request');

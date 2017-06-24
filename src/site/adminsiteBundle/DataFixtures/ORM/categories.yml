@@ -1,0 +1,86 @@
+categorie:
+    order: 5
+    data:
+    ### COLLECTIONS BASES
+        # menus
+        -
+            nom: 'menus'
+            descriptif: '<p>Menus du site</p>'
+            type: menu
+            open: true
+        # diaporamas
+        -
+            nom: 'diaporamas'
+            descriptif: '<p>Diaporamas multimédia</p>'
+            type: diapo
+            open: true
+        # pagewebs
+        -
+            nom: 'pages web'
+            descriptif: '<p>Collections de pages web</p>'
+            type: pageweb
+            open: true
+        # articles
+        -
+            nom: 'articles'
+            descriptif: "<p>Collections d'articles</p>"
+            type: article
+            open: true
+            couleur: 'rgba(35,170,179,1)'
+        # images
+        -
+            nom: 'images'
+            descriptif: '<p>Collections de photos</p>'
+            type: image
+            open: true
+        # evenements
+        -
+            nom: 'évènements'
+            descriptif: '<p>Collections évènements</p>'
+            type: evenement
+            open: true
+        # trash
+        -
+            nom: 'trash'
+            descriptif: '<p>Catégories sans parents, catégories mis de côté</p>'
+            type: trash
+            icon: fa-trash
+            open: true
+
+    ### COLLECTIONS / DIAPORAMAS
+        # menu principal
+        -
+            nom: 'Imago Guitare, luthier'
+            descriptif: '<p>Menu principal du site</p>'
+            categorieParent:
+                field: nom
+                value: 'menus'
+        -
+            nom: 'Évènements'
+            descriptif: '<p>Évènements Imago Guitare</p>'
+            categorieParent:
+                field: nom
+                value: 'menus'
+        # pages web d'informations
+        -
+            nom: 'Informations'
+            descriptif: "<p>Pages d'informations générales et légales</p>"
+            categorieParent:
+                field: nom
+                value: 'pages web'
+        # diaporamas
+        -
+            nom: 'Diaporama accueil'
+            descriptif: "<p>Diaporama de la page d'accueil</p>"
+            categorieParent:
+                field: nom
+                value: 'diaporamas'
+        # articles
+        -
+            nom: 'Atelier'
+            descriptif: "<p>L'atelier Imago Guitare</p>"
+            categorieParent:
+                field: nom
+                value: 'articles'
+
+

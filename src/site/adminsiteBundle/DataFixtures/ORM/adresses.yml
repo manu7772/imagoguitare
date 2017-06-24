@@ -1,0 +1,15 @@
+adresse:
+    order: 8
+    data:
+        -
+            nom: 'Atelier Imago'
+            adresse: '20 allée des vignes'
+            cp: '01340'
+            ville: 'Jayat'
+            commentaire: "Village de l'Ain (Rhône-Alpes) situé à 22 km au nord de Bourg-en-Bresse et à 30km à l'est de Mâcon"
+            # url: 'https://www.google.fr/maps/place/20+All%C3%A9e+des+Vignes,+01340+Jayat/@46.3699097,5.1153717,17z/data=!3m1!4b1!4m5!3m4!1s0x47f347ae5b087d77:0x2460a7af0265532!8m2!3d46.3699097!4d5.1175604'
+            # url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2752.973706217036!2d5.115371715485788!3d46.36990967912209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f347ae5b087d77%3A0x2460a7af0265532!2s20+All%C3%A9e+des+Vignes%2C+01340+Jayat!5e0!3m2!1sfr!2sfr!4v1498203973991'
+            url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2752.973706217036!2d5.115371715485788!3d46.36990967912209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f347ae5b087d79%3A0x5df8d06d4d5054ff!2sImago+Guitare!5e0!3m2!1sfr!2sfr!4v1498204064676'
+            tier:
+                field: 'nom'
+                value: 'Atelier Imago Guitare'

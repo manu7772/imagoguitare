@@ -1,11 +1,15 @@
-{% extends 'siteinterfaceBundle::page_admin_generic.html.twig' %}
+{% extends 'LaboAdminBundle::page_admin_generic.html.twig' %}
 {% set cssjsloads = 'TAB' %}
 {% set DEVMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_SUPER_ADMIN')) %}
 
 {% block page_heading %}
 <div class="row wrapper border-bottom white-bg page-heading">
 	<div class="col-lg-12 m-t-xs">
-		<h2>{{ htitle|capitalize }}</h2>
+		<h2 class="row">
+			<div class="col-md-8 ellipsis">{{ htitle|capitalize }}</div>
+			<div class="col-md-4">
+			</div>
+		</h2>
 		<ol class="breadcrumb">
 			<li><a href="{{ path('siteadmin_homepage') }}"><strong>Administration</strong></a></li>
 			<li><a href="{{ path('siteUser_users', {type: 'all'}) }}"><strong>Utilisateurs</strong></a></li>
@@ -14,7 +18,7 @@
 		{% if DEVMODE %}
 		<hr class="m-b-sm m-t-xs">
 		<div class='btn-group'>
-			<a href="{{ path('siteUser_users', {type: type, action: 'check'}) }}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-check icon-wait-on-click" data-icon-wait="{{ spinIcon|default('fa-cogs') }}"></i> Check tous utilisateurs</a>
+			<a href="{{ path('siteUser_check') }}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-check icon-wait-on-click" data-icon-wait="{{ spinIcon|default('fa-cogs') }}"></i> Check tous utilisateurs</a>
 		</div>
 		{% endif %}
 	</div>
@@ -26,30 +30,17 @@
 
 {% if users|length > 0 %}
 
-	{% if type|upper not in ['ROLE_TRANSLATOR', 'ROLE_EDITOR', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] %}
+	{% if type|upper not in ['ROLE_SUPER_ADMIN'] %}
 	<div class="col-md-12">
 		<div class="ibox float-e-margins">
-<!-- 			<div class="ibox-title">
-				<h5>Tableau {{ htitle }}</h5>
-				<div class="ibox-tools">
-					<a class="collapse-link">
-						<i class="fa fa-chevron-up"></i>
-					</a>
-					<a class="fullscreen-link">
-						<i class="fa fa-expand"></i>
-					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
-					</a>
-				</div>
-			</div> -->
 			<div class="ibox-content">
 				<table class="table table-striped table-bordered table-hover dataTables dataTable dtr-inline" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
 					<thead>
 						<tr>
 							<th>Login</th>
+							<th class='text-center'>avatar</th>
 							<th>Nom/prénom</th>
-							<th style="width:1%;">Actions</th>
+							<th>Actions</th>
 							<th>Email</th>
 							<th>Type</th>
 						</tr>
@@ -60,28 +51,91 @@
 						{% set classtype = userColor(user) %}
 						<tr>
 							<td>
-								<p class="text-{{ classtype|default('muted')|raw }}">{{ user.username }}</p>
-								{% if user.lastLogin is not null %}
-								<em class='text-primary'>Dernier log&nbsp;: {{ user.lastLogin|date(formatDateHeure) }}</em>
+								{% if not user.enabled %}
+								<p class="text-muted }} no-margins"><i class="fa fa-exclamation-triangle m-r-xs"></i>{{ user.username }}</p>
 								{% else %}
-								<em class='text-muted'>(jamais connecté)</em>
+								<p class="text-{{ classtype|default('muted')|raw }} no-margins">{{ user.username }}</p>
+								{% endif %}
+								{% if user.lastLogin is not null %}
+								<p class='no-margins'><em class='text-primary'>Dernier log&nbsp;: {{ user.lastLogin|date(formatDateHeure) }}</em></p>
+								{% else %}
+								<p class='no-margins'><em class='text-muted'>(jamais connecté)</em></p>
+								{% endif %}
+								{% if marketplace.active|default(false) %}
+								<p class='no-margins'>{{ UCfirst('name'|trans({}, 'panier')) }} : {{ 'x_found'|transchoice(user.articlesPanier, {}, 'article') }}</p>
+								{% endif %}
+								{% if user.userunion is not null %}
+								<p class="no-margins">
+									<strong>
+										{%- if user.isGlobalunionValid() -%}
+										<i class="fa fa-heart text-success m-r-xs"></i>
+										{%- else -%}
+										<a href="{{ path('user_check_union', {username: user.userunion.username, userunion: user.username}) }}" title="Union invalide entre {{ user.userunion.username }} et {{ user.username }} : cliquer pour vérifier et rétablir"><i class="fa fa-heart text-danger m-r-xs"></i></a>
+										{%- endif -%}
+										{{- user.uniontypename|trans({}, 'siteUserBundle') -}}
+									</strong>
+									{%- if not user.unionconfirmed -%}
+										<a href="{{ path('user_confirm_union', {username: user.username}) }}" title="Union non confirmée par {{ user.username }} : cliquer pour confirmer"><i class="fa fa-unlink text-danger m-l-xs"></i></a>
+									{%- endif -%}
+									&nbsp;avec {{ user.userunion.username }}
+									{%- if not user.userunion.unionconfirmed -%}
+										<a href="{{ path('user_confirm_union', {username: user.userunion.username}) }}" title="Union non confirmée par {{ user.userunion.username }} : cliquer pour confirmer"><i class="fa fa-unlink text-danger m-l-xs m-r-xs"></i></a>
+									{%- endif -%}
+								</p>
+								{% elseif user.uniontype != user.removeUniontype %}
+								<p class="no-margins"><strong><i class="fa fa-heart text-muted m-r-xs"></i>{{ user.uniontypename|trans({}, 'siteUserBundle') }}</strong></p>
+								{% else %}
+								<p class="no-margins"><i class="fa fa-heart-o text-muted m-r-xs"></i><i>{{ user.uniontypename|trans({}, 'siteUserBundle') }}</i></p>
+								{% endif %}
+							</td>
+							<td class='text-center'>
+								{% if not user.enabled %}<i class="fa fa-ban fa-3x text-muted fa-border"></i>
+								{% elseif user.avatar.isScreenableImage|default(false) != false %}
+								<img src="{{ user.avatar.imgThumbnail(64,64,'cut')|raw }}" class="img-rounded fa-border">
+								{% else %}
+								<i class="fa fa-user fa-3x text-muted fa-border"></i>
 								{% endif %}
 							</td>
 							<td>
-								<strong>{{ user.nom }}</strong><br>{{ user.prenom }}
+								<strong>{{ user.nom }}</strong><br>{{ user.prenom }}{% if user.isCollaborator %}<br><strong class="text-success">Collaborator</strong>{% endif %}
+								{% if not user.enabled %}<br><small><strong><i class="fa fa-exclamation-triangle m-r-xs"></i>Désactivé</strong></small>{% endif %}
 							</td>
 							<td>
-								<div class="btn-group">
-									<a href="{{ path('siteUser_info', {username: user.username}) }}" type="button" class="btn btn-white btn-xs" title="Voir {{ user.username }}"><i class="fa fa-eye icon-wait-on-click"></i></a>
-									{% if user.id == app.user.id %}
-									<a href="{{ path('fos_user_profile_edit', {id: app.security.token.user.id}) }}" type="button" class="btn btn-white btn-xs" title="Modifier {{ user.username }}"><i class="fa fa-pencil icon-wait-on-click"></i></a>
-									<a href="{{ path('fos_user_deleting', {id: app.security.token.user.id}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="Supprimer votre compte ?" data-message="ATTENTION, vous êtes sur le point de supprimer votre compte ! Souhaitez-vous vraiment faire cette opération ?"><i class="fa fa-times icon-wait-on-click"></i></a>
-									{% elseif app.user.haveRight(user) %}
-									<a href="{{ path('siteUser_edit', {username: user.username}) }}" type="button" class="btn btn-white btn-xs" title="Modifier {{ user.username }}"><i class="fa fa-pencil icon-wait-on-click"></i></a>
-									<a href="{{ path('siteUser_delete', {username: user.username}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="Supprimer {{ user.username }}" data-message="Souhaitez-vous vraiment supprimer ce compte ?"><i class="fa fa-times icon-wait-on-click"></i></a>
+								<div class="btn-group m-r-xs" role="group">
+									<a href="{{ path('siteUser_info', {username: user.username}) }}" type="button" class="btn btn-white btn-xs" title="Voir {{ user.username }}"><i class="fa fa-eye icon-wait-on-click fa-fw"></i></a>
+									{% if app.user.haveRight(user) %}
+									<a href="{{ path('siteUser_edit', {username: user.username}) }}" type="button" class="btn btn-white btn-xs" title="Modifier {{ user.username }}"><i class="fa fa-pencil icon-wait-on-click fa-fw"></i></a>
+									{# {% if not user.enabled %} #}
+									<a href="{{ path('siteUser_delete', {username: user.username}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="Supprimer {{ user.username }}" data-message="Souhaitez-vous vraiment supprimer ce compte ?"><i class="fa fa-times icon-wait-on-click fa-fw"></i></a>
+									{# {% endif %} #}
+									{% if is_granted('ROLE_ADMIN') %}
+									<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='fa fa-gear fa-fw'></i></button>
+									<ul class="dropdown-menu">
+										{% if "ROLE_USER" in user.roles %}{% set iconRole = 'fa-circle' %}{% else %}{% set iconRole = 'fa-circle-o' %}{% endif %}
+										<li><a href="{{ path('user_change_role', {username: user.username, role: 'ROLE_USER'}) }}"><i class="fa {{ iconRole|raw }} text-info m-r-xs"></i>{{- 'roles.ROLE_USER'|trans({}, 'siteUserBundle')|capitalize -}}</a></li>
+										{% if "ROLE_TESTER" in user.roles %}{% set iconRole = 'fa-circle' %}{% else %}{% set iconRole = 'fa-circle-o' %}{% endif %}
+										<li><a href="{{ path('user_change_role', {username: user.username, role: 'ROLE_TESTER'}) }}"><i class="fa {{ iconRole|raw }} text-warning m-r-xs"></i>{{- 'roles.ROLE_TESTER'|trans({}, 'siteUserBundle')|capitalize -}}</a></li>
+										{% if "ROLE_ADMIN" in user.roles %}{% set iconRole = 'fa-circle' %}{% else %}{% set iconRole = 'fa-circle-o' %}{% endif %}
+										<li><a href="{{ path('user_change_role', {username: user.username, role: 'ROLE_ADMIN'}) }}"><i class="fa {{ iconRole|raw }} text-warning m-r-xs"></i>{{- 'roles.ROLE_ADMIN'|trans({}, 'siteUserBundle')|capitalize -}}</a></li>
+										{% if is_granted('ROLE_SUPER_ADMIN') %}
+										{% if "ROLE_TRANSLATOR" in user.roles %}{% set iconRole = 'fa-circle' %}{% else %}{% set iconRole = 'fa-circle-o' %}{% endif %}
+										<li><a href="{{ path('user_change_role', {username: user.username, role: 'ROLE_TRANSLATOR'}) }}"><i class="fa {{ iconRole|raw }} text-link m-r-xs"></i>{{- 'roles.ROLE_TRANSLATOR'|trans({}, 'siteUserBundle')|capitalize -}}</a></li>
+										{% if "ROLE_SUPER_ADMIN" in user.roles %}{% set iconRole = 'fa-circle' %}{% else %}{% set iconRole = 'fa-circle-o' %}{% endif %}
+										<li><a href="{{ path('user_change_role', {username: user.username, role: 'ROLE_SUPER_ADMIN'}) }}"><i class="fa {{ iconRole|raw }} text-danger m-r-xs"></i>{{- 'roles.ROLE_SUPER_ADMIN'|trans({}, 'siteUserBundle')|capitalize -}}</a></li>
+										{% endif %}
+										{% if user.username != app.user.username %}
+											<li class="divider"></li>
+											{% if user.enabled %}
+											<li><a href="{{ path('user_enable', {username: user.username, enable: 'disable'}) }}">{{- 'actions.disable'|trans()|capitalize -}}</a></li>
+											{% else %}
+											<li><a href="{{ path('user_enable', {username: user.username, enable: 'enable'}) }}">{{- 'actions.enable'|trans()|capitalize -}}</a></li>
+											{% endif %}
+										{% endif %}
+									</ul>
+									{% endif %}
 									{% endif %}
 								</div>
-								{% if DEVMODE %}
+{# 								{% if DEVMODE %}
 								<hr class="m-b-sm m-t-xs">
 								<div class="btn-group">
 									<a href="{{ path('siteUser_users', {type: 'all', action: 'check', params: {username: user.username}|json_encode }) }}" type="button" class="btn btn-danger btn-xs" title="Checker utilisateur {{ user.username }}"><i class="fa fa-check icon-wait-on-click" data-icon-wait="{{ spinIcon|default('fa-cogs') }}"></i></a>
@@ -93,14 +147,17 @@
 									{{ form_end(delete_form[entite.id]) }}
 									{% endif %}
 								</div>
-
-								{% endif %}
+								{% endif %} #}
 							</td>
-							<td><a href="mailto:{{ user.email }}">{{ user.email }}</a</td>
-							<td>
+							<td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+							<td>{% if user.enabled %}
 								{% for role in user.roles %}
 								<label class="label label-{{ roleColor(role) }}" title="{{ role }}">{{ roleName(role) }}</label> 
 								{% endfor %}
+{# 								{% if user.isCollaborator %}
+								<label class="label label-success">Collaborator</label> 
+								{% endif %} #}
+								{% endif %}
 							</td>
 						</tr>
 						{% endfor %}
@@ -119,25 +176,26 @@
 	<div class="col-lg-3">
 		<div class="contact-box center-version">
 			<a href="{{ path('siteUser_info', {username: user.username}) }}">
-				<!-- <img alt="image" class="img-circle" src="img/a2.jpg"> -->
+				{% if user.avatar.isScreenableImage|default(false) != false %}
+				<img alt="image" class="img-circle" src="{{ user.avatar.imgThumbnail(128,128,'cut')|raw }}">
+				{% else %}
 				<i class="fa fa-user fa-5x text-{{ classtype|default('muted')|raw }}"></i>
+				{% endif %}
 				<h3 class="m-b-xs"><strong>{{ user.prenom }} {{ user.nom|default(user.username) }}</strong></h3>
 				<div class="font-bold"><i class="fa fa-user"></i> {{ user.username }}</div>
 				<address class="m-t-md">
-					<strong>{{ user.adresse }}</strong><br>
-					{{ user.cp }}<br>
-					{{ user.ville }}<br>
-					<abbr title="Téléphone">Tél. </abbr> {{ user.tel }}
+					<strong>{{ user.adresse|default('-') }}</strong><br>
+					{{ user.cp|default('-') }}<br>
+					{{ user.ville|default('-') }}<br>
+					<abbr title="Téléphone">Tél. </abbr> {{ user.telephone|default('-') }}
 				</address>
 			</a>
 			<div class="contact-box-footer">
-				<div class="m-t-xs btn-group">
-					<a href="{{ path('siteUser_info', {username: user.username}) }}" class="btn btn-xs btn-white"><i class="fa fa-eye icon-wait-on-click"></i> Voir</a>
-					<a href="{{ path('siteUser_edit', {username: user.username}) }}" class="btn btn-xs btn-white"><i class="fa fa-pencil icon-wait-on-click"></i> Modifier</a>
-					{% if user.id == app.user.id %}
-					<a href="{{ path('fos_user_deleting', {id: app.security.token.user.id}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="Supprimer votre compte ?" data-message="ATTENTION, vous êtes sur le point de supprimer votre compte ! Souhaitez-vous vraiment faire cette opération ?"><i class="fa fa-times icon-wait-on-click"></i></a>
-					{% elseif app.user.haveRight(user) %}
-					<a href="{{ path('siteUser_delete', {username: user.username}) }}" class="btn btn-xs btn-white need-confirmation" title="Supprimer {{ user.username }}" data-message="Souhaitez-vous vraiment supprimer ce compte ?"><i class="fa fa-times icon-wait-on-click"></i> Supprimer</a>
+				<div class="m-t-xs btn-group btn-block">
+					<a href="{{ path('siteUser_info', {username: user.username}) }}" class="btn btn-xs btn-white col-xs-4"><i class="fa fa-eye icon-wait-on-click"></i></a>
+					<a href="{{ path('siteUser_edit', {username: user.username}) }}" class="btn btn-xs btn-white col-xs-4"><i class="fa fa-pencil icon-wait-on-click"></i></a>
+					{% if app.user.haveRight(user) %}
+					<a href="{{ path('siteUser_delete', {username: user.username}) }}" class="btn btn-xs btn-white col-xs-4 need-confirmation" title="Supprimer {{ user.username }}" data-message="Souhaitez-vous vraiment supprimer ce compte ?"><i class="fa fa-times icon-wait-on-click"></i></a>
 					{% endif %}
 				</div>
 			</div>
@@ -148,7 +206,11 @@
 		<div class="contact-box">
 			<div class="col-sm-4">
 				<div class="text-center">
+					{% if user.avatar.isScreenableImage|default(false) != false %}
+					<img alt="image" class="img-circle" src="{{ user.avatar.imgThumbnail(62,62,'cut')|raw }}">
+					{% else %}
 					<i class="fa fa-user fa-5x text-{{ classtype|default('muted')|raw }}"></i>
+					{% endif %}
 					<div class="m-t-xs font-bold">{{ user.username }}</div>
 				</div>
 			</div>
@@ -156,10 +218,10 @@
 				<h3>{{ user.prenom }} <strong>{{ user.nom|default(user.username) }}</strong></h3>
 				<!-- <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p> -->
 				<address>
-					<strong>{{ user.adresse }}</strong><br>
-					{{ user.cp }}<br>
-					{{ user.ville }}<br>
-					<abbr title="Téléphone">Tél. </abbr> {{ user.tel }}
+					<strong>{{ user.adresse|default('-') }}</strong><br>
+					{{ user.cp|default('-') }}<br>
+					{{ user.ville|default('-') }}<br>
+					<abbr title="Téléphone">Tél. </abbr> {{ user.telephone|default('-') }}
 				</address>
 			</div>
 			<div class="clearfix"></div>
@@ -172,7 +234,7 @@
 				</div>
 				<div class="col-xs-4">
 					{% if user.id == app.user.id %}
-					<a href="{{ path('fos_user_deleting', {id: app.security.token.user.id}) }}" type="button" class="btn btn-white btn-xs need-confirmation" title="Supprimer votre compte ?" data-message="ATTENTION, vous êtes sur le point de supprimer votre compte ! Souhaitez-vous vraiment faire cette opération ?"><i class="fa fa-times icon-wait-on-click"></i></a>
+					<a href="{{ path('fos_user_deleting', {id: app.security.token.user.id}) }}" type="button" class="btn btn-white btn-xs btn-block need-confirmation" title="Supprimer votre compte ?" data-message="ATTENTION, vous êtes sur le point de supprimer votre compte ! Souhaitez-vous vraiment faire cette opération ?"><i class="fa fa-times icon-wait-on-click"></i></a>
 					{% elseif app.user.haveRight(user) %}
 					<a href="{{ path('siteUser_delete', {username: user.username}) }}" type="button" class="btn btn-white btn-xs btn-block need-confirmation" title="Supprimer {{ user.username }}" data-message="Souhaitez-vous vraiment supprimer ce compte ?"><i class="fa fa-times icon-wait-on-click"></i></a>
 					{% endif %}
@@ -186,6 +248,7 @@
 	{% endfor %}
 
 	{% endif %}
+	{# {{ dump(users) }} #}
 
 {% else %}
 	<div class="col-md-12">

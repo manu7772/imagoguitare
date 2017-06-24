@@ -1,0 +1,77 @@
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+
+<!-- FOOTER -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<!-- <img src="assets/img/logo/bravana-default.png" alt="Bravana logo" class="logo-footer"> -->
+				<h3>{{ site.nom|default('') }}</h3>
+				<br>
+				<!-- <br> -->
+				<!-- <p>Proactively aggregate B2B initiatives before extensive channels. Monotonectally extend interactive methods of empowerment through excellent applications.</p> -->
+				<!-- <p>No need to wait, <a href="#">send us a quote</a></p> -->
+				<!-- <br> -->
+				{% if site.boutiques|default([])|length > 0 %}
+				<address class="contact-info">
+					{% if site.boutiques.0.adresse|default(null) is not null %}
+					<p>
+						<i class="icon icon_pin_alt ico-styled text-primary"></i> {{ site.boutiques.0.adresse.adresse|raw }}
+						<br>
+						{{ site.boutiques.0.adresse.cp }} {{ site.boutiques.0.adresse.ville }}
+					</p>
+					{% endif %}
+					{% if site.boutiques.0.telfixe|default(null) is not null %}
+					<p><i class="icon icon_phone ico-styled text-primary"></i> <a href="tel:{{ site.boutiques.0.telfixe }}">{{ site.boutiques.0.telfixe }}</a></p>
+					{% endif %}
+					{% if site.boutiques.0.mobile|default(null) is not null %}
+					<p><i class="icon icon_mobile ico-styled text-primary"></i> <a href="tel:{{ site.boutiques.0.mobile }}">{{ site.boutiques.0.mobile }}</a></p>
+					{% endif %}
+					<p><i class="icon icon_mail_alt ico-styled text-primary"></i> <a href="mailto:{{ site.boutiques.0.email }}">{{ site.boutiques.0.email }}</a></p>
+				</address>
+				{% endif %}
+				{# <hr> #}
+				{# <h4 class="footer-heading">Réseaux sociaux</h4> #}
+				{# <ul class="list-inline social-icons social-icons-small"> #}
+					{# <li><a href="#"><i class="fa fa-facebook"></i></a></li> #}
+					{# <li><a href="#"><i class="fa fa-google"></i></a></li> #}
+					{# <li><a href="#"><i class="fa fa-rss"></i></a></li> #}
+					<!-- <li><a href="#"><i class="fa fa-youtube"></i></a></li> -->
+					<!-- <li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
+				{# </ul> #}
+			</div>
+			{# {% for item1 in site.categorieFooters if is_granted(item1.statut.niveau) and not (item1.slug matches ("#^informations#")) -%} #}
+			{% for item1 in site.categorieFooters|default([]) if is_granted(item1.statut.niveau) -%}
+			{%- if loop.index < 4 -%}
+			<div class="col-md-3">
+				<div class="margin-bottom-50"></div>
+						<h4 class="footer-heading">{{ item1.nom }}</h4>
+				<ul class="list-unstyled latest-news-footer">
+					{% for item2 in item1.nestedChilds if is_granted(item2.statut.niveau) -%}
+					<li><a {{ actions.elementHref(item2, item1)|raw }}>{{ item2.nom }}</a></li>
+				{%- endfor %}
+				</ul>
+			</div>
+			{%- endif %}
+			{%- endfor %}
+		</div>
+		<div class="footer-bottom">
+			<p class="copyright-text left">&copy;{{ annee() }} {{ site.nom|default('') }} - Aequation Webdesign ©</p>
+{# 			<nav class="right">
+				<ul class="list-inline">
+					{% for item1 in site.categorieFooters|default([]) if is_granted(item1.statut.niveau) and item1.slug matches ("#^informations#") %}
+					{% for item2 in item1.nestedChilds if is_granted(item2.statut.niveau) %}
+					<li><a {{ actions.elementHref(item2, item1)|raw }}>{{ item2.nom }}</a></li>
+					{% endfor %}
+					{% endfor %}
+				</ul>
+			</nav> #}
+			<nav class="right">
+				<p class="copyright-text"></p>
+			</nav>
+		</div>
+		{# <div class="margin-bottom-50"></div> #}
+		{# <p class="copyright-text text-center margin-top-30 no-margin-bottom">L'abus d'alcool est dangereux pour la santé. Consommez avec modération.</p> #}
+	</div>
+</footer>
+<!-- END FOOTER -->

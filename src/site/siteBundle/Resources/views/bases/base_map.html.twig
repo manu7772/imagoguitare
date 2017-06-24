@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default(app.request.defaultLocale) }}">
+<head>
+	<title>
+	{%- block title -%}{{ include("sitesiteBundle:blocks:title.html.twig") }}{%- endblock title -%}
+	</title>
+	{%- block meta -%}{{ include("sitesiteBundle:blocks:meta.html.twig") }}{%- endblock meta -%}
+
+	{% stylesheets filter='cssrewrite, yui_css'
+	'bundles/sitesite/css/bootstrap.css'
+	'bundles/sitesite/css/font-awesome.min.css'
+	'bundles/sitesite/css/elegant-icons.css'
+	'bundles/sitesite/css/main.css'
+	'css/less/imago.css'
+	'bundles/sitesite/css/main-shop.css'
+	'bundles/sitesite/css/my-custom-styles.css'
+	 output="css/site/base_map.css" %}
+	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	{% endstylesheets %}
+
+	{{ include("sitesiteBundle:blocks:google_fonts.html.twig") }}
+	{{ include("sitesiteBundle:blocks:favicon.html.twig") }}
+</head>
+<body>
+	{% block googleAnalyticScript %}
+	{{ include('sitesiteBundle:blocks:googleAnalyticScript.html.twig') }}
+	{% endblock googleAnalyticScript %}
+
+	{% block body %}
+	{% endblock body %}
+
+	{% block hiddendata %}
+		{{ include('LaboAdminBundle:blocks:hidden-data.html.twig') }}
+	{% endblock hiddendata %}
+
+	{% block js %}
+	{% javascripts
+	'bundles/sitesite/js/jquery-2.1.1.min.js'
+	'bundles/sitesite/js/bootstrap.min.js'
+	'bundles/sitesite/js/plugins/easing/jquery.easing.min.js'
+	'bundles/sitesite/js/plugins/google-map/google-map.js'
+	'bundles/sitesite/js/plugins/parsley-validation/parsley.min.js'
+	'bundles/sitesite/js/plugins/toastr/toastr.min.js'
+	'bundles/sitesite/js/bravana.js'
+	 output="js/site/base_map.js" %}
+	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		{% block end_javascripts %}
+		{% endblock end_javascripts %}
+	});
+	</script>
+	{% endblock js %}
+</body>
+</html>

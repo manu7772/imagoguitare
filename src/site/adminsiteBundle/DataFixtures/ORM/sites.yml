@@ -1,0 +1,35 @@
+site:
+    order: 100
+    data:
+        -
+            nom: 'Imago Guitare'
+            accroche: 'Rico Priet, Luthier contemporain'
+            default: 1
+            couleur: 'rgba(54,26,86,1)'
+            menuNav:
+                field: nom
+                value: 'Imago Guitare, luthier'
+            categorieFooters:
+                field: nom
+                value: 
+                    - 'informations'
+                    - 'Imago Guitare, luthier'
+            boutiques:
+                field: nom
+                value: 'Atelier Imago Guitare'
+        -
+            nom: 'Imago Guitare TEST'
+            accroche: 'Rico Priet, Luthier contemporain'
+            # default: 0
+            couleur: 'rgba(184,26,86,1)'
+            menuNav:
+                field: nom
+                value: 'Imago Guitare, luthier'
+            categorieFooters:
+                field: nom
+                value: 
+                    - 'informations'
+                    - 'Imago Guitare, luthier'
+            boutiques:
+                field: nom
+                value: 'Atelier Imago Guitare'

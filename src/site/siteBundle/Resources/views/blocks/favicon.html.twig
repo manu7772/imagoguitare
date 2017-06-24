@@ -1,4 +1,15 @@
-<!-- Favicone Icon -->
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-<link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+<!-- FAVICONS -->
+{% if site.favicon|default(null) != null %}
+	{% set favicon16 = site.favicon.imgThumbnail(16,16,'cut') %}
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ site.favicon.imgThumbnail(144,144,'cut') }}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ site.favicon.imgThumbnail(114,114,'cut') }}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ site.favicon.imgThumbnail(72,72,'cut') }}">
+	<link rel="apple-touch-icon" href="{{ favicon16 }}">
+	<link rel="shortcut icon" href="{{ favicon16 }}">
+{% else %}
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon_144x144.ico') }}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon_114x114.ico') }}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon_72x72.ico') }}">
+	<link rel="apple-touch-icon" href="{{ asset('favicon_16x16.ico') }}">
+	<link rel="shortcut icon" href="{{ asset('favicon_16x16.ico') }}">
+{% endif %}

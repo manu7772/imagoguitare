@@ -3,67 +3,24 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: twigpages_globals.yml }
+    - { resource: labo_parameters.yml }
+    - { resource: labo_icons.yml }
+    - { resource: cropper.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    menus:
-        site-menu:
-            bundle: sitesite
-            name: imago
-        admin-sidemenu:
-            bundle: siteadmin
-            name: sidemenu
-    locale:                 fr
-    homepage:               sitesite_homepage
-    restrict_admin:         ROLE_ADMIN
-    formatDate:             "dd-MM-yyyy"
-    formatDateHeure:        "Y-m-d H:i:s"
-    formFormatDate:         "dd/mm/yyyy"
-    timezone:               "Europe/Paris"
+    locale:                 "fr"
     default_locales:        "fr|en"
-    webmaster:
-        nom:        Dujardin
-        prenom:     Emmanuel
-        tel:        06 13 14 35 15
-        email:      emmanuel@aequation-webdesign.fr
-    list_locales:
-        default:            %default_locales%
-        sitesite:           %default_locales%
-        sitetranslate:      %default_locales%
-        siteedition:        %default_locales%
-        siteUser:           %default_locales%
-        siteadmin:          %default_locales%
-    messages:
-        types:
-            success: success
-            info: info
-            warning: warning
-            error: error
-        default_params:
-            texte: "Texte"
-            type: 'success'
-            title: "Titre"
-            showMethod: "slideDown"
-            hideMethod: "fadeOut"
-            showEasing: "swing"
-            hideEasing: "swing"
-            showDuration: 400
-            hideDuration: 1000
-            positionClass: "toast-top-right"
-            closeButton: false
-            progressBar: true
-            debug: false
-            timeOut: 6000
-            extendedTimeOut: 1000
-            closeHtml: '<button type="button">&times;</button>'
-            newestOnTop: false
-    marketplace:
-        active: false
-        paiement: false
-        devise:
-            name: euro
-            symb: €
+    keywords:
+        title: site.title
+        description: site.description
+        keywords: site.keywords
+    formatDate:      "dd-MM-yyyy"
+    formatDateHeure: "d-m-Y H:i:s"
+    admin:
+        accueil_nb_messages: 6
+
 
 framework:
     #esi:             ~
@@ -96,46 +53,137 @@ twig:
         webmaster: %webmaster%
         sidemenuswitcher: true
         searchswitcher: false
+        homepage: %homepage%
         formatDate: %formatDate%
         formatDateHeure: %formatDateHeure%
+        formatDateOnly: %formatDateOnly%
         formFormatDate:  %formFormatDate%
         default_locales: %default_locales%
         list_locales: %list_locales%
-        marketplace: marketplace
+        info_entites: %info_entites%
+        marketplace: %marketplace%
+        ajaxlive: %ajaxlive%
+        serializer: %serializer%
+        site_domains: %site_domains%
+        site_titles: %site_titles%
     form:
         resources:
             # - 'sitegraphicsBundle:Form:form_div_layout.html.twig'
             # - 'sitegraphicsBundle:Form:form_table_layout.html.twig'
             # - 'sitegraphicsBundle:Form:bootstrap_3_horizontal_layout.html.twig'
             # - 'sitegraphicsBundle:Form:bootstrap_3_layout.html.twig'
-            - 'sitegraphicsBundle:Form:performed_bootstrap_3_horizontal_layout.html.twig'
+            # - 'sitegraphicsBundle:Form:performed_bootstrap_3_horizontal_layout.html.twig'
             # - 'sitegraphicsBundle:Form:performed_bootstrap_3_layout.html.twig'
+            - 'sitegraphicsBundle:Form:performed_bootstrap_3_horizontal_layout_laboadmin.html.twig'
 
+braincrafted_bootstrap:
+    auto_configure:
+        assetic: false
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:
+        - LaboAdminBundle
+        - siteadminsiteBundle
         - sitesiteBundle
-        - siteadminBundle
-        - siteinterfaceBundle
         - siteUserBundle
         - FOSUserBundle
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
-        #closure:
-        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        lessphp:
+            file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
+            apply_to: ".less.css$"
+            # Les deux lignes dci-dessous permettent de minifier le CSS compilé
+            formatter: "compressed"
+            preserve_comments: false
         yui_css:
-            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor/build/yuicompressor-2.4.8.jar"
             timeout: 1200
         yui_js:
-            jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"
+            jar: "%kernel.root_dir%/Resources/java/yuicompressor/build/yuicompressor-2.4.8.jar"
             timeout: 1200
-        # LESS
-        lessphp:
-            file: %kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php
-            apply_to: "(\.less|\.less\.css)$"
+    assets:
+        appleTouchIcon_png:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/apple-touch-icon.png']
+            output: apple-touch-icon.png
+        favicon_ico:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon.ico']
+            output: favicon.ico
+        favicon_png:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon.png']
+            output: favicon.png
+        favicon_16x16_ICO:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon_16x16.ICO']
+            output: favicon_16x16.ico
+        favicon_72x72_ICO:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon_72x72.ICO']
+            output: favicon_72x72.ico
+        favicon_114x114_ICO:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon_114x114.ICO']
+            output: favicon_114x114.ico
+        favicon_144x144_ICO:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon_144x144.ICO']
+            output: favicon_144x144.ico
+        favicon_144x144_PNG:
+            inputs: ['%kernel.root_dir%/../app/Resources/favicons/favicon_144x144.PNG']
+            output: favicon_144x144.png
+        imago_css:
+            inputs: ['bundles/sitesite/css/skins/imago.less.css']
+            output: css/less/imago.css
+            filters:
+                - cssrewrite
+                - lessphp
+                - yui_css
+        bootstrap_css:
+            inputs:
+                - bundles/sitesite/less/variables.less
+                # - %kernel.root_dir%/../vendor/twbs/bootstrap/less/variables.less
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less
+            filters:
+                - lessphp
+                - cssrewrite
+            output: ~
+        bootstrap_js:
+            filters: ['yui_js']
+            inputs:
+                # - %kernel.root_dir%/../vendor/twbs/bootstrap/js/*.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/alert.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/button.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/carousel.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/collapse.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/dropdown.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/modal.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tooltip.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/popover.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/scrollspy.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/affix.js
+                - %kernel.root_dir%/../vendor/braincrafted/bootstrap-bundle/Braincrafted/Bundle/BootstrapBundle/Resources/js/bc-bootstrap-collection.js
+            output: ~
+        jquery_ui_css:
+            filters:
+                - lessphp
+                - cssrewrite
+            inputs:
+                # - 'https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css'
+                - 'bundles/sitesite/css/jquery-ui.css'
+            output: ~
+        jquery_js:
+            filters: ['yui_js']
+            inputs:
+                # - 'https://code.jquery.com/jquery-3.1.1.js'
+                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.12.0.js
+            output: ~
+        allJquery_js:
+            filters: ['yui_js']
+            inputs:
+                - @jquery_js
+                # - 'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+                - 'bundles/sitesite/js/jquery-ui.min.js'
+            output: ~
 
 # Doctrine Configuration
 doctrine:
@@ -159,26 +207,31 @@ doctrine:
         # naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            gedmo_translatable:
-                type: annotation
-                prefix: Gedmo\Translatable\Entity
-                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
-                alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
-            gedmo_translator:
-                type: annotation
-                prefix: Gedmo\Translator\Entity
-                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
-                alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
-            gedmo_loggable:
-                type: annotation
-                prefix: Gedmo\Loggable\Entity
-                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
-                alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
-            gedmo_tree:
-                type: annotation
-                prefix: Gedmo\Tree\Entity
-                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
-                alias: GedmoTree # this one is optional and will default to the name set for the mapping 
+            # gedmo_translatable:
+            #     type: annotation
+            #     prefix: Gedmo\Translatable\Entity
+            #     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+            #     alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+            # gedmo_translator:
+            #     type: annotation
+            #     prefix: Gedmo\Translator\Entity
+            #     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+            #     alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
+            # gedmo_loggable:
+            #     type: annotation
+            #     prefix: Gedmo\Loggable\Entity
+            #     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+            #     alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
+            # gedmo_tree:
+            #     type: annotation
+            #     prefix: Gedmo\Tree\Entity
+            #     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+            #     alias: GedmoTree # this one is optional and will default to the name set for the mapping 
+            # gedmo_sortable:
+            #     type: annotation
+            #     prefix: Gedmo\Sortable\Entity
+            #     dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Sortable/Entity"
+            #     alias: GedmoSortable # this one is optional and will default to the name set for the mapping 
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -190,15 +243,15 @@ swiftmailer:
 
 # FOSUser Configuration
 fos_user:
-    db_driver:     orm  # le type de BDD à utiliser : ORM Doctrine
-    firewall_name: main # le nom du firewall derrière lequel on utilisera ces utilisateurs
-    user_class:    site\UserBundle\Entity\User # la classe de l'entité User que nous utilisons
+    db_driver:          orm  # le type de BDD à utiliser : ORM Doctrine
+    firewall_name:      main # le nom du firewall derrière lequel on utilisera ces utilisateurs
+    user_class:         site\UserBundle\Entity\User # la classe de l'entité User que nous utilisons
     registration:
         form:
-            type: site_user_registration
+            type:       site_user_registration
         confirmation:
-            enabled:    true # change to true for required email confirmation
-            template:   siteUserBundle:Registration:email.txt.twig
+            enabled:    false # change to true for required email confirmation
+            # template:   siteUserBundle:Registration:email.txt.twig
     profile:
         form:
             type: site_user_profile
@@ -206,43 +259,21 @@ fos_user:
     use_listener:             true
     use_flash_notifications:  true
     use_username_form_type:   true
-    from_email:
-        address:              no-reply@imagoguitare.com
-        sender_name:          imago_guitare
+    from_email: %mail%
+
+# JMS Serializer configuration
+jms_serializer:
+  metadata:
+    auto_detection: true
+    debug: "%kernel.debug%"
 
 # Stof\DoctrineExtensionBundle configuration
 stof_doctrine_extensions:
     orm:
         default:
-            loggable:       false
-            sluggable:      true
-            timestampable:  false
-            translatable:   false
-            tree:           true
-
-# # monolog config
-# monolog:
-#     handlers:
-#         main:
-#             type:               fingers_crossed
-#             action_level:       error
-#             handler:            grouped
-#             channels:           !bomo_files
-#         grouped:
-#             type:               group
-#             members:            [streamed, swift]
-#         streamed:
-#             type:               stream
-#             path:               "%kernel.logs_dir%/%kernel.environment%.log"
-#             level:              debug
-#         swift:
-#             type:               swift_mailer
-#             from_email:         FQN@foo.com
-#             to_email:           manu7772@gmail.com
-#             subject:            "monolog - imagoguitare"
-#             level:              debug
-#         login:
-#             type:               stream
-#             path:               "%kernel.logs_dir%/auth.log"
-#             level:              info
-#             channels:           security
+            tree: false
+            sortable: true
+            sluggable: true
+            loggable: false
+            timestampable: false
+            translatable: false

@@ -1,0 +1,40 @@
+name_s: slides
+name: slide
+not_found: 'no slide found'
+x_found: '{0} no slide found|{1} 1 slide found|[2,+Inf] %count% slides found'
+create: 'create new slide'
+create_btn: 'new slide'
+backlist: 'back to list of slides'
+backlist_btn: 'back to list'
+dontexist: 'this slide does not exist'
+moredetails: 'more details on %name%'
+existe: this slide already exists
+suppression: 'slide %name% has been removed'
+moredetails: 'more details on %name%'
+grants:
+    no_access: You do not have rights to access to slide<br>"%name%"
+form:
+    select: Select an item to promote
+fields:
+    id: id
+    nom: name
+    titre: title
+    accroche: text
+    descriptif: description
+    image: image
+    couleur: color
+    youtube: Youtube code
+    transition: transition
+    delay: delay
+    overlay: dark background
+    autoplayvideo: launch video
+    lightext: light text
+    created: creation
+    updated: pudated
+    autres: other informations
+    jamais: no modification
+    parents: parents
+    parent: parent
+    icon: icon
+    item: element
+    group_diaporama_slideParents: diaporamas

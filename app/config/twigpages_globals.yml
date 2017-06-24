@@ -1,99 +1,208 @@
 twig:
     globals:
-        keywords:
-            title: site.title
-            description: site.description
-            keywords: site.keywords
-        formatDate:      "dd-MM-yyyy"
-        formatDateHeure: "d-m-Y H:i:s"
-        fileFormats:
-            pdf:        pdf
-            jpg:        image
-            jpeg:       image
-            gif:        image
-            png:        image
-            default:    text
         default_icon: 'fa-caret-right'
         menu_Admin_default_role: %restrict_admin%
         menu_Admin:
-            item0:
+            accueil:
                 nom: 'accueil'
-                path: %homepage%
-                icon: 'fa-home'
-            item1:
-                role: 'ROLE_TRANSLATOR'
-                nom: 'traduction.name'
-                path: 'sitetranslate_homepage'
-                icon: 'fa-flag'
-            item2:
+                path: siteadmin_homepage
+                icon: 'entite.home'
+            categories:
                 role: 'ROLE_EDITOR'
-                nom: 'pageweb.name_s'
+                nom: name_s
+                trans_domain: categorie
+                icon: 'entite.categorie'
+                path: 
+                    path: 'siteadmin_repo_categorie'
+                    params:
+                        method: findRoots
+            marketplace:
+                role: 'ROLE_ADMIN'
+                nom: 'marketplace.name'
                 path: 'siteadmin_homepage'
-                icon: 'fa-desktop'
+                icon: 'entite.article'
                 level2: 
-                    item0:
-                        role: 'ROLE_EDITOR'
-                        nom: 'pageweb.name_s'
+                    article:
+                        role: 'ROLE_ADMIN'
+                        nom: 'name_s'
+                        trans_domain: article
+                        icon: 'entite.article'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: article
+                    boutiques:
+                        role: 'ROLE_ADMIN'
+                        nom: 'name_s'
+                        trans_domain: boutique
+                        icon: 'entite.boutique'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: boutique
+                    facture:
+                        role: 'ROLE_ADMIN'
+                        nom: 'name_s'
+                        trans_domain: facture
+                        icon: 'entite.facture'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: facture
+                    tauxTva:
+                        role: 'ROLE_ADMIN'
+                        nom: 'name_s'
+                        trans_domain: tauxTva
+                        icon: 'entite.tauxTva'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: tauxTva
+            pageweb:
+                role: 'ROLE_EDITOR'
+                nom: 'name_s'
+                trans_domain: pageweb
+                path: 'siteadmin_homepage'
+                icon: 'entite.pageweb'
+                level2: 
+                    pagewebs:
+                        nom: 'name_s'
+                        trans_domain: pageweb
+                        icon: 'entite.pageweb'
                         path: 
                             path: 'siteadmin_entite'
                             params:
                                 entite: pageweb
-                    item1:
-                        role: %restrict_admin%
-                        nom: 'menu.name_s'
+                    sections:
+                        nom: 'name_s'
+                        trans_domain: section
+                        icon: 'entite.section'
                         path: 
-                            path: 'siteadmin_menus'
+                            path: 'siteadmin_entite'
                             params:
-                                name: all
-            item3:
+                                entite: section
+            media:
                 role: 'ROLE_EDITOR'
-                nom: 'media.name_s'
-                path: 
-                    path: 'siteadmin_entite'
-                    params:
-                        entite: media
-                icon: 'fa-film'
-            item4:
-                role: %restrict_admin%
-                nom: 'User.name_s'
-                path: 'site_user_homepage'
-                icon: 'fa-users'
-            item5:
-                role: ROLE_EDITOR
-                nom: message.name_s
-                icon: fa-paper-plane
-                path:
-                    path: siteadmin_entite
-                    params:
-                        entite: message
-            item6:
-                role: %restrict_admin%
-                nom: 'parametres'
+                nom: 'name_s'
+                trans_domain: media
                 path: 'siteadmin_homepage'
-                icon: 'fa-gear'
+                icon: 'entite.media'
                 level2: 
-                    item0:
-                        nom: 'tag.name_s'
+                    slides:
+                        nom: 'name_s'
+                        trans_domain: slide
+                        icon: 'entite.slide'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: slide
+                    diaporama:
+                        nom: 'types.diapo'
+                        trans_domain: categorie
+                        icon: 'entite.multimedia'
+                        path:
+                            path: 'siteadmin_repo_categorie'
+                            params:
+                                method: findCollectionsByType
+                                repoParams: diapo
+                    images:
+                        nom: 'name_s'
+                        trans_domain: image
+                        icon: 'entite.image'
+                        path: 
+                            path: 'siteadmin_entite'
+                            params:
+                                entite: image
+                    tags:
+                        nom: 'name_s'
+                        trans_domain: tag
+                        icon: 'entite.tags'
                         path: 
                             path: 'siteadmin_entite'
                             params:
                                 entite: tag
-                    item1:
-                        nom: 'fileFormat.name_s'
+            utilisateurs:
+                nom: name_s
+                trans_domain: User
+                icon: 'entite.User'
+                path: 
+                    path: 'siteUser_users'
+                    # params:
+                        # type: ROLE_USER
+            messages:
+                role: %restrict_admin%
+                nom: name_s
+                trans_domain: message
+                icon: 'entite.message'
+                path:
+                    path: siteadmin_entite
+                    params:
+                        entite: message
+            parametres:
+                role: %restrict_admin%
+                nom: 'siteparams'
+                trans_domain: site
+                path: 'siteadmin_homepage'
+                icon: 'entite.parametres'
+                level2: 
+                    sites:
+                        nom: 'name_s'
+                        trans_domain: site
+                        icon: 'entite.site'
                         path: 
                             path: 'siteadmin_entite'
                             params:
-                                entite: fileFormat
-            item7:
-                nom: 'help'
+                                entite: site
+                    menus:
+                        role: %restrict_admin%
+                        nom: 'name_s'
+                        trans_domain: menu
+                        icon: 'entite.menu'
+                        trans_domain: menus
+                        path:
+                            path: 'siteadmin_repo_categorie'
+                            params:
+                                method: findCollectionsByType
+                                repoParams: menu
+                    # statut:
+                    #     nom: 'name_s'
+                    #     role: 'ROLE_SUPER_ADMIN'
+                    #     icon: 'entite.statut'
+                    #     trans_domain: statut
+                    #     path: 
+                    #         path: 'siteadmin_entite'
+                    #         params:
+                    #             entite: statut
+            help:
+                nom: 'name'
+                trans_domain: help
                 path: siteadmin_support
-                icon: 'fa-support'
-            item8:
+                icon: 'entite.help'
+            webmaster:
                 role: 'ROLE_SUPER_ADMIN'
-                nom: 'Super Admin'
-                path: 'siteadmin_homepage'
-                icon: 'fa-cogs'
+                nom: 'roles.ROLE_SUPER_ADMIN'
+                trans_domain: User
+                path: 'siteadmin_sadmin_index'
+                icon: 'entite.webmaster'
                 level2: 
-                    item1:
+                    sadminHome:
+                        nom: 'Tableau de bord'
+                        path: 'siteadmin_sadmin_index'
+                    generate:
                         nom: 'install.name'
                         path: 'generate'
+                    routes:
+                        nom: 'Routes'
+                        path: 'siteadmin_sadmin_routes'
+                    bundles:
+                        nom: 'Bundles'
+                        path: 'siteadmin_sadmin_bundles'
+                    entities:
+                        nom: 'superadmin.entites'
+                        path: 'siteadmin_sadmin_entities'
+                    panier:
+                        nom: 'Testpanier'
+                        path: 'siteadmin_sadmin_panier'
+                    sessions:
+                        nom: 'Session data'
+                        path: 'siteadmin_sadmin_sessiondata'

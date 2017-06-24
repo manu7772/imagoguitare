@@ -1,0 +1,51 @@
+{% if pageweb.diaporama.nestedChilds|default(null) is not null %}
+{% set width = 800 %}
+{% set heigth = 600 %}
+<!-- SHOP BY CATEGORY -->
+<section>
+	<div class="container">
+		{# <div class="section-heading-center section-heading-shop"> #}
+			{# <h2 class="heading-border">Shop by <strong>Category</strong></h2> #}
+		{# </div> #}
+		<ul class="list-unstyled category-grid clearfix">
+			{% for slide in pageweb.diaporama.nestedChilds %}
+			{% if slide.shortName == 'image' %}
+			<li class="category-box">
+				<a href="#">
+					<span class="overlay-bg">&nbsp;</span>
+					<img src="{{ slide.imgThumbnail(width,heigth,'cut') }}" class="img-responsive" alt="{{ slide.slug }}">
+				</a>
+				<p class="overlay-info">
+					<strong class="category-name">{{ slide.nom }}</strong>
+					{# <a href="#" class="btn btn-primary">SHOP NOW <i class="fa fa-chevron-right"></i></a> #}
+				</p>
+			</li>
+			{% elseif slide.shortName == 'slide' and slide.image|default(null) is not null %}
+			<li class="category-box">
+				<a href="#">
+					<span class="overlay-bg">&nbsp;</span>
+					<img src="{{ slide.image.imgThumbnail(width,heigth,'cut') }}" class="img-responsive" alt="{{ slide.image.slug }}">
+				</a>
+				<p class="overlay-info">
+					<strong class="category-name">{{ slide.titre|default('…')|replace({"<br>":" "})|truncate(80,true,'…')|raw }}</strong>
+					{# <a href="#" class="btn btn-primary">SHOP NOW <i class="fa fa-chevron-right"></i></a> #}
+				</p>
+			</li>
+			{% endif %}
+			{% endfor %}
+
+{# 			<li class="category-box category-box-width-2x">
+				<a href="#">
+					<span class="overlay-bg">&nbsp;</span>
+					<img src="assets/img/shop/categories/bags.jpg" class="img-responsive" alt="Watches">
+				</a>
+				<p class="overlay-info">
+					<strong class="category-name">{{BAGS}}</strong>
+					<a href="#" class="btn btn-primary">SHOP NOW <i class="fa fa-chevron-right"></i></a>
+				</p>
+			</li> #}
+		</ul>
+	</div>
+</section>
+<!-- END SHOP BY CATEGORY -->
+{% endif %}

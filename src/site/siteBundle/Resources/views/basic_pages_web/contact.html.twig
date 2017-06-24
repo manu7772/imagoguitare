@@ -1,0 +1,27 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+{% set cssjsloads = 'map' %}
+
+{% block content %}
+		<!-- PAGE HEADER DEFAULT -->
+		<div class="page-header">
+			<div class="container">
+				<h1 class="page-title pull-left">{{ pageweb.nom|capitalize }}</h1>
+				<ol class="breadcrumb link-accent">
+					<li class="active">Plan d'accès</li>
+				</ol>
+			</div>
+		</div>
+		<!-- END PAGE HEADER DEFAULT -->
+		<!-- PAGE CONTENT -->
+		<div class="page-content no-margin-top">
+			<div class="google-map map-fullwidth">
+				<div id="custom-map-canvas"></div>
+			</div>
+			<div class="margin-bottom-50"></div>
+		</div>
+	</div>
+</section>
+<!-- END ABOUT -->
+
+{% endblock content %}
+

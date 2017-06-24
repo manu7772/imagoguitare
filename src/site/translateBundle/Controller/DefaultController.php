@@ -3,13 +3,18 @@
 namespace site\translateBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * DefaultController
+ * @Security("has_role('ROLE_TRANSLATOR')")
+ */
 class DefaultController extends Controller {
 
     const MOTIF_FORM = '93736254F_form_data_';
 
     /**
-     *
+     * 
      */
     public function showtradAction() {
         $data = array();
@@ -29,7 +34,7 @@ class DefaultController extends Controller {
 
 
     /**
-     *
+     * 
      */
     public function mergetradAction($language, $bundle, $domain, $current = null) {
         $aeTrans = $this->get('aetools.translate');
@@ -40,22 +45,22 @@ class DefaultController extends Controller {
             $insert = $aeTrans->insertSchemaType($bundle, $domain, $lang);
         }
         // message
-        $msg = $this->get('aetools.aeMessages');
+        $msg = $this->get('aetools.aeServiceMessages');
         if($insert !== false)
             $msg->addFlashMessage('traduction.merge.done', array('traduction.merge.with', "%language%" => $language), 'info');
         else
             $msg->addFlashMessage('error.name', 'error.operation', 'error', 'exceptions');
         // redirection
         if($current == null) {
-            return $this->redirect($this->generateUrl('sitetranslate_homepage'));
+            return $this->redirectToRoute('sitetranslate_homepage');
         } else {
-            return $this->redirect($this->generateUrl('edit_traduction', array("bundle" => $bundle, "domain" => $domain, "language" => $current)));
+            return $this->redirectToRoute('edit_traduction', array("bundle" => $bundle, "domain" => $domain, "language" => $current));
         }
     }
 
 
     /**
-     *
+     * 
      */
     public function editradAction($bundle, $domain, $language) {
         $data = array();
@@ -69,7 +74,7 @@ class DefaultController extends Controller {
         $data['langues']['list'] = $aeTrans->getLanguages();
         if(!in_array($language, $data['langues']['list'])) {
             // langage inconnu
-            return $this->redirect($this->generateUrl('sitetranslate_homepage'));
+            return $this->redirectToRoute('sitetranslate_homepage');
         }
         $data['langues']['bundles'] = $aeTrans->getLanguagesByBundles();
         $data['langues']['default'] = $aeTrans->getDefaultLocale();
@@ -92,7 +97,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     *
+     * 
      */
     public function changeAction() {
         $aeTrans = $this->get('aetools.translate');
@@ -111,14 +116,14 @@ class DefaultController extends Controller {
         // $newvalue = $request->request->get('newvalue');
         // $result = $aeTrans->changeValue($bundle, $domain, $language, $field, $newvalue);
         if($result == false) {
-            $msg = $this->get('aetools.aeMessages');
+            $msg = $this->get('aetools.aeServiceMessages');
             $msg->addFlashMessage('Modification', 'Erreur lors de l\'enregistrement.', 'error');
         }
         // echo('<pre>ALL<br>');
         // var_dump($all);
         // echo('</pre>');
         // return new Response('ok');
-        return $this->redirect($this->generateUrl('edit_traduction', array("bundle" => $bundle, "domain" => $domain, "language" => $language)));
+        return $this->redirectToRoute('edit_traduction', array("bundle" => $bundle, "domain" => $domain, "language" => $language));
     }
 
 }

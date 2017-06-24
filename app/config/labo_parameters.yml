@@ -1,0 +1,326 @@
+parameters:
+    cache:
+        delay: '-10 MINUTES'
+    ajaxlive:
+        name: ajaxlive          # name
+        active: false
+        parameters:
+            frequency: 3000         # frequency in seconds
+            frequencyMax: 300000    # frequencyMax in seconds
+            frequencyMin: 3000      # frequencyMin in seconds
+        entities:
+            panier:
+                JmsGroups: ['ajaxlive']
+                shortname: panier
+                QueryMethod:
+                    method: findAllOfUser
+                    shortCutContext: false
+                user_condition: id
+            message:
+                JmsGroups: ['ajaxlive']
+                shortname: message
+                QueryMethod:
+                    method: findNotRead
+                    shortCutContext: false
+                user_condition: mail_sitemessages
+            sessiondata:
+                JmsGroups: ['ajaxlive']
+                shortname: sessiondata
+                QueryMethod:
+                    method: findAllOfUser
+                    shortCutContext: false
+                user_condition: is_collaborator
+    serializer:
+        default:
+            JmsGroups: ['complete']
+            QueryMethod:
+                method: findAllOfUser
+                shortCutContext: false
+            user_condition: all
+    site_titles:
+        part1: 'Domaine Buffard'
+        part2: 'Claude Buffard, viticulteur à Cerdon'
+    site_domains:
+        main_domain: 'imagoguitare.aequation.fr'
+        public:
+            reseau: 'http://'
+            prefix: ''
+            domain: 'imagoguitare.aequation'
+            extensions:
+                - 'fr'
+        test:
+            reseau: 'http://'
+            prefix: 'test'
+            domain: 'imagoguitare.aequation'
+            extensions:
+                - 'fr'
+        admin:
+            reseau: 'http://'
+            prefix: 'admin'
+            domain: 'imagoguitare.aequation'
+            extensions:
+                - 'fr'
+            # path: '/admin'
+        testadmin:
+            reseau: 'http://'
+            prefix: 'testadmin'
+            domain: 'imagoguitare.aequation'
+            extensions:
+                - 'fr'
+            # path: '/admin'
+    default_color: 'rgba(128,128,128,1)'
+    webfolders:
+        tree: # nestable #
+            - params
+            - labo_cache
+            - debug
+            - images
+    mail:
+        address: noreply@buffard-cerdon.fr
+        sender_name: Domaine Buffard
+    # menus:
+    #     site-menu:
+    #         bundle: sitesite
+    #         name: publicmenu
+    #     admin-sidemenu:
+    #         bundle: siteadmin
+    #         name: sidemenu
+    homepage:               sitesite_homepage
+    restrict_admin:         ROLE_ADMIN
+    formatDate:             "dd-MM-yyyy" # formulaires
+    formatDateOnly:         "d-m-Y"
+    formatDateHeure:        "d-m-Y H:i:s"
+    formFormatDate:         "dd-mm-yyyy"
+    timezone:               "Europe/Paris"
+    webmaster:
+        nom:        Dujardin
+        prenom:     Emmanuel
+        tel:        06 13 14 35 15
+        email:      manu7772@gmail.com
+        societe:    Aequation-Webdesign
+    list_locales:
+        default:            %default_locales%
+        sitesite:           %default_locales%
+        sitetranslate:      %default_locales%
+        siteedition:        %default_locales%
+        siteUser:           %default_locales%
+        siteadmin:          %default_locales%
+        siteadminsite:      %default_locales%
+        sitegraphics:       %default_locales%
+    messages:
+        types:
+            success: success
+            info: info
+            warning: warning
+            error: error
+        default_params:
+            texte: "Texte"
+            type: 'success'
+            title: "Titre"
+            showMethod: "slideDown"
+            hideMethod: "fadeOut"
+            showEasing: "swing"
+            hideEasing: "swing"
+            showDuration: 400
+            hideDuration: 1000
+            positionClass: "toast-top-right"
+            closeButton: false
+            progressBar: true
+            debug: false
+            timeOut: 6000
+            extendedTimeOut: 500
+            closeHtml: '<button type="button">&times;</button>'
+            newestOnTop: true
+    info_entites:
+        default:
+            icon: fa-question
+        site:
+            icon: fa-building
+        evenement:
+            icon: fa-bell-o
+            singleFields:
+                couleur: '#361a56'
+            nestedAttributes:
+                nesteds:
+                    data-limit: 0
+                    class: ['categorie']
+                    required: false
+                evenements:
+                    data-limit: 10
+                    class: ['evenement']
+                    required: false
+        article:
+            icon: fa-shopping-cart
+            nestedAttributes:
+                articles:
+                    data-limit: 10
+                    class: ['article']
+                    required: false
+                nesteds:
+                    data-limit: 0
+                    class: ['categorie']
+                    required: false
+            singleFields:
+                vendable: true
+                surdevis: false
+                prix: 1.00
+                unitprix: 'Kg'
+                unit: 'g'
+                defaultquantity: 1
+                maxquantity: null
+                minquantity: 1
+                increment: 1
+        marque:
+            icon: fa-trophy
+        panier:
+            icon: fa-shopping-cart
+        nested:
+            icon: fa-folder
+            nestedAttributes:
+                categorie_nested:
+                    data-limit: 1
+                    class: ['categorie']
+                    required: false
+                images:
+                    data-limit: 1000
+                    class: ['image']
+                    required: false
+        categorie:
+            icon: fa-folder
+            nestedAttributes:
+                nesteds:
+                    data-limit: 0
+                    class: 'method::getAccepts'
+                    required: false
+                pagewebs:
+                    data-limit: 12
+                    class: ['pageweb']
+                    required: false
+            types_descrition:
+                defaults:
+                    accepts: ['pageweb', 'article','image','evenement','fiche','marque','reseau','boutique','pdf','categorie','slide','section']
+                    couleur: 'rgba(128,128,128,1)'
+                types:
+                    trash:
+                        nom: 'types.trash'
+                        accepts: ['pageweb','article','image','evenement','fiche','marque','reseau','boutique','pdf','categorie','slide','section']
+                    menu:
+                        nom: 'types.menu'
+                        accepts: ['pageweb','article','image','evenement','fiche','marque','reseau','boutique','pdf','categorie']
+                    # multimedia:
+                    #     nom: 'types.multimedia'
+                    #     accepts: ['pageweb','article','image','fiche','marque','reseau','boutique','pdf']
+                    diapo:
+                        nom: 'types.diapo'
+                        accepts: ['article','evenement','image','slide']
+                    evenement:
+                        nom: 'types.evenement'
+                        accepts: ['evenement']
+                    pageweb:
+                        nom: 'types.pageweb'
+                        accepts: ['pageweb']
+                    # section:
+                    #     nom: 'types.section'
+                    #     accepts: ['section']
+                    article:
+                        nom: 'types.article'
+                        accepts: ['article']
+                    image:
+                        nom: 'types.image'
+                        accepts: ['image']
+                    # marque:
+                    #     nom: 'types.marque'
+                    #     accepts: ['marque']
+                    # reseau:
+                    #     nom: 'types.reseau'
+                    #     accepts: ['reseau']
+                    # boutique:
+                    #     nom: 'types.boutique'
+                    #     accepts: ['boutique']
+                    # pdf:
+                    #     nom: 'types.pdf'
+                    #     accepts: ['pdf']
+        pageweb:
+            icon: fa-desktop
+            nestedAttributes:
+                nesteds:
+                    data-limit: 0
+                    class: ['categorie']
+                    required: false
+                pagewebSections:
+                    data-limit: 0
+                    class: ['section']
+                    required: false
+        section:
+            icon: fa-code
+            nestedAttributes:
+                nesteds:
+                    data-limit: 0
+                    class: ['categorie']
+                    required: false
+                pagewebSections:
+                    data-limit: 0
+                    class: ['pageweb']
+                    required: false
+        slide:
+            icon: fa-video-camera
+            nestedAttributes:
+                nesteds:
+                    data-limit: 8
+                    class: ['categorie']
+                    required: false
+        media:
+            icon: fa-film
+            preferedStockage: database
+        fiche:
+            icon: fa-file-text-o
+            nestedAttributes:
+                fiches:
+                    data-limit: 10
+                    class: ['fiche']
+                    required: false
+                nesteds:
+                    data-limit: 0
+                    class: ['categorie']
+                    required: false
+        image:
+            icon: fa-file-image-o
+        pdf:
+            icon: fa-file-pdf-o
+        multimedia:
+            icon: fa-film
+        rawfile:
+            icon: fa-file-o
+        tag:
+            icon: fa-tag
+        statut:
+            icon: fa-toggle-on
+        message:
+            icon: fa-paper-plane
+        User:
+            icon: fa-user
+        adresse:
+            icon: fa-map-marker
+        boutique:
+            icon: fa-building-o
+        tauxTva: 
+            icon: fa-calculator
+        facture: 
+            icon: fa-money
+        calendar: 
+            icon: fa-calendar
+    marketplace:
+        active: true #gérer des articles, boutiques, etc.
+        vente: false #afficher les prix et remplir le panier
+        paiement: false #paiement en ligne
+        statistiques: false
+        devises:
+            fr:
+                name: euro
+                symb: €
+                ratio: 1.0
+            en:
+                name: livre
+                symb: £
+                ratio: 0.72
+

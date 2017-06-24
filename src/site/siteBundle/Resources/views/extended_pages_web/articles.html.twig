@@ -1,0 +1,162 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+{% set cssjsloads = 'shop' %}
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+{% set EDITORMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_EDITOR')) %}
+
+{% block slider %}
+{# {{ parent() }} #}
+{% endblock slider %}
+
+{% block content %}
+<!-- PAGE HEADER DEFAULT -->
+<div class="page-header">
+	<div class="container">
+		<h1 class="page-title pull-left">{{ pageweb.titreh1|raw }}</h1>
+		<ol class="breadcrumb link-accent">
+			{# <li><a href="#">Home</a></li> #}
+			{# <li><a href="#">Shop</a></li> #}
+			<li class="active">Les vins et boissons de la cave</li>
+		</ol>
+	</div>
+</div>
+<!-- END PAGE HEADER DEFAULT -->
+<!-- PAGE CONTENT -->
+<div class="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				{% set articles = selectNestedClasses(pageweb.subentitys, ['article'], site, false) %}
+				{% if articles|length > 0 -%}
+				<!-- PRODUCT DISPLAY -->
+				<div class="product-display" style="margin-top:0px;">
+					<!-- DISPLAY CONTROLS -->
+					<div class="display-controls clearfix">
+						<div class="controls-left">
+							{{ pageweb.code|raw }}
+						</div>
+						<div class="controls-right hidden-xs hidden-sm">
+							<form class="form-inline">
+								<div class="form-group">
+									<label>Présentation</label>
+									<label class="radio-icon" title="Vue en grille">
+										<input id="product-grid" type="radio" name="view-mode" title="Grid View"><span><i class="fa fa-th"></i></span>
+									</label>
+									<label class="radio-icon" title="Vue en liste">
+										<input id="product-list" type="radio" name="view-mode" title="List View" checked="checked"><span><i class="fa fa-list"></i></span>
+									</label>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- END DISPLAY CONTROLS -->
+					<!-- PRODUCT GRID -->
+					<ul class="list-inline row product-grid" style="height:0px;width:0px;">
+						{% for article in articles -%}
+						<li class="col-md-4 col-sm-6" data-article-slug="{{ article.slug }}">
+							<div class="product-item">
+								<a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">
+									<img src="{{ imageB64sized(article.image.id|default(null), 350, 350, 'cut') }}" class="img-responsive" alt="{{ article.slug }}">
+									{# {% if article.isStockempty() -%}<span class="label label-{{ article.stockColor }}">Indisponible</span> #}
+									{# {%- elseif article.isStockcritique() -%}<span class="label label-{{ article.stockColor }}">Fin de stock</span> #}
+									{# {%- endif %} #}
+								</a>
+								<div class="product-info">
+									<h3 class="title">
+										<a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">{{ article.nom }}</a>
+										{%- if EDITORMODE %} <a {{ actions.adminHref(path('siteadmin_entite', {entite: article.shortName|default(article.className|default(null)), id: item['element_id']|default(article.id), action: 'show'})) }}><i class="fa fa-eye icon-wait-on-click text-muted"></i></a>{% endif %}
+										{%- if EDITORMODE %} <a {{ actions.adminHref(path('siteadmin_entite', {entite: article.shortName|default(article.className|default(null)), id: item['element_id']|default(article.id), action: 'edit'})) }}><i class="fa fa-pencil icon-wait-on-click text-muted"></i></a>{% endif %}
+									</h3>
+									<p class=""><i><small>{{ article.accroche|truncate(100, true, '…')|raw }}</small></i></p>
+									<p class="short-description">{{ article.descriptif|truncate(160, true, '…')|raw }}</p>
+									<div class="bottom">
+										{# <span class="price">{{ articlePrix(article)|raw }}</span> #}
+										{# {% if marketplace.vente -%} #}
+										{# <a href="#" class="btn btn-primary btn-addtocart"><i class="fa fa-cart-plus"></i> Ajouter</a> #}
+										{# {%- endif -%} #}
+									</div>
+								</div>
+							</div>
+						</li>
+						{# {%- endif -%} #}
+						{%- endfor %}
+					</ul>
+					<!-- END PRODUCT GRID -->
+					<!-- PRODUCT LIST -->
+					<ul class="list-unstyled product-list" style="height:0px;width:0px;">
+						{% for article in articles -%}
+						<li class="product-item clearfix" data-article-slug="{{ article.slug }}">
+							<a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">
+								<img src="{{ imageB64sized(article.image.id|default(null), 350, 500, 'cut') }}" class="img-responsive" alt="{{ article.slug }}">
+								{# {% if article.isStockempty() -%}<span class="label label-{{ article.stockColor }}">Indisponible</span> #}
+								{# {%- elseif article.isStockcritique() -%}<span class="label label-{{ article.stockColor }}">Fin de stock</span> #}
+								{# {%- endif %} #}
+							</a>
+							<div class="product-info">
+								<h3 class="title no-margin-top">
+									<a href="{{ path('site_pageweb_article', {itemSlug: article.slug, parentSlug: categorie.slug|default(pageweb.slug|default(null))}) }}">{{ article.nom }}</a>
+									{%- if EDITORMODE %} <a {{ actions.adminHref(path('siteadmin_entite', {entite: article.shortName|default(article.className|default(null)), id: item['element_id']|default(article.id), action: 'show'})) }}><i class="fa fa-eye icon-wait-on-click text-muted"></i></a>{% endif %}
+									{%- if EDITORMODE %} <a {{ actions.adminHref(path('siteadmin_entite', {entite: article.shortName|default(article.className|default(null)), id: item['element_id']|default(article.id), action: 'edit'})) }}><i class="fa fa-pencil icon-wait-on-click text-muted"></i></a>{% endif %}
+								</h3>
+								<p class=""><i>{{ article.accroche|raw }}</i></p>
+								<p class="short-description">{{ article.descriptif|raw }}</p>
+								{# <p><span class="price">{{ articlePrix(article)|raw }}</span></p> #}
+								{# {% if marketplace.vente -%} #}
+								{# <a href="#" class="btn btn-primary btn-lg btn-addtocart"><i class="fa fa-cart-plus"></i> Ajouter</a> #}
+								{# {%- endif -%} #}
+							</div>
+						</li>
+						{# {%- endif -%} #}
+						{%- endfor %}
+					</ul>
+					<!-- END PRODUCT LIST -->
+				</div>
+				<!-- PRODUCT DISPLAY -->
+				{% else %}
+				<!-- NO-PRODUCT -->
+				<div class="section-heading">
+					<h3 class="heading-thin text-center"><i class="fa fa-frown-o"></i> {{ 'not_found'|trans({}, 'article') }}</h3>
+				</div>
+				<!-- END NO-PRODUCT -->
+				{% endif %}
+{# 				{% if pageweb.diaporama.nestedChilds|default([]) is not empty %}
+				<hr>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						{{ include("sitesiteBundle:blocks:carousel_banner.html.twig") }}
+					</div>
+				</div>
+				{% endif %} #}
+			</div>
+		</div>
+	</div>
+</div>
+{# {{ dump() }} #}
+<!-- END PAGE CONTENT -->
+{% endblock content %}
+
+{% block end_javascripts %}
+
+	{{ parent() }}
+
+	$('.product-grid').attr('style', 'width:100%;height:auto;').hide();
+	$('.product-grid > li').attr('style', 'height:780px;overflow:hidden;');
+	$('.product-list').attr('style', 'width:100%;height:auto;').show();
+
+	$('#product-grid').on('click', function (item) {
+		$('.product-list').hide();
+		$('.product-grid').show();
+	});
+
+	$('#product-list').on('click', function (item) {
+		$('.product-grid').hide();
+		$('.product-list').show();
+	});
+
+
+{% endblock end_javascripts %}
+
+
+
+
+
+

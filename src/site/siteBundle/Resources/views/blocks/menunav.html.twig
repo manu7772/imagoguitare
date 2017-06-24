@@ -1,0 +1,23 @@
+{%- if site|default(false) -%}
+{% import 'sitesiteBundle:macros:actions.macro.twig' as actions %}
+
+<div id="main-nav-collapse" class="collapse navbar-collapse">
+	<ul class="nav navbar-nav main-navbar-nav">
+		{% for item1 in site.menuNav.nestedChilds if selectClasses(item1, ['categorie','pageweb'], site) != null %}
+		{% set classes = [] %}
+		{% if item1.slug == app.request.attributes.get('_route_params')['itemSlug']|default(null) %}{% set classes = classes|merge(['active']) %}{% endif %}
+		{% if item1.nestedChilds|length > 0 %}{% set classes = classes|merge(['dropdown']) %}{% endif %}
+		<li class="{{ classes|join(' ') }}">
+			<a {{ actions.elementHref(item1, site.menuNav)|raw }}{{ item1.nestedChilds|length > 0 ? ' class="dropdown-toggle" data-toggle="dropdown"' : '' }}>{{ item1.nom|capitalize }}{{ item1.nestedChilds|length > 0 ? ' <i class="fa fa-angle-down"></i>' : '' }}</a>
+			{% if item1.nestedChilds|length > 0 %}
+			<ul class="dropdown-menu" role="menu">
+				{% for item2 in item1.nestedChilds if selectClasses(item2, ['categorie','pageweb'], site) != null %}
+				<li><a {{ actions.elementHref(item2, item1)|raw }}>{{ item2.nom|capitalize }}</a></li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}

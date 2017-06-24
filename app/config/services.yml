@@ -1,42 +1,338 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-    ae_services:           site\services\
+    ae_services:           Labo\Bundle\AdminBundle\services\
+    site_services:         site\adminsiteBundle\services\
 
 services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
-    # fonctionnalités de base / boîte à outils
-    aetools.aetools:
-        class: %ae_services%aetools
-        arguments: [@service_container]
 
-    # fonctionnalités d'entités
-    aetools.aeEntities:
-        class: %ae_services%aeEntities
-        arguments: [@service_container]
+    #######################
+    ### BASES           ###
+    #######################
 
-    # fonctionnalités de pages web
-    aetools.pageweb:
-        class: %ae_services%pageweb
-        arguments: [@service_container]
+    # Gestion des données globales fixes du site
+    aetools.aeData:
+        class: %ae_services%aeData
 
-    # fonctionnalités images / formats d'images
-    aetools.media:
+    # Gestion des classes
+    aetools.aeClasses:
+        class: %ae_services%aeClasses
+
+    # Gestion des fichers/dossiers
+    aetools.aeSystemfiles:
+        class: %ae_services%aeSystemfiles
+
+    # service de manipulation d'images
+    aetools.aeImagesTools:
         class: %ae_services%aeImages
-        arguments: [@doctrine.orm.entity_manager]
 
-    # fonctionnalités tags
-    aetools.tag:
-        class: %ae_services%aeTags
-        arguments: [@doctrine.orm.entity_manager]
 
-    # Fonctions textes utiles et pratiques pour utilisation dans TWIG
-    aetools.textutilities:
-        class: %ae_services%twigTools
+
+    #######################
+    ### DIVERS          ###
+    #######################
+
+    # fonctionnalités de réponse / pour Ajax notamment
+    aetools.aeReponse:
+        class: %ae_services%aeReponse
+
+    # fonctionnalités de lecture/écriture en fichiers YAML
+    aetools.aeYaml:
+        class: %ae_services%aeYaml
+
+    # fonctionnalités d'unités
+    aetools.aeUnits:
+        class: %site_services%aeUnits
+
+    # fonctionnalités de dates & times
+    aetools.aeDates:
+        class: %ae_services%aeDates
+
+    # fonctionnalités de arrays & collections
+    aetools.aeArrays:
+        class: %ae_services%aeArrays
+
+    # fonctionnalités de mail
+    aetools.aeEmail:
+        class: %ae_services%aeEmail
         arguments: [@service_container]
+
+    # fonctionnalités de cache
+    aetools.aeCache:
+        class: %ae_services%aeCache
+        arguments: [@service_container]
+
+    # fonctionnalités de debug
+    aetools.aeDebug:
+        class: %ae_services%aeDebug
+        arguments: [@service_container]
+
+    # fonctionnalités de Twig descriptions
+    aetools.aeTwigdescriptions:
+        class: %ae_services%aeTwigdescriptions
+        arguments: [@service_container]
+
+    # fonctionnalités de messages flash
+    aetools.flashMessages:
+        class: %ae_services%flashMessages
+        arguments: [@service_container]
+
+
+    #######################
+    ### SYMFONY 2       ###
+    #######################
+
+    # fonctionnalités de base avec controller / boîte à outils
+    # aetools.aetools:
+    #     class: %ae_services%aetools
+        # arguments: [@service_container]
+
+    # fonctionnalités de routes et URL
+    aetools.aeUrlroutes:
+        class: %ae_services%aeUrlroutes
+        arguments: [@service_container]
+
+
+    #######################
+    ### SESSION DATA    ###
+    #######################
+
+    # fonctionnalités de SESSION
+    aetools.aeServiceSessiondata:
+        class: %ae_services%aeServiceSessiondata
+        arguments: [@service_container]
+
+
+    #######################
+    ### ROLES           ###
+    #######################
+
+    # fonctionnalités de ROLES
+    aetools.RolesService:
+        class: %ae_services%RolesService
+        arguments: [%security.role_hierarchy.roles%]
+
+
+    #######################
+    ### FORM            ###
+    #######################
+
+    # fonctionnalités de formulaires
+    aetools.aeForms:
+        class: %ae_services%aeForms
+        arguments: [@service_container]
+
+
+
+
+
+
+
+    # fonctionnalités de jstree
+    aetools.aeJstree:
+        class: %ae_services%aeJstree
+        arguments: [@service_container]
+
+
+
+
+
+    #########################
+    ### DOCTRINE ENTITIES ###
+    #########################
+
+    # service baseEntity
+    aetools.aeServiceBaseEntity:
+        class: %ae_services%aeServiceBaseEntity
+        arguments: [@service_container]
+
+    # service subentity
+    aetools.aeServiceSubentity:
+        class: %ae_services%aeServiceSubentity
+        arguments: [@service_container]
+
+
+
+    # service nested
+    aetools.aeServiceNested:
+        class: %ae_services%aeServiceNested
+        arguments: [@service_container]
+
+    # service site
+    aetools.aeServiceSite:
+        class: %site_services%aeServiceSite
+        arguments: [@service_container]
+
+    # service categorie
+    aetools.aeServiceCategorie:
+        class: %site_services%aeServiceCategorie
+        arguments: [@service_container]
+
+    # service tauxTva
+    aetools.aeServiceTauxTva:
+        class: %site_services%aeServiceTauxTva
+        arguments: [@service_container]
+
+    # service tag
+    aetools.aeServiceTag:
+        class: %ae_services%aeServiceTag
+        arguments: [@service_container]
+
+    # service statut
+    aetools.aeServiceStatut:
+        class: %ae_services%aeServiceStatut
+        arguments: [@service_container]
+
+    # service message
+    aetools.aeServiceMessage:
+        class: %site_services%aeServiceMessage
+        arguments: [@service_container]
+    aetools.aeServiceMessageuser:
+        class: %ae_services%aeServiceMessageuser
+        arguments: [@service_container]
+
+    # service panier
+    aetools.aeServicePanier:
+        class: %ae_services%aeServicePanier
+        arguments: [@service_container]
+
+    # service calendar
+    aetools.aeServiceCalendar:
+        class: %ae_services%aeServiceCalendar
+        arguments: [@service_container]
+
+    # service facture
+    aetools.aeServiceFacture:
+        class: %ae_services%aeServiceFacture
+        arguments: [@service_container]
+
+
+    #######################
+    ### ITEM            ###
+    #######################
+
+    # service item
+    aetools.aeServiceItem:
+        class: %ae_services%aeServiceItem
+        arguments: [@service_container]
+
+    # service article
+    aetools.aeServiceArticle:
+        class: %site_services%aeServiceArticle
+        arguments: [@service_container]
+
+    # service pageweb
+    aetools.aeServicePageweb:
+        class: %site_services%aeServicePageweb
+        arguments: [@service_container]
+
+    # service section
+    aetools.aeServiceSection:
+        class: %site_services%aeServiceSection
+        arguments: [@service_container]
+
+    # service fiche
+    aetools.aeServiceFiche:
+        class: %site_services%aeServiceFiche
+        arguments: [@service_container]
+
+    #######################
+    ### TIER            ###
+    #######################
+
+    # service tier
+    aetools.aeServiceTier:
+        class: %ae_services%aeServiceTier
+        arguments: [@service_container]
+
+    # service boutique
+    aetools.aeServiceBoutique:
+        class: %site_services%aeServiceBoutique
+        arguments: [@service_container]
+
+    #######################
+    ### MEDIA           ###
+    #######################
+
+    # service media
+    aetools.aeServiceMedia:
+        class: %ae_services%aeServiceMedia
+        arguments: [@service_container]
+
+    # service image
+    aetools.aeServiceImage:
+        class: %site_services%aeServiceImage
+        arguments: [@service_container]
+
+    # service pdf
+    aetools.aeServicePdf:
+        class: %site_services%aeServicePdf
+        arguments: [@service_container]
+
+    # service rawfile
+    aetools.aeServiceRawfile:
+        class: %ae_services%aeServiceRawfile
+        arguments: [@service_container]
+
+
+
+
+
+    #######################
+    ### FIXTURES        ###
+    #######################
+
+    # service de fixtures
+    aetools.aefixtures:
+        class: %ae_services%aeFixtures
+        arguments: [@service_container]
+
+
+    #######################
+    ### TWIG EXTENSIONS ###
+    #######################
+
+    # TWIG functions and filters for texts
+    aetools.twigToolsTextutilities:
+        class: %ae_services%twigToolsTextutilities
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    # TWIG functions and filters for article and panier
+    aetools.twigToolsArticlePanier:
+        class: %ae_services%twigToolsArticlePanier
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    # TWIG functions and filters for entities
+    aetools.twigToolsEntities:
+        class: %site_services%twigToolsEntities
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    # TWIG functions and filters for section
+    aetools.twigToolsSections:
+        class: %site_services%twigToolsSections
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }
+
+    # Twig extension for dates
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    # Twig extension for texts
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
 
@@ -45,19 +341,65 @@ services:
     ### SUCCESS HANDLER ###
     #######################
 
-    ae.success_handler:
-        class: %ae_services%SuccessHandler
-        arguments: [@router, @service_container]
-        public: false
+    # aetools.success_handler:
+    #     class: %ae_services%SuccessHandler
+    #     arguments: [@router, @service_container]
+    #     public: false
 
+    ###################################
+    ### EVENT LISTENER SUR DOCTRINE ENTITIES
+    ###################################
+
+    # Utilitaire de gestion sur les entités
+    # aetools.entityUtils:
+    #     class: %ae_services%entityListener
+    #     arguments: [@service_container]
+    #     tags:
+    #         - { name: doctrine.event_listener, event: postLoad }
+    #         - { name: doctrine.event_listener, event: prePersist }
+    #         - { name: doctrine.event_listener, event: postPersist }
+    #         - { name: doctrine.event_listener, event: preUpdate }
+    #         - { name: doctrine.event_listener, event: postUpdate }
+    #         - { name: doctrine.event_listener, event: preRemove }
+    #         - { name: doctrine.event_listener, event: postRemove }
 
     ######################
     ### EVENT LISTENER ###
     ######################
 
     # EventListerner sur paramètres généraux du site
-    # aetools.site_listener:
-    #     class: %ae_services%siteListener
-    #     # arguments: [@service_container]
-    #     tags:
-    #         - { name: kernel.event_listener, event: kernel.controller, method: load }
+    aetools.site_listener:
+        class: %site_services%siteListener
+        # arguments: [@service_container]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: load }
+
+    aetools.maintenance:
+        class: %ae_services%MaintenanceListener
+        arguments: [@service_container]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+
+    ###################################
+    ### EVENT LISTENER SUR DOCTRINE ENTITIES
+    ###################################
+
+    # Entity listener
+    baseEntityListener:
+        class: %ae_services%baseEntityListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+    onFlushSubscriber:
+        class: %ae_services%onFlushSubscriber
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_subscriber }
+
+
+
+
+
+

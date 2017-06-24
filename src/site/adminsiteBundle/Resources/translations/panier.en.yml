@@ -1,0 +1,33 @@
+name_s: baskets
+name: basket
+not_found: 'no basket found'
+x_found: '{0} no basket found|{1} 1 basket found|[2,+Inf] %count% baskets found'
+create: 'create new basket'
+create_btn: 'new basket'
+created: '{0} no basket created|{1} %count% basket have been created : %list%|[2,+Inf] %count% baskets have been created : %list%'
+new: '{0,1}new basket|[2,+Inf] %count% new baskets'
+backlist: 'back to list of baskets'
+backlist_btn: 'back to list'
+dontexist: 'this basket does not exist'
+existe: 'this basket already exists'
+suppression: 'basket %name% have been deleted'
+moredetails: 'more details on %name%'
+fields:
+    id: id
+    nom: name
+    created: created
+    updated: updated
+    jamais: no modification
+actions:
+    articleadded: "{0}No article has been added in basket|{1}One article %article% has been added in basket|[2,+Inf] %count% articles %article% have been added in basket"
+    contenudeleted: Basket has been emptied
+    contenuempty: Basket is already empty
+    articlenotexist: Article %article% does not exist in basket
+    articlenotpanierable: Article %article% can not be added in basket
+    articledeleted: Article %article% has been removed from basket
+    articledretired: "{0}No article has been removed from basket|{1}One article %article% has been removed from basket|[2,+Inf] %count% articles %article% have been removed from basket"
+    articleverified: "{0}No unavailable article have been removed from basket|{1}One unavailable article %articles% has been removed from basket|[2,+Inf] %count% unavailable articles : %articles%, have been removed from basket"
+errors:
+    errorpanier: Basket error. No action done
+    usernotfound: User not found
+    articlenotfound: Article not found

@@ -1,0 +1,13 @@
+{% if pageweb.diaporama.nestedChilds|default(null) is not null %}
+<!-- BANNER CAROUSEL -->
+<div id="carousel-banner" class="owl-carousel carousel-pagination-inside">
+	{% for slide in pageweb.diaporama.nestedChilds %}
+		{% if slide.shortName == 'image' %}
+		<div><a href="#"><img src="{{ slide.img }}" class="img-responsive" alt="{{ slide.slug }}"></a></div>
+		{% elseif slide.shortName == 'slide' and slide.image|default(null) is not null %}
+		<div><a href="#"><img src="{{ slide.image.img }}" class="img-responsive" alt="{{ slide.image.slug }}"></a></div>
+		{% endif %}
+	{% endfor %}
+</div>
+<!-- END BANNER CAROUSEL -->
+{% endif %}

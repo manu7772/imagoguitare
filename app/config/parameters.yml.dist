@@ -1,12 +1,12 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
+    database_host: localhost
     database_port: null
-    database_name: imago
-    database_user: admin
-    database_password: azetyu123
-    mailer_transport: smtp
-    mailer_host: auth.smtp.1and1.fr
-    mailer_user: emmanuel@aequation-webdesign.fr
-    mailer_password: azetyu123
-    secret: thisisthewebsiteofimagoguitare1234567890
+    database_name: buffard
+    database_user: buffard
+    database_password: buffard014507863252244
+    mailer_transport: sendmail
+    mailer_host: localhost
+    mailer_user: null 
+    mailer_password: null      
+    secret: thisisthesiteofbuffardcerdon789

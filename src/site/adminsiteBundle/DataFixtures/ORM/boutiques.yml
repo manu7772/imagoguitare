@@ -1,0 +1,11 @@
+boutique:
+    order: 6
+    data:
+        -
+            nom: 'Atelier Imago Guitare'
+            horaire: '<ul><li>Du lundi au vendredi, de 14h à 19h</li><li>Sur rendez-vous le samedi</li></ul>'
+            denomination: 'Imago Guitare'
+            telfixe: ~
+            mobile: '06 35 26 24 98'
+            email: 'contact@imagoguitare.com'
+            descriptif: ~

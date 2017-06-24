@@ -1,0 +1,123 @@
+{% extends 'LaboAdminBundle:entites:entiteShow.html.twig' %}
+{% set cssjsloads = 'TAB' %}
+{% import 'LaboAdminBundle:blocks:sortable_nested_categories.html.twig' as nestcat %}
+
+{% set DEVMODE = (app.environment in ['DEV', 'TEST']) or (is_granted('ROLE_SUPER_ADMIN')) %}
+
+{% block page_heading %}
+	{{ parent() }}
+{% endblock page_heading %}
+
+{% block content %}
+<div class="row">
+
+	<div class="col-md-6">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>{{ entite.nom|raw }}{{ (entite.statut.id > 1 ? " <small><i>" ~ entite.statut.nom ~ "</i></small>" : "")|raw }}</h3>
+			</div>
+			<div class="ibox-content">
+				<table class="table table-striped table-bordered table-hover" role="grid">
+					<thead>
+						<tr>
+							<th>{{ UCfirst('table.col.libelle'|trans) }}</th>
+							<th>{{ UCfirst('table.col.valeur'|trans) }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>{{ 'table.col.nom'|trans }}</strong></td>
+							<td>{{ entite.nom }}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'table.col.modele'|trans }}</strong></td>
+							<td>{{ entite.modelename }}</td>
+						</tr>
+						<tr>
+							<td><strong>Action</strong></td>
+							<td>{{ entite.action }}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ UCfirst('fields.parents'|trans({}, entite.shortName)) }}</strong></td>
+							<td>
+								{{ actions.labelLinkList(entite.group_pagewebSections_parents, [], null, type, type_value_joiner, DEVMODE ? 'edit' : 'show') }}
+							</td>
+						</tr>
+						<tr>
+							<td><strong>{{ UCfirst('fields.subentitys'|trans({}, entite.shortName)) }}</strong></td>
+							<td>
+								{{ actions.labelLinkList(entite.subentitys, [], null, type, type_value_joiner, DEVMODE ? 'edit' : 'show') }}
+							</td>
+						</tr>
+						<tr>
+							<td><strong>{{ UCfirst('fields.created'|trans({}, entite.shortName)) }}</strong></td>
+							<td>
+								{{ entite.created|date(formatDateHeure) }}
+							</td>
+						</tr>
+						<tr>
+							<td><strong>{{ UCfirst('fields.updated'|trans({}, entite.shortName)) }}</strong></td>
+							<td>
+								{{ (entite.updated|default(null) != null ? entite.updated|date(formatDateHeure) : "<small><i class='text-muted'>" ~ UCfirst('fields.jamais'|trans({}, entite.shortName)) ~ "</i></small>")|raw }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>{{ UCfirst('fields.image'|trans({}, entite.shortName)) }} {% if entite.image != null %}<a href="{{ path('siteadmin_entite', {entite: entite.shortName, action: 'delete_linked_image', id: entite.id}) }}" data-title="{{ UCfirst('supprime.nom'|trans({}, 'image')) }}" data-message="{{ UCfirst('supprime.confirm-definitif'|trans({}, 'image')) }}" class="btn btn-xs btn-white pull-right need-confirmation"><i class="fa fa-times icon-wait-on-click"></i></a>{% endif %}</h3>
+			</div>
+			<div class="ibox-content text-center">
+				{% if entite.image|default(null) != null %}
+				<img src="{{ entite.image.img }}" class="img-responsive center-block img-rounded">
+				<p>{{ entite.image.nom }}{% if entite.image.nom != entite.image.nom %}<em><i> (image : {{ entite.image.nom }})</i></em>{% endif %}</p>
+				{% else %}
+				<i class="fa fa-ban fa-5x text-muted fa-border"></i>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	
+	{% set images = entite.childsByGroup('images') %}
+	{% if images|length > 0 %}
+	<div class="col-sm-6 col-md-4 col-lg-3">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h3>+{{ images|length }} photo{{ plur(images) }}</h3>
+			</div>
+			<div class="ibox-content">
+				<div class="carousel slide" id="carousel1">
+					<div class="carousel-inner">
+						{% for image in images %}
+						<div class="item{% if loop.first %} active{% endif %}">
+							<img src="{{ image.img|raw }}" class="img-responsive center-block img-rounded">
+						</div>
+						{% endfor %}
+					</div>
+					<a data-slide="prev" href="#carousel1" class="left carousel-control">
+						<span class="icon-prev"></span>
+					</a>
+					<a data-slide="next" href="#carousel1" class="right carousel-control">
+						<span class="icon-next"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="clearfix"></div>
+
+</div>
+{% endblock content %}
+
+{% block end_javascripts %}
+{{ parent() }}
+{{ nestcat.nestedtreeAjax() }}
+{% endblock end_javascripts %}

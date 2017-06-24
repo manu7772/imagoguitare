@@ -1,0 +1,29 @@
+<div id="contact-widget-bottom" class="panel panel-primary contact-widget">
+	<div class="panel-heading">
+		<h5 class="panel-title">{{ 'messagebox.titre'|trans }}</h5>
+		<i class="fa fa-caret-down icon-down hide"></i><i class="fa fa-caret-up icon-up"></i>
+	</div>
+	<div class="panel-body">
+		<form method="post" id="contact-form" action="{{ url('message_send') }}" novalidate>
+			<p>{{ 'messagebox.vosinfos'|trans }}</p>
+			<div class="alert alert-success" style="display:none;"></div>
+			<div class="form-group">
+				<label for="contact-name" class="control-label sr-only">{{ 'messagebox.nom'|trans }}</label>
+				<input type="text" class="form-control" id="contact-name" name="name" placeholder="{{ 'messagebox.votrenom'|trans }}" required value="{{ app.user.nom|default(app.user.username|default(app.session.get('message_user').message.name|default(''))) }}"{{ app.user != null ? ' disabled="disabled"' : '' }}>
+			</div>
+			<div class="form-group">
+				<label for="contact-email" class="control-label sr-only">{{ 'messagebox.email'|trans }}</label>
+				<input type="email" class="form-control" id="contact-email" name="email" placeholder="{{ 'messagebox.votreemail'|trans }}" required value="{{ app.user.email|default(app.session.get('message_user').message.email|default('')) }}"{{ app.user != null ? ' disabled="disabled"' : '' }}>
+			</div>
+			<div class="form-group">
+				<label for="contact-message" class="control-label sr-only">{{ 'messagebox.message'|trans }}</label>
+				<textarea class="form-control" id="contact-message" name="message" rows="5" cols="30" placeholder="{{ 'messagebox.votremessage'|trans }}" required></textarea>
+			</div>
+			{% if app.user != null -%}
+			<input type="hidden" name='user_id' value='{{ app.user.id|default('') }}'>
+			{%- endif %}
+			<input type="hidden" name="msg-submitted" id="msg-submitted" value="true">
+			<button id="submit-button" type="submit" class="btn btn-primary" data-sendtext="{{ 'messagebox.messagesend'|trans }}" data-senderror="{{ 'messagebox.messageerror'|trans }}"><i class="fa fa-send-o loading-icon"></i> <span>{{ 'messagebox.buttonsend'|trans }}</span></button>
+		</form>
+	</div>
+</div>

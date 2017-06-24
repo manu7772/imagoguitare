@@ -1,0 +1,111 @@
+'2017-06-23 18:43:36':
+    id: 72
+    nom: 'Imago Guitare'
+    icon: fa-building
+    created: DateTime
+    updated: DateTime
+    slug: imago-guitare-1
+    default: true
+    descriptif: null
+    deletable: true
+    couleur: 'rgba(54,26,86,1)'
+    typentite: null
+    accroche: 'Rico Priet, Luthier contemporain'
+    optionArticlePhotosOnly: true
+    optionArticlePriceOnly: false
+    class_name: site
+    boutiques:
+        -
+            id: 14
+            nom: 'Atelier Imago'
+            icon: fa-building-o
+            created: DateTime
+            updated: DateTime
+            slug: atelier-imago
+            default: false
+            descriptif: null
+            deletable: true
+            couleur: 'rgba(255,255,255,1)'
+            typentite: null
+            telfixe: null
+            mobile: '06 35 26 24 98'
+            email: contact@imagoguitare.com
+            horaire: '<ul><li>Du lundi au vendredi, de 14h à 19h</li><li>Sur rendez-vous le samedi</li></ul>'
+            denomination: 'Imago Guitare'
+            class_name: boutique
+            adresse:
+                id: 1
+                nom: 'Atelier Imago'
+                url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2752.973706217036!2d5.115371715485788!3d46.36990967912209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f347ae5b087d79%3A0x5df8d06d4d5054ff!2sImago+Guitare!5e0!3m2!1sfr!2sfr!4v1498204064676'
+                type: boutique
+                adresse: '20 allée des vignes'
+                cp: '01340'
+                ville: Jayat
+                commentaire: 'village situé 22km au nord de Bourg en Bresse et 30km à l''est de Macon dans l''Ain'
+                icon: fa-map-marker
+                created: DateTime
+                updated: DateTime
+                slug: atelier-imago
+                default: false
+            image: null
+            logo: null
+    categorieArticles: {  }
+    categorieFooters:
+        -
+            id: 9
+            nom: 'Imago Guitare, luthier'
+            icon: fa-folder
+            created: DateTime
+            updated: DateTime
+            slug: imago-guitare-luthier
+            default: false
+            descriptif: '<p>Menu principal du site</p>'
+            deletable: true
+            couleur: 'rgba(255,255,255,1)'
+            typentite: null
+            lvl: 1
+            open: false
+            accepts: '["pageweb","article","image","evenement","fiche","marque","reseau","boutique","pdf","categorie"]'
+            type: menu
+            class_name: categorie
+        -
+            id: 11
+            nom: Informations
+            icon: fa-folder
+            created: DateTime
+            updated: DateTime
+            slug: informations
+            default: false
+            descriptif: '<p>Pages d''informations générales et légales</p>'
+            deletable: true
+            couleur: 'rgba(255,255,255,1)'
+            typentite: null
+            lvl: 1
+            open: false
+            accepts: '["pageweb"]'
+            type: pageweb
+            class_name: categorie
+        -
+            id: 13
+            nom: Atelier
+            icon: fa-folder
+            created: DateTime
+            updated: DateTime
+            slug: atelier
+            default: false
+            descriptif: '<p>L''atelier Imago Guitare''</p>'
+            deletable: true
+            couleur: 'rgba(255,255,255,1)'
+            typentite: null
+            lvl: 1
+            open: false
+            accepts: '["article"]'
+            type: article
+            class_name: categorie
+    menuNav_id: 9
+    menuArticle_id: 13
+    image_id: null
+    logo_id: null
+    favicon_id: null
+    faviconBinaryFile: null
+    adminLogo_id: null

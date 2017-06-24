@@ -2,7 +2,102 @@ sitesite_homepage:
     path:       /
     defaults:   { _controller: sitesiteBundle:Default:index }
 
-site_pageweb:
-    path:       /page/{pageweb}/{params}
-    defaults:   { _controller: sitesiteBundle:Default:pageweb, params: null }
+# js_revolution_extentions:
+#     path:       /extensions/{js_filename}
+#     defaults:   { _controller: sitesiteBundle:Revolution:getfile }
+# js_revolution_extentions_page:
+#     path:       /page/extensions/{js_filename}
+#     defaults:   { _controller: sitesiteBundle:Revolution:getfile }
+
+site_pageweb_pageweb:
+    path:       /page/{itemSlug}
+    defaults:   { _controller: sitesiteBundle:Default:pageweb }
+
+site_pageweb_pageweb_parent:
+    path:       /page/{parentSlug}/{itemSlug}
+    defaults:   { _controller: sitesiteBundle:Default:pageweb }
+
+site_pageweb_categories:
+    path:       /page/categories/{categorieSlug}/{params}
+    defaults:   { _controller: sitesiteBundle:Default:pagewebCategorie, params: null }
+
+# site_pageweb:
+#     path:       /page/{pagewebSlug}/{params}
+#     defaults:   { _controller: sitesiteBundle:Default:pagewebPageweb, params: null }
+
+site_pageweb_categorie:
+    path:       /categorie/{itemSlug}/{parentSlug}
+    defaults:   { _controller: sitesiteBundle:Default:categorie, parentSlug: null }
+
+site_pageweb_article:
+    path:       /article/{itemSlug}/{parentSlug}
+    defaults:   { _controller: sitesiteBundle:Default:article, parentSlug: null }
+
+site_pageweb_articles:
+    path:       /articles/{categorieSlug}
+    defaults:   { _controller: sitesiteBundle:Default:articlesByCategorie }
+
+
+# site_pageweb_fiche:
+#     path:       /fiche/{itemSlug}/{parentSlug}
+#     defaults:   { _controller: sitesiteBundle:Default:fiche, parentSlug: null }
+
+# site_pageweb_ficherecette:
+#     path:       /fiche-recette/{itemSlug}/{parentSlug}
+#     defaults:   { _controller: sitesiteBundle:Default:fiche, parentSlug: null }
+
+# site_pageweb_ficheboisson:
+#     path:       /fiche-boisson/{itemSlug}/{parentSlug}
+#     defaults:   { _controller: sitesiteBundle:Default:fiche, parentSlug: null }
+
+# site_pageweb_fiches:
+#     path:       /fiches/{categorieSlug}
+#     defaults:   { _controller: sitesiteBundle:Default:fichesByCategorie }
+
+
+# MESSAGES
+message_send:
+    path:       /message-send
+    defaults:   { _controller: sitesiteBundle:message:send }
+    methods:    ['post','get']
+
+# AJAX LIVE
+ajaxlive_global_serialized:
+    path:       /global-serialized/{requirements}/{user}
+    defaults:   { _controller: sitesiteBundle:ajaxlive:globalinfos, requirements: null, user: null }
+
+entity_serialized:
+    path:       /serialized/{requirements}/{user}/{shortname}
+    defaults:   { _controller: sitesiteBundle:ajaxlive:entiteinfos, requirements: null, user: null, shortname: null }
+
+# Gestion du panier
+# panier_pageweb:
+#     path:       /panier/detail/{username}
+#     defaults:   { _controller: sitesiteBundle:panier:panierdetail, username: null }
+
+# panier_pageweb_commande:
+#     path:       /panier/commande/{username}
+#     defaults:   { _controller: sitesiteBundle:panier:paniercommande, username: null }
+
+panier_pageweb_valid:
+    path:       /panier/valid_check
+    defaults:   { _controller: sitesiteBundle:panier:paniervalid }
+    methods:    ['post']
+
+panier_pageweb_valid_confirm:
+    path:       /panier/valid_confirmed/{factureId}
+    defaults:   { _controller: sitesiteBundle:panier:paniervalidconfirm, factureId: null }
+
+panier_commande_verifdate:
+    path:       /commande/verif_date
+    defaults:   { _controller: sitesiteBundle:panier:commandeVerifDate }
+    methods:    ['post']
+
+panier_action:
+    path:       /panier/action/{getdata}
+    defaults:   { _controller: sitesiteBundle:panier:panier, getdata: null }
+
+panier_test_action:
+    path:       /panier-test/action/{getdata}
+    defaults:   { _controller: sitesiteBundle:panier:panierTest, getdata: null }
 

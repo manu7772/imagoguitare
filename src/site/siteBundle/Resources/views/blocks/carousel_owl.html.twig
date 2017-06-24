@@ -1,0 +1,26 @@
+{% if pageweb.diaporama.nestedChilds|default(null) is not null %}
+{% set height = 300 %}
+<!-- CAROUSEL CONTENT -->
+<section>
+	<div class="container">
+		<div id="content-slider" class="owl-carousel carousel-content carousel-has-navigation">
+			{% for slide in pageweb.diaporama.nestedChilds %}
+				{% if slide.shortName == 'image' %}
+				{# <div class="text-center"> #}
+					{# <img src="{{ slide.imgThumbnail(null,height,'in') }}" class="img-responsive center-block" alt="{{ slide.slug}}"> #}
+					{# <h2>Multipurpose Use</h2> #}
+					{# <p class="lead">Completely syndicate leading-edge e-business with proactive strategic theme areas. Intrinsicly scale multifunctional users whereas customer directed quality vectors. </p> #}
+				{# </div> #}
+				{% elseif slide.shortName == 'slide' and slide.image|default(null) is not null %}
+				<div class="text-center">
+					<img src="{{ slide.image.imgThumbnail(null,height,'in') }}" class="img-responsive center-block margin-bottom-30" alt="{{ slide.image.slug}}">
+					{% if slide.titre is not null %}<h2>{{ slide.titre|raw }}</h2>{% endif %}
+					{% if slide.accroche is not null %}<p class="lead">{{ slide.accroche|raw }}</p>{% endif %}
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</section>
+<!-- END CAROUSEL CONTENT -->
+{% endif %}

@@ -1,0 +1,48 @@
+{% extends 'sitesiteBundle::base_pages.html.twig' %}
+
+{% block title -%}
+{{ site_titles.part1 }} - {{ article.nom|default(site_titles.part2)|raw  }}
+{%- endblock title %}
+
+{% block mainContainer %}
+
+	{{ include('sitesiteBundle:blocks:intro_pageweb.html.twig') }}
+
+	{% if pageweb.code|striptags|trim|length > 0 %}
+	<div class="clearfix"></div>
+	<section class="pb-sm-30">
+		<div class="container">
+			<div class="spacer-30"></div>
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-2">
+					<h1 class="h1">Couleurs du site</h1>
+					<a id="about"></a>
+					{{ pageweb.code|raw }}
+					<div class="row">
+						<div class="col-md-4">
+							<h3>Couleur #1</h3>
+							{% for couleur in ['color1-base','color1-01','color1-02','color1-03','color1-04','color1-05','color1-06','color1-07'] %}
+							<div class="bloc-color bloc-full-width {{ couleur }}" {{ loop.first ? 'style="margin-bottom:6px;"' : '' }}><small>@{{ couleur }}&nbsp;</small></div>
+							{% endfor %}
+						</div>
+						<div class="col-md-4">
+							<h3>Couleur #2</h3>
+							{% for couleur in ['color2-base','color2-01','color2-02','color2-03','color2-04','color2-05','color2-06','color2-07'] %}
+							<div class="bloc-color bloc-full-width {{ couleur }}" {{ loop.first ? 'style="margin-bottom:6px;"' : '' }}><small>@{{ couleur }}&nbsp;</small></div>
+							{% endfor %}
+						</div>
+						<div class="col-md-4">
+							<h3>Couleur #3</h3>
+							{% for couleur in ['color3-base','color3-01','color3-02','color3-03','color3-04','color3-05','color3-06','color3-07'] %}
+							<div class="bloc-color bloc-full-width {{ couleur }}" {{ loop.first ? 'style="margin-bottom:6px;"' : '' }}><small>@{{ couleur }}&nbsp;</small></div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="spacer-60"></div>
+		</div>
+	</section>
+	{% endif %}
+
+{% endblock mainContainer %}

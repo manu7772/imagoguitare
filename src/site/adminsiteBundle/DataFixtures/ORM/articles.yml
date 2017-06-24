@@ -1,0 +1,27 @@
+article:
+    order: 10
+    data:
+        -
+            nom: 'Folk'
+            accroche: "Ligne de guitare dite flat-top inspirée du folk"
+            descriptif: "<ul><li>Table 325 mm : <span style='font-weight: bold;'>épicéa</span><br></li><li>Fond/éclisses : <span style='font-weight: bold;'>érable massif</span>&nbsp;<br></li><li>Manche : <span style='font-weight: bold;'>érable</span>, <span style='font-weight: bold;'>acajou</span><br></li><li>Touches/chevalet : <span style='font-weight: bold;'>palissandre des Indes</span><br></li><li>Fileterie : <span style='font-weight: bold;'>palissandre des Indes</span><br></li><li>Rosace : <span style='font-weight: bold;'>palissandre indien</span>, <span style='font-weight: bold;'>wengé</span><br></li><li>Mécaniques : <span style='font-weight: bold;'>gotoh</span><br></li><li>Vernis : <span style='font-weight: bold;'>cellulosique brillant</span>&nbsp;<br></li><li>Teinte : <span style='font-weight: bold;'>caramel</span><br></li><li>Etui : <span style='font-weight: bold;'>rigide</span><br></li></ul><p></p><div>Prix : 3600 euros<sup>TTC</sup> en moyenne, à partir de 2400 euros.<br></div>"
+            prix: ~
+            unitprix: p
+            unit: p
+            increment: 1
+            defaultquantity: 1
+            group_nesteds_parents:
+                field: nom
+                value: 'Atelier'
+        -
+            nom: 'Jazz'
+            accroche: "Ligne de guitare dite arch-top"
+            descriptif: "<ul><li>Table 333 mm : <span style='font-weight: bold;'>épicéa</span><br></li><li>Fond/éclisses : <span style='font-weight: bold;'>érable ondé</span>, <span style='font-weight: bold;'>érable</span><br></li><li>Manche : <span style='font-weight: bold;'>cédro du Honduras</span><br></li><li>Touches/chevalet : <span style='font-weight: bold;'>palissandre des indes</span><br></li><li>Mécaniques : <span style='font-weight: bold;'>sperzel acoustic</span><br></li><li>Vernis : <span style='font-weight: bold;'>cellulosique PU aqueux et huile dure</span><br></li><li>Teinte : <span style='font-weight: bold;'>rouge oxyde oxyde de fer</span><br></li><li>Capteur : <span style='font-weight: bold;'>piézo Twin spot K&amp;K</span><br></li><li>Etui : <span style='font-weight: bold;'>rigide</span><br></li></ul><p>Prix : à partir de 2400 euros</p>"
+            prix: ~
+            unitprix: p
+            unit: p
+            increment: 1
+            defaultquantity: 1
+            group_nesteds_parents:
+                field: nom
+                value: 'Atelier'
