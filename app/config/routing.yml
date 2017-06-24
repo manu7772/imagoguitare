@@ -6,7 +6,7 @@
 sitesiteBundle_path:
     path: /{_locale}
     defaults: { _controller: sitesiteBundle:Default:index, _locale: %locale% }
-    host: "{base}{domaine}.{ext}"
+    host: "{base}.{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
         domaine: "aequation"
@@ -17,7 +17,7 @@ sitesiteBundle_www_fr:
     resource: "@sitesiteBundle/Resources/config/routing.yml"
     prefix:   /{_locale}
     defaults: { _locale: %locale% }
-    host: "{base}{domaine}.{ext}"
+    host: "{base}.{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
         domaine: "aequation"

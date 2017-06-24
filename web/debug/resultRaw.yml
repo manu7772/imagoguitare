@@ -1220,3 +1220,29 @@
                 actual: ''
                 list: {  }
             raw: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/4d2pRXhpZgAASUkqAAgAAAAIAAABAwABAAAAAAUAAAEBAwABAAAAwAMAAA8BAgAIAAAAx (1055595 char.)'
+-
+    '2017-06-24 16:58:59':
+        nom: favicon_144x144.PNG
+        id: null
+        originalnom: favicon_144x144.PNG
+        format: image/png
+        extension: png
+        fileSize: '4062'
+        width: 144
+        height: 144
+        slug: null
+        imageId: null
+        data:
+            height: '0'
+            width: '0'
+            ratioIndex: '0'
+            file:
+                type: image/png
+                name: favicon_144x144.PNG
+                size: '4062'
+            removeImage: 'true'
+            dataType: cropper
+            rawfiles:
+                actual: ''
+                list: {  }
+            raw: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAYAAADnRuK4AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAA (5438 char.)'
