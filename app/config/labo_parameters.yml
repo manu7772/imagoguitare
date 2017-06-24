@@ -38,33 +38,33 @@ parameters:
                 shortCutContext: false
             user_condition: all
     site_titles:
-        part1: 'Domaine Buffard'
-        part2: 'Claude Buffard, viticulteur à Cerdon'
+        part1: 'Imago Guitare'
+        part2: 'Eric Priet, Rico, Luthier à Jayat'
     site_domains:
-        main_domain: 'imagoguitare.aequation.fr'
+        main_domain: 'imagoguitaredemo.aequation.fr'
         public:
             reseau: 'http://'
             prefix: ''
-            domain: 'imagoguitare.aequation'
+            domain: 'imagoguitaredemo.aequation'
             extensions:
                 - 'fr'
         test:
             reseau: 'http://'
             prefix: 'test'
-            domain: 'imagoguitare.aequation'
+            domain: 'imagoguitaredemo.aequation'
             extensions:
                 - 'fr'
         admin:
             reseau: 'http://'
             prefix: 'admin'
-            domain: 'imagoguitare.aequation'
+            domain: 'imagoguitareadmin.aequation'
             extensions:
                 - 'fr'
             # path: '/admin'
         testadmin:
             reseau: 'http://'
             prefix: 'testadmin'
-            domain: 'imagoguitare.aequation'
+            domain: 'imagoguitareadmin.aequation'
             extensions:
                 - 'fr'
             # path: '/admin'

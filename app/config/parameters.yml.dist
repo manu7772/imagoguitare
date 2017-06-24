@@ -2,11 +2,11 @@
 parameters:
     database_host: localhost
     database_port: null
-    database_name: buffard
-    database_user: buffard
-    database_password: buffard014507863252244
+    database_name: imagoguitare
+    database_user: imagoguitare
+    database_password: imagoguitare877657644
     mailer_transport: sendmail
     mailer_host: localhost
     mailer_user: null 
     mailer_password: null      
-    secret: thisisthesiteofbuffardcerdon789
+    secret: thisisthesiteofimagoguitare567
