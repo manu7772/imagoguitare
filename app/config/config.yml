@@ -146,7 +146,7 @@ assetic:
                 - cssrewrite
             output: ~
         bootstrap_js:
-            filters: ['yui_js']
+            # filters: ['yui_js']
             inputs:
                 # - %kernel.root_dir%/../vendor/twbs/bootstrap/js/*.js
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
@@ -172,13 +172,13 @@ assetic:
                 - 'bundles/sitesite/css/jquery-ui.css'
             output: ~
         jquery_js:
-            filters: ['yui_js']
+            # filters: ['yui_js']
             inputs:
                 # - 'https://code.jquery.com/jquery-3.1.1.js'
                 - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.12.0.js
             output: ~
         allJquery_js:
-            filters: ['yui_js']
+            # filters: ['yui_js']
             inputs:
                 - @jquery_js
                 # - 'https://code.jquery.com/ui/1.12.1/jquery-ui.js'

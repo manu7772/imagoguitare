@@ -44,27 +44,27 @@ parameters:
         main_domain: 'imagoguitaredemo.aequation.fr'
         public:
             reseau: 'http://'
-            prefix: ''
-            domain: 'imagoguitaredemo.aequation'
+            prefix: 'imagoguitaredemo'
+            domain: 'aequation'
             extensions:
                 - 'fr'
         test:
             reseau: 'http://'
-            prefix: 'test'
-            domain: 'imagoguitaredemo.aequation'
+            prefix: 'imagoguitaredemotest'
+            domain: 'aequation'
             extensions:
                 - 'fr'
         admin:
             reseau: 'http://'
-            prefix: 'admin'
-            domain: 'imagoguitareadmin.aequation'
+            prefix: 'imagoguitareadmin'
+            domain: 'aequation'
             extensions:
                 - 'fr'
             # path: '/admin'
         testadmin:
             reseau: 'http://'
-            prefix: 'testadmin'
-            domain: 'imagoguitareadmin.aequation'
+            prefix: 'imagoguitareadmin'
+            domain: 'aequation'
             extensions:
                 - 'fr'
             # path: '/admin'

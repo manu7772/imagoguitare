@@ -9,9 +9,9 @@ sitesiteBundle_path:
     host: "{base}{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
-        domaine: "buffard-cerdon"
+        domaine: "aequation"
         ext: "fr"
-        base: www\.|test\.|
+        base: imagoguitaredemo
 
 sitesiteBundle_www_fr:
     resource: "@sitesiteBundle/Resources/config/routing.yml"
@@ -20,9 +20,9 @@ sitesiteBundle_www_fr:
     host: "{base}{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
-        domaine: "buffard-cerdon"
+        domaine: "aequation"
         ext: "fr"
-        base: www\.|test\.|
+        base: imagoguitaredemo
 
 ### ADMIN ###
 siteadminsiteBundle_path:
@@ -31,9 +31,9 @@ siteadminsiteBundle_path:
     host: "{base}.{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
-        domaine: "buffard-cerdon"
+        domaine: "aequation"
         ext: "fr"
-        base: admin|testadmin
+        base: imagoguitareadmin
 
 siteadminsiteBundle_admin_fr:
     resource: "@siteadminsiteBundle/Resources/config/routing.yml"
@@ -42,9 +42,53 @@ siteadminsiteBundle_admin_fr:
     host: "{base}.{domaine}.{ext}"
     requirements:
         _locale: %default_locales%
-        domaine: "buffard-cerdon"
+        domaine: "aequation"
         ext: "fr"
-        base: admin|testadmin
+        base: imagoguitareadmin
+
+# ### PUBLIC ###
+# sitesiteBundle_path:
+#     path: /{_locale}
+#     defaults: { _controller: sitesiteBundle:Default:index, _locale: %locale% }
+#     host: "{base}{domaine}.{ext}"
+#     requirements:
+#         _locale: %default_locales%
+#         domaine: "buffard-cerdon"
+#         ext: "fr"
+#         base: www\.|test\.|
+
+# sitesiteBundle_www_fr:
+#     resource: "@sitesiteBundle/Resources/config/routing.yml"
+#     prefix:   /{_locale}
+#     defaults: { _locale: %locale% }
+#     host: "{base}{domaine}.{ext}"
+#     requirements:
+#         _locale: %default_locales%
+#         domaine: "buffard-cerdon"
+#         ext: "fr"
+#         base: www\.|test\.|
+
+# ### ADMIN ###
+# siteadminsiteBundle_path:
+#     path: /{_locale}
+#     defaults: { _controller: siteadminsiteBundle:Default:index, _locale: %locale% }
+#     host: "{base}.{domaine}.{ext}"
+#     requirements:
+#         _locale: %default_locales%
+#         domaine: "buffard-cerdon"
+#         ext: "fr"
+#         base: admin|testadmin
+
+# siteadminsiteBundle_admin_fr:
+#     resource: "@siteadminsiteBundle/Resources/config/routing.yml"
+#     prefix:   /{_locale}
+#     defaults: { _locale: %locale% }
+#     host: "{base}.{domaine}.{ext}"
+#     requirements:
+#         _locale: %default_locales%
+#         domaine: "buffard-cerdon"
+#         ext: "fr"
+#         base: admin|testadmin
 
 #############################
 # JS Revolution slider extentions

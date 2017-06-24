@@ -74,7 +74,8 @@ class siteListener extends base_siteListener {
 				break;
 			default:
 				// WEB SITE
-				$test = preg_match('#^((http|https)://)?test(admin)?\.#', $httpHost) ? 'testadmin' : 'admin';
+				// $test = preg_match('#^((http|https)://)?test(admin)?\.#', $httpHost) ? 'testadmin' : 'admin';
+				$test = preg_match('#^((http|https)://)?imagoguitare(admin)?\.#', $httpHost) ? 'testadmin' : 'admin';
 				$domain_admin = $this->container->getParameter('site_domains')[$test];
 				return $domain_admin['reseau'].$domain_admin['prefix'].'.'.$domain_admin['domain'].'.'.$domain_admin['extensions'][0].'/'.$locale;
 				break;
